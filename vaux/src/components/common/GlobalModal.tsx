@@ -23,7 +23,8 @@ const GlobalModal = (props: GlobalModalProps) => {
 		border: "0",
 		p: 4,
 		outline: "none",
-        borderRadius:"5px"
+        borderRadius:"5px",
+        overflowY:"auto"
 	};
 
 	return (
@@ -41,7 +42,7 @@ const GlobalModal = (props: GlobalModalProps) => {
 			}}
 		>
 			<Fade in={openState}>
-				<Box sx={style}>
+				<Box sx={style} className=" max-sm:min-w-[300px] md:min-w-[500px] lg:max-w-[750px]">
 					{children}
 				</Box>
 			</Fade>
