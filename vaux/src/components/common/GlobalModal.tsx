@@ -17,7 +17,7 @@ const GlobalModal = (props: GlobalModalProps) => {
 		top: "50%",
 		left: "50%",
 		transform: "translate(-50%, -50%)",
-		width: MinWidth ? MinWidth : 400,
+		MinWidth: MinWidth ? MinWidth : 400,
 		bgcolor: "background.paper",
 		boxShadow: 24,
 		border: "0",
