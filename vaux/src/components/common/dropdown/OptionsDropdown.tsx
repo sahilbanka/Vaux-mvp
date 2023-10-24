@@ -44,35 +44,37 @@ const OptionsDropdown = (props:any) => {
 
 	return (
 		<div
-			className={ "cursor-pointer flex flex-col justify-center items-center relative"}
+			className={
+				"cursor-pointer flex flex-col justify-center items-center relative"
+			}
 			onClick={() => {
 				if (!disabled) toggleOptionDropdown();
 			}}
 		>
 			<div className="text-0 flex items-center text-white gap-1">
 				{DD_label}
-        <img src={downArrow} />
+				<img src={downArrow} />
 			</div>
-				<div
-					ref={optionDropdown}
-					className={`md:absolute md:top-[43px] block text-Gray-700
-        border-1 border-Gray-300 bg-gray-900  max-h-[60vh] min-h[50px]  shadow-md
+			<div
+				ref={optionDropdown}
+				className={`md:absolute md:top-[43px] block text-Gray-700
+        border-1 border-Gray-300  max-h-[60vh] min-h[50px]  shadow-md
        ${optionDropdownOpen ? "block" : "hidden"}`}
-				>
-					{optionsDropdownData.map(
-						(d: { label: string; link: string }, i: number) => {
-							return (
-								<DropdownItem
-									key={i}
-									className={`text-[14px] px-[12px] py-[24px] hover:bg-Gray-200`}
-									onSelect={() => optionDropdownItemClickHandler(d.link)}
-									label={d.label}
-								/>
-							);
-						},
-					)}
-				</div>
-		
+				style={{ backgroundColor: "#394689" }}
+			>
+				{optionsDropdownData.map(
+					(d: { label: string; link: string }, i: number) => {
+						return (
+							<DropdownItem
+								key={i}
+								className={`text-[14px] px-[12px] py-[24px] hover:bg-Gray-200`}
+								onSelect={() => optionDropdownItemClickHandler(d.link)}
+								label={d.label}
+							/>
+						);
+					},
+				)}
+			</div>
 		</div>
 	);
 };
