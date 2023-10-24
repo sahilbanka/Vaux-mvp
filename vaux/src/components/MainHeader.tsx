@@ -4,20 +4,25 @@ import { optionDropdownDataProducts } from "../utils/constants";
 import Button from "@mui/material/Button";
 import GlobalModal from "./common/GlobalModal";
 import ContactUs from "./ContactUs";
+import { useNavigate } from "react-router";
 
 const MainHeader = () => {
 	const [showMenu, setShowMenu] = useState(false);
 	const [openContactUsModal, setOpenContactUsModal] = useState(false);
 	const handleOpenContactUsModal = () => setOpenContactUsModal(true);
 	const handleCloseContactUsModal = () => setOpenContactUsModal(false);
+	const navigate = useNavigate();
+
+	const routeChange = (path: string) => {
+		navigate(path);
+	}
 
 	return (
 		<nav
-			className=" fixed w-full z-20 top-0 left-0 border-b border-gray-600"
-			style={{ backgroundColor: "#394689" }}
+			className=" fixed w-full z-20 top-0 left-0 border-b border-gray-600 bg-primary text-white"
 		>
 			<div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-				<a href="#" className="flex items-center">
+				<a href="/#" className="flex items-center">
 					<img
 						src="https://flowbite.com/docs/images/logo.svg"
 						className="h-8 mr-3"
@@ -45,9 +50,9 @@ const MainHeader = () => {
 					>
 						<path
 							stroke="currentColor"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth="2"
 							d="M1 1h15M1 7h15M1 13h15"
 						/>
 					</svg>
@@ -55,8 +60,7 @@ const MainHeader = () => {
 				{showMenu && (
 					<div className="md:hidden w-full  md:w-auto" id="navbar-dropdown">
 						<ul
-							className="flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white  dark:border-gray-700"
-							style={{ backgroundColor: "#394689" }}
+							className="bg-primary flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white  dark:border-gray-700"
 						>
 							<li>
 								<OptionsDropdown
@@ -66,21 +70,16 @@ const MainHeader = () => {
 							</li>
 
 							<li>
-								<Button
-									variant="outlined"
-									style={{ color: "white", border: "1px solid white" }}
+								<Button type="button"
+									variant="outlined" className="text-white border border-white border-solid"
+									onClick={() => routeChange('/login')}
 								>
 									Login
 								</Button>
 							</li>
 							<li>
 								<Button
-									variant="contained"
-									style={{
-										color: "#394689",
-										backgroundColor: "white",
-										border: "1px solid #394689",
-									}}
+									variant="contained" className="text-primary bg-white border border-solid border-primary"
 								>
 									Sign Up
 								</Button>
@@ -90,8 +89,7 @@ const MainHeader = () => {
 				)}
 				<div className="w-full md:w-auto" id="navbar-dropdown">
 					<ul
-						className="flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4  rounded-lg  md:flex-row md:space-x-8 md:mt-0 "
-						style={{ backgroundColor: "#394689" }}
+						className="flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4  rounded-lg  md:flex-row md:space-x-8 md:mt-0 bg-primary"
 					>
 						<li>
 							<OptionsDropdown
@@ -99,7 +97,7 @@ const MainHeader = () => {
 								DD_label="Products"
 							/>
 						</li>
-						<li className="text-white" onClick={handleOpenContactUsModal}>
+						<li className="cursor-pointer" onClick={handleOpenContactUsModal}>
 							Contact Us
 						</li>
 						<GlobalModal
@@ -112,20 +110,14 @@ const MainHeader = () => {
 
 						<li>
 							<Button
-								variant="outlined"
-								style={{ color: "white", border: "1px solid white" }}
-							>
+								variant="outlined" className="text-white border border-solid border-white"
+								onClick={() => routeChange('/login')}>
 								Login
 							</Button>
 						</li>
 						<li>
 							<Button
-								variant="contained"
-								style={{
-									color: "#394689",
-									backgroundColor: "white",
-									border: "1px solid #394689",
-								}}
+								variant="contained" className="text-primary bg-white border border-solid border-primary"
 							>
 								Sign Up
 							</Button>
