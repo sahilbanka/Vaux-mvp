@@ -1,12 +1,13 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { List, ListItem } from "@mui/material";
+import contactUsbanner from "../assets/contactUs.svg";
 const ContactUs = () => {
 	return (
-		<>
-			<Typography id="modal-modal-title" variant="h6" component="h2">
-				Contact Us
-			</Typography>
+		<div className="grid grid-cols-2 gap-4 items-center">
+			<div>
+				<img src={contactUsbanner} alt="contact us" />
+			</div>
 			<Box component="div" id="transition-modal-description">
 				<List sx={{ listStyleType: "disc" }}>
 					<ListItem sx={{ display: "list-item" }}>
@@ -33,7 +34,7 @@ const ContactUs = () => {
 					</ListItem>
 				</List>
 			</Box>
-		</>
+		</div>
 	);
 };
 export default ContactUs;
