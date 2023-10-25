@@ -12,9 +12,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+<<<<<<< HEAD
     <GoogleOAuthProvider clientId='227470375271-dd2l60nhqr3si84n8u681cmc1qo4fnhc.apps.googleusercontent.com'>
       <App />
     </GoogleOAuthProvider>
+=======
+      <App />
+>>>>>>> d44587b (merged)
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -12,12 +12,17 @@ module.exports = {
       "white": '#FFFFFF',
       "black": '#000'
     },
+<<<<<<< HEAD
     extend: {
       borderRadius: {
         'xmd': '0.25rem'
       }
     },
+=======
+    extend: {},
+>>>>>>> d44587b (merged)
   },
+  important: true,
   plugins: [],
 }
 
