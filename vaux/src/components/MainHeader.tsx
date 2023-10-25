@@ -21,7 +21,7 @@ const MainHeader = () => {
 		<nav
 			className=" fixed w-full z-20 top-0 left-0 border-b border-gray-600 bg-primary text-white"
 		>
-			<div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+			<div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
 				<a href="/#" className="flex items-center">
 					<img
 						src="https://flowbite.com/docs/images/logo.svg"
@@ -58,7 +58,7 @@ const MainHeader = () => {
 					</svg>
 				</button>
 				{showMenu && (
-					<div className="md:hidden w-full  md:w-auto" id="navbar-dropdown">
+					<div className="md:hidden" id="navbar-dropdown">
 						<ul
 							className="bg-primary flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white  dark:border-gray-700"
 						>
@@ -87,7 +87,7 @@ const MainHeader = () => {
 						</ul>
 					</div>
 				)}
-				<div className="w-full md:w-auto" id="navbar-dropdown">
+				<div className="hidden md:block" id="navbar-dropdown">
 					<ul
 						className="flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4  rounded-lg  md:flex-row md:space-x-8 md:mt-0 bg-primary"
 					>

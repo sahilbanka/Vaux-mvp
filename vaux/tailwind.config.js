@@ -12,9 +12,12 @@ module.exports = {
       "white": '#FFFFFF',
       "black": '#000'
     },
-    extend: {},
+    extend: {
+      borderRadius: {
+        'xmd': '0.25rem'
+      }
+    },
   },
-  important: true,
   plugins: [],
 }
 
