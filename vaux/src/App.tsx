@@ -1,18 +1,16 @@
 import { useRoutes } from 'react-router';
 import './App.css';
-import MainHeader from 'components/MainHeader';
+import Dashboard from 'components/Dashboard';
 import Login from 'components/Login';
-import AIVoicesListHome from 'components/Home/AIVoicesListHome';
+import { ProtectedRoute } from 'components/ProtectedRoute';
 
 function App() {
   const routes = useRoutes([
     {
       path: "/",
-      element: <MainHeader />
-    },
-    {
-      path: "/voices",
-      element: <AIVoicesListHome />
+      element: <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
     },
     {
       path: "/login",
