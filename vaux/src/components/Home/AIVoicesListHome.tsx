@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllAIVoiceSample } from "../../actions/APIActions";
-import { formatAIVoicesResponseForLanding } from "../../utils/common.utils";
-import AIVoiceItemHome from "./AIVoiceItemHome";
+import { getAllAIVoiceSample } from "actions/APIActions";
+import { formatAIVoicesResponseForLanding } from "utils/common.utils";
+import AIVoiceItemHome from "components/Home/AIVoiceItemHome";
 
 const AIVoicesListHome = () => {
 	const [AIVoices, setAIVoices] = useState<any>([]);
@@ -19,7 +19,7 @@ const AIVoicesListHome = () => {
 	}, []);
 
 	return (
-		<div className="flex m-auto gap-3 flex-wrap justify-evenly">
+		<div className="flex m-auto gap-3 overflow-x-auto">
 			{AIVoices.map(
 				(voice: {
 					Gender: string;

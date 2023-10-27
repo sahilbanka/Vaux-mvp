@@ -8,10 +8,9 @@ function App() {
   const routes = useRoutes([
     {
       path: "/",
-      element: <ProtectedRoute>
+      element: 
         <Dashboard />
-      </ProtectedRoute>
-    },
+      },
     {
       path: "/login",
       element: <Login />

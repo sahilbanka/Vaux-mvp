@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import playBtn from "../../assets/play.svg";
-import { fetchAIVoicePreview } from "../../actions/APIActions";
-import Avatar_male_1 from "../../assets/M1.png";
-import Avatar_male_2 from "../../assets/M2.png";
-import Avatar_female_1 from "../../assets/F1.png";
-import Avatar_female_2 from "../../assets/F2.png";
-import pauseBtn from "../../assets/pause.svg";
+import playBtn from "assets/play.svg";
+import { fetchAIVoicePreview } from "actions/APIActions";
+import Avatar_male_1 from "assets/M1.png";
+import Avatar_male_2 from "assets/M2.png";
+import Avatar_female_1 from "assets/F1.png";
+import Avatar_female_2 from "assets/F2.png";
+import pauseBtn from "assets/pause.svg";
 interface AIVoiceItemHomePropsInterface {
 	AIVoiceItem: {
 		Gender: string;
@@ -56,7 +56,7 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 		if (isAudioPlaying !== AIVoiceItem.Id && !ref.current?.paused) {
 			ref.current?.pause();
 		}
-	}, [isAudioPlaying]);
+	}, [AIVoiceItem.Id, isAudioPlaying]);
 	return (
 		<div className="flex flex-col w-[250px] justify-center items-center gap-2 relative">
 			<div
@@ -66,7 +66,7 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 				<img
 					src={imageObj[AIVoiceItem.img_id as keyof typeof imageObj]}
 					alt="AI voice Avatar"
-					className="absolute  z-[1] left-[50%] top-[-85px]"
+					className="absolute z-[1] left-[50%] top-[-85px] min-w-[260px]"
 					width={260}
 					style={{ transform: "translate(-50%, 0%)" }}
 				/>

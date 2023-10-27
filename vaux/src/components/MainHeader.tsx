@@ -1,9 +1,9 @@
 import { useState } from "react";
-import OptionsDropdown from "./common/dropdown/OptionsDropdown";
-import { optionDropdownDataProducts } from "../utils/constants";
+import OptionsDropdown from "components/common/dropdown/OptionsDropdown";
+import { Constants } from "utils/constants";
 import Button from "@mui/material/Button";
-import GlobalModal from "./common/GlobalModal";
-import ContactUs from "./ContactUs";
+import GlobalModal from "components/common/GlobalModal";
+import ContactUs from "components/ContactUs";
 import { useNavigate } from "react-router";
 
 const MainHeader = () => {
@@ -19,9 +19,9 @@ const MainHeader = () => {
 
 	return (
 		<nav
-			className=" fixed w-full z-20 top-0 left-0 border-b border-gray-600 bg-primary text-white"
+			className="sticky w-full z-20 top-0 left-0 border-b border-gray-600 bg-primary text-white"
 		>
-			<div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+			<div className="flex items-center justify-between mx-auto px-16 py-4">
 				<a href="/#" className="flex items-center">
 					<img
 						src="https://flowbite.com/docs/images/logo.svg"
@@ -64,7 +64,7 @@ const MainHeader = () => {
 						>
 							<li>
 								<OptionsDropdown
-									DD_data={optionDropdownDataProducts}
+									DD_data={Constants.optionDropdownDataProducts}
 									DD_label="Products"
 								/>
 							</li>
@@ -93,7 +93,7 @@ const MainHeader = () => {
 					>
 						<li>
 							<OptionsDropdown
-								DD_data={optionDropdownDataProducts}
+								DD_data={Constants.optionDropdownDataProducts}
 								DD_label="Products"
 							/>
 						</li>

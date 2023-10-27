@@ -1,13 +1,13 @@
 import React from 'react'
 import MainHeader from 'components/MainHeader';
-import AIVoicesListHome from 'components/Home/AIVoicesListHome';
+import Overview from 'components/Overview';
 
 
 function Dashboard() {
   return (
     <>
-        <MainHeader />
-        <AIVoicesListHome />
+      <MainHeader />
+      <Overview />
     </>
   )
 }

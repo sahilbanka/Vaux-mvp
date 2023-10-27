@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { List, ListItem } from "@mui/material";
-import contactUsbanner from "../assets/contactUs.svg";
+import contactUsbanner from "assets/contactUs.svg";
 const ContactUs = () => {
 	return (
 		<div className="grid  grid-cols-1 md:grid-cols-2 gap-4 items-center sm:text-lg 2xl:text-2xl">
