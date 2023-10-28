@@ -1,4 +1,7 @@
 // add the API response interfaces 
+export interface VAUX_LOGIN_RESPONSE {
+    token: string;
+}
 interface VAUX_AI_VOICES {
     Gender:string;
     Name:string;

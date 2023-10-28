@@ -1,7 +1,6 @@
 import { useState } from "react";
 import OptionsDropdown from "components/common/dropdown/OptionsDropdown";
 import { Constants } from "utils/constants";
-import Button from "@mui/material/Button";
 import GlobalModal from "components/common/GlobalModal";
 import ContactUs from "components/ContactUs";
 import { useNavigate } from "react-router";
@@ -13,8 +12,8 @@ const MainHeader = () => {
 	const handleCloseContactUsModal = () => setOpenContactUsModal(false);
 	const navigate = useNavigate();
 
-	const routeChange = (path: string) => {
-		navigate(path);
+	const routeChange = (path: string, params?: any) => {
+		navigate(path, { state: params });
 	}
 
 	return (
@@ -60,7 +59,7 @@ const MainHeader = () => {
 				{showMenu && (
 					<div className="md:hidden" id="navbar-dropdown">
 						<ul
-							className="bg-primary flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white  dark:border-gray-700"
+							className="flex items-center flex-col font-medium p-4 sm:gap-1 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white  dark:border-gray-700"
 						>
 							<li>
 								<OptionsDropdown
@@ -70,19 +69,14 @@ const MainHeader = () => {
 							</li>
 
 							<li>
-								<Button type="button"
-									variant="outlined" className="text-white border border-white border-solid"
-									onClick={() => routeChange('/login')}
-								>
+								<button type="button" className="text-white border border-white border-solid px-4 py-2 rounded-xmd" onClick={() => routeChange('/login', {type: 'login'})} >
 									Login
-								</Button>
+								</button>
 							</li>
 							<li>
-								<Button
-									variant="contained" className="text-primary bg-white border border-solid border-primary"
-								>
+								<button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd" onClick={() => routeChange('/signup', {type: 'signup'})}>
 									Sign Up
-								</Button>
+								</button>
 							</li>
 						</ul>
 					</div>
@@ -109,18 +103,14 @@ const MainHeader = () => {
 						</GlobalModal>
 
 						<li>
-							<Button
-								variant="outlined" className="text-white border border-solid border-white"
-								onClick={() => routeChange('/login')}>
+							<button className="text-white border border-solid border-white px-4 py-2 rounded-xmd" onClick={() => routeChange('/login', {type: 'login'})}>
 								Login
-							</Button>
+							</button>
 						</li>
 						<li>
-							<Button
-								variant="contained" className="text-primary bg-white border border-solid border-primary"
-							>
+							<button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd" onClick={() => routeChange('/signup', {type: 'signup'})}>
 								Sign Up
-							</Button>
+							</button>
 						</li>
 					</ul>
 				</div>

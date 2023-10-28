@@ -1,54 +1,63 @@
-import { Button } from '@mui/material';
-import mainImage from 'assets/main.png';
 import google from 'assets/google.svg';
-import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
+import signin from 'assets/signin.svg';
 
 function Login() {
+
   return (
-    <div className="bg-gray-100 flex justify-center items-center h-screen">
+    <div className="bg-background flex justify-center items-center h-screen">
       <a href="/" className="text-white m-4 font-14 back-to-homepage">
-        <div className="d-flex align-items-center text-white">
-          <span className="material-icons-round md-18 text-white mr-2">{'<-'}</span>
+        <div className="d-flex align-items-center text-black font-semibold">
+          <span className="material-icons-round md-18 text-black mr-2">{'<-'}</span>
           Back to Homepage
         </div>
       </a>
-      <div className="w-1/2 h-screen hidden bg-primary lg:flex lg:justify-center lg:items-center">
-        <div className='w-full flex flex-col justify-center items-center'>
-          <img src={mainImage} alt="Main_Image" className="object-cover" />
-          <hr className='my-16 text-white w-[80%]'></hr>
-          <span className='text-5xl text-white'>VAux</span>
+      <div className="w-[60%] h-screen hidden lg:flex lg:justify-center lg:items-center">
+        <img src={signin} alt="login" />
+      </div>
+      <LoginContent />
+    </div>
+  )
+}
+
+function LoginContent() {
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: codeResponse => console.log(codeResponse),
+    flow: 'auth-code',
+  });
+
+  return (
+    <div className="lg:p-28 md:p-42 sm:p-20 p-8 w-full lg:w-[40%]">
+      <h1 className="text-3xl font-semibold mb-16 text-center">Login to VAux</h1>
+      <div className='flex flex-col gap-3 items-center my-8'>
+        {/* <GoogleLogin
+        onSuccess={credentialResponse => {
+          console.log(credentialResponse);
+        }}
+        onError={() => {
+          console.log('Login Failed');
+        }}
+      /> */}
+        <button className='w-full flex justify-center border border-solid border-indigo rounded-xmd py-2 px-3 focus:outline-none text-black hover:bg-button-hover' onClick={loginWithGoogle}>
+          <img src={google} alt="google" className='w-6 h-6 mx-4' />
+          <span>Sign In with Google</span>
+        </button>
+        <div className='text-center my-2'><span className='text-indigo text-xl font-normal'>OR</span></div>
+        <div className='w-full'>
+          <form action="#" method="POST">
+            <div className="mb-6">
+              <input type="text" id="email" name="email" placeholder='Email' className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent" autoComplete="off" />
+            </div>
+            <div className="mb-6">
+              <input type="password" id="password" name="password" placeholder='Password' className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent" autoComplete="off" />
+            </div>
+            <button type="submit" className="bg-primary my-4 text-white font-semibold rounded-xmd py-2 px-4 w-full">Login</button>
+          </form>
         </div>
       </div>
-      <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-        <h1 className="text-2xl font-semibold mb-12 text-center">Login to VAux</h1>
-        <div className='flex flex-col gap-3 items-center'>
-          <GoogleLogin
-            onSuccess={credentialResponse => {
-              console.log(credentialResponse);
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-          />
-          {/* <Button className='w-full border border-solid border-gray-300 rounded-xmd py-2 px-3 focus:outline-none text-black'>
-            <img src={google} alt="google" className='w-6 h-6' />
-            <span>Sign In with Google</span>
-          </Button> */}
-          <div className='text-center my-2'><span className='text-gray-300 '>OR</span></div>
-          <div className='w-full'>
-            <form action="#" method="POST">
-              <div className="mb-4">
-                <label htmlFor="username" className="block text-gray-600">Username</label>
-                <input type="text" id="username" name="username" className="w-full border border-gray-300 rounded-xmd py-2 px-3 focus:outline-none focus:border-blue-500" autoComplete="off" />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="password" className="block text-gray-600">Password</label>
-                <input type="password" id="password" name="password" className="w-full border border-gray-300 rounded-xmd py-2 px-3 focus:outline-none focus:border-blue-500" autoComplete="off" />
-              </div>
-              <button type="submit" className="bg-primary text-white font-semibold rounded-xmd py-2 px-4 w-full">Login</button>
-            </form>
-          </div>
-        </div>
+      <div className='border-t border-t-indigo'>
+        <button type="submit" className="border border-primary my-12 font-normal py-2 px-4 w-full hover:bg-button-hover">CREATE AN ACCOUNT</button>
       </div>
     </div>
   )

@@ -5,10 +5,10 @@ import Overview from 'components/Overview';
 
 function Dashboard() {
   return (
-    <>
+    <div>
       <MainHeader />
       <Overview />
-    </>
+    </div>
   )
 }
 
