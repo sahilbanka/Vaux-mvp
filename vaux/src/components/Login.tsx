@@ -6,13 +6,13 @@ function Login() {
 
   return (
     <div className="bg-background flex justify-center items-center h-screen">
-      <a href="/" className="text-white m-4 font-14 back-to-homepage">
-        <div className="d-flex align-items-center text-black font-semibold">
-          <span className="material-icons-round md-18 text-black mr-2">{'<-'}</span>
-          Back to Homepage
-        </div>
-      </a>
       <div className="w-[60%] h-screen hidden lg:flex lg:justify-center lg:items-center">
+        <a href="/" className="text-white m-4 font-14 back-to-homepage">
+          <div className="d-flex align-items-center text-black font-semibold">
+            <span className="material-icons-round md-18 text-black mr-2">{'<-'}</span>
+            Back to Homepage
+          </div>
+        </a>
         <img src={signin} alt="login" />
       </div>
       <LoginContent />
@@ -59,7 +59,7 @@ function LoginContent() {
         </div>
       </div>
       <div className='border-t border-t-indigo mb-8'></div>
-      <div className='mb-8'>
+      <div className=''>
         <button type="submit" className="border border-primary font-normal py-2 px-4 w-full hover:bg-button-hover">CREATE AN ACCOUNT</button>
       </div>
     </div>
