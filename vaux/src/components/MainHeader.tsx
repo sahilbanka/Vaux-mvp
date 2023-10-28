@@ -17,7 +17,7 @@ const MainHeader = () => {
 	}
 
 	return (
-		<nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full py-4 md:py-0 px-4 border-b border-gray-600 bg-primary text-white">
+		<nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full py-4 md:py-0 px-8 border-b border-gray-600 bg-primary text-white">
 			<div>
 				<a href="/#">
 					<div className="flex">
@@ -34,18 +34,18 @@ const MainHeader = () => {
 			</div>
 			<div className="cursor-pointer md:hidden block" onClick={() => setShowMenu(!showMenu)}>
 				<svg xmlns="http://www.w3.org/2000/svg" id="menu-button" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
 				</svg>
 			</div>
 			<div className={`${!showMenu ? 'hidden' : ''} w-full md:flex md:items-center md:w-auto`} id="menu">
 				<ul className="pt-4 text-base text-white md:flex md:items-center md:justify-between md:pt-0 ">
-					<li className="md:p-4 py-2 block">
+					<li className="md:p-4 px-2 block py-3">
 						<OptionsDropdown
 							DD_data={Constants.optionDropdownDataProducts}
 							DD_label="Products"
 						/>
 					</li>
-					<li className="cursor-pointer md:p-4 py-2 block" onClick={handleOpenContactUsModal}>
+					<li className="cursor-pointer md:p-4 px-2 block py-3" onClick={handleOpenContactUsModal}>
 						Contact Us
 					</li>
 					<GlobalModal
@@ -56,13 +56,13 @@ const MainHeader = () => {
 						<ContactUs />
 					</GlobalModal>
 
-					<li className="md:p-4 py-2 block">
-						<button className="text-white border border-solid border-white px-4 py-2 rounded-xmd" onClick={() => routeChange('/login', { type: 'login' })}>
+					<li className="md:p-4 px-2 block py-3">
+						<button className="text-white border-0 p-0 rounded-none md:border md:border-solid md:border-white md:px-4 md:py-2 md:rounded-xmd" onClick={() => routeChange('/login', { type: 'login' })}>
 							Login
 						</button>
 					</li>
-					<li className="md:p-4 py-2 block">
-						<button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd" onClick={() => routeChange('/signup', { type: 'signup' })}>
+					<li className="md:p-4 px-2 block py-3">
+						<button className="text-white border-0 p-0 rounded-none md:text-primary md:bg-white md:border md:border-solid md:border-primary md:px-4 md:py-2 md:rounded-xmd" onClick={() => routeChange('/signup', { type: 'signup' })}>
 							Sign Up
 						</button>
 					</li>

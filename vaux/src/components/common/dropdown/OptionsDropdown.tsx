@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import DropdownItem from "components/common/dropdown/DropdownItems";
 import downArrow from "assets/dropdown_arrow.svg";
+import upArrow from "assets/up_arrow.svg";
 const OptionsDropdown = (props:any) => {
 	/**
 	 ** Initially, setting hardcoded values for Option Dropdown, once the preferences changes, we can update it in the success of data call
@@ -45,7 +46,7 @@ const OptionsDropdown = (props:any) => {
 	return (
 		<div
 			className={
-				"cursor-pointer flex flex-col justify-center items-center relative"
+				"cursor-pointer flex flex-col relative"
 			}
 			onClick={() => {
 				if (!disabled) toggleOptionDropdown();
@@ -53,14 +54,15 @@ const OptionsDropdown = (props:any) => {
 		>
 			<div className="text-0 flex items-center text-white gap-1">
 				{DD_label}
-				<img src={downArrow} />
+				{!optionDropdownOpen && <img src={downArrow} alt="down-arrow" />}
+				{optionDropdownOpen && <img src={upArrow} alt="down-arrow" />}
+				
 			</div>
 			<div
 				ref={optionDropdown}
-				className={`md:absolute md:top-[43px] block text-Gray-700
-        border-1 border-Gray-300  max-h-[60vh] min-h[50px]  shadow-md
+				className={`absolute top-[100%] left-4 md:top-[43px] md:left-0 block text-Gray-700 mt-2 md:mt-0
+        border-1 border-Gray-300  max-h-[60vh] min-h[50px] shadow-md bg-primary border border-solid border-white md:border-transparent
        ${optionDropdownOpen ? "block" : "hidden"}`}
-				style={{ backgroundColor: "#394689" }}
 			>
 				{optionsDropdownData.map(
 					(d: { label: string; link: string }, i: number) => {
