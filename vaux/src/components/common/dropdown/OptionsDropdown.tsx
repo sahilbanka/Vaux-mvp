@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import DropdownItem from "./DropdownItems";
-import downArrow from "../../../assets/dropdown_arrow.svg";
+import DropdownItem from "components/common/dropdown/DropdownItems";
+import downArrow from "assets/dropdown_arrow.svg";
 const OptionsDropdown = (props:any) => {
 	/**
 	 ** Initially, setting hardcoded values for Option Dropdown, once the preferences changes, we can update it in the success of data call

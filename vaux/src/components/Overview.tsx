@@ -10,7 +10,7 @@ function Overview() {
     <div className='overview-main bg-background w-full px-16 py-12'>
       <div className="overview-head flex">
         <div className='mt-6 w-[55%] py-6'>
-          <span className='text-30 leading-normal font-medium my-8 whitespace-nowrap'>{Constants.Overview_Labels.subtitle}</span>
+          <span className='text-30 leading-normal font-medium my-8'>{Constants.Overview_Labels.subtitle}</span>
           <h1 className='text-7xl font-semibold my-10'>{Constants.Overview_Labels.description_heading}</h1>
         </div>
         <div className='mt-6 w-[45%] flex justify-center items-center'>
