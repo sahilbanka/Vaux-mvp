@@ -11,8 +11,11 @@ interface AIVoiceItemHomePropsInterface {
 		Gender: string;
 		Name: string;
 		Id: string;
-		img_urL: string;
+		Img_url: string;
 		img_id: string;
+		Language: string;
+		Emotion: Array<string>;
+		Country: string;
 	};
 	isAudioPlaying: string;
 	setIsAudioPlaying: React.Dispatch<React.SetStateAction<string>>;

@@ -1,9 +1,12 @@
 // add the API response interfaces 
-interface VAUX_AI_VOICES {
+export interface VAUX_AI_VOICES {
     Gender:string;
     Name:string;
     Id: string;
-    img_urL: string;
+    Img_url: string;
+    Language: string;
+    Emotion: Array<string>;
+    Country: string;
 };
 
 

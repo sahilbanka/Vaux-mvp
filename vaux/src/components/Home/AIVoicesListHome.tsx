@@ -5,11 +5,11 @@ import AIVoiceItemHome from "./AIVoiceItemHome";
 
 const AIVoicesListHome = () => {
 	const [AIVoices, setAIVoices] = useState<any>([]);
-    const[isAudioPlaying ,  setIsAudioPlaying] = useState("");
+	const [isAudioPlaying, setIsAudioPlaying] = useState("");
 
 	useEffect(() => {
 		const getAllAIVoices = async () => {
-			const voices = await getAllAIVoiceSample();
+			const voices = await getAllAIVoiceSample(true);
 			if (voices?.length) {
 				const formatedVoices = formatAIVoicesResponseForLanding(voices, 2, 2);
 				setAIVoices(formatedVoices);
@@ -25,10 +25,20 @@ const AIVoicesListHome = () => {
 					Gender: string;
 					Name: string;
 					Id: string;
-					img_urL: string;
-                    img_id:string;
+					Img_url: string;
+					img_id: string;
+					Language: string;
+					Emotion: Array<string>;
+					Country: string;
 				}) => {
-					return <AIVoiceItemHome key={voice.Id} AIVoiceItem={voice} isAudioPlaying={isAudioPlaying} setIsAudioPlaying={setIsAudioPlaying} />;
+					return (
+						<AIVoiceItemHome
+							key={voice.Id}
+							AIVoiceItem={voice}
+							isAudioPlaying={isAudioPlaying}
+							setIsAudioPlaying={setIsAudioPlaying}
+						/>
+					);
 				},
 			)}
 		</div>
