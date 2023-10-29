@@ -13,12 +13,14 @@ module.exports = {
         "white": '#FFFFFF',
         "black": '#000',
         "light-blue": '#C3DDFB',
-        'indigo': '#A59B9B'
+        'indigo': '#A59B9B',
+        'grey-white': '#F6F7F9'
       },
       borderRadius: {
         'xmd': '0.25rem'
       },
       fontSize: {
+        '20': '20px',
         '30': '30px'
       },
       lineHeight: {
@@ -31,6 +33,9 @@ module.exports = {
       borderColor:{
         "primary": '#394689',
       },
+      fontFamily: {
+        'ink-free': `'Shadows Into Light', cursive`
+      }
     },
   },
   plugins: [],

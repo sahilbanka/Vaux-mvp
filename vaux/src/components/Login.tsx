@@ -1,9 +1,10 @@
 import google from 'assets/google.svg';
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import signin from 'assets/signin.svg';
 import { useState } from 'react';
 import { login } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
 
 function Login() {
 
@@ -74,8 +75,14 @@ function LoginContent() {
   }
 
   const googleLogin = useGoogleLogin({
-    onSuccess: async (credentialResponse) => {
-      console.log(credentialResponse);
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse);
+      // const userInfo = await axios.get(
+      //   'https://www.googleapis.com/oauth2/v3/userinfo',
+      //   { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } },
+      // );
+  
+      // console.log(userInfo);
     },
     onError: errorResponse => console.log(errorResponse),
   });
@@ -90,7 +97,7 @@ function LoginContent() {
       <div className='flex flex-col gap-3 items-center'>
         {/* <GoogleLogin
           onSuccess={credentialResponse => {
-
+            console.log(credentialResponse);
           }}
           onError={() => {
             console.log('Login Failed');
@@ -125,8 +132,7 @@ function LoginContent() {
       </div>
     
       <div className='border-t border-t-indigo mb-8'></div>
-  
-      <div className="">
+      <div className='my-4'>
         <button type="submit" className="border border-primary font-medium py-2 px-4 w-full hover:bg-button-hover rounded-xmd"
           onClick={() => routeChange('/signup')}>CREATE AN ACCOUNT</button>
       </div>
