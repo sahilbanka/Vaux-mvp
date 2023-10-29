@@ -4,7 +4,6 @@ import signup from 'assets/signup.svg';
 import { useState } from 'react';
 import { userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
-import { VAUX_LOGIN_RESPONSE } from 'utils/APIResponseTypes';
 
 
 function SignUp() {
@@ -39,8 +38,7 @@ function SignUpContent() {
     );
     const [errorMsg, setErrMsg] = useState("");
     const [valideForm, setValidForm] = useState({
-        first_name: true,
-        last_name: true,
+        name: true,
         email: true,
         password: true
     });
@@ -50,8 +48,13 @@ function SignUpContent() {
             event.preventDefault();
         }
         const data: any = await userSignup(fromGoogle ? { token: gToken } : signupForm);
-        if (data?.Token) {
-            console.log(data?.Token);
+        let { Error, Token } = data || {}
+        if (Error) {
+          setErrMsg(Error);
+          return
+        }
+        if (Token) {
+          setErrMsg("");
         }
     };
 
@@ -65,6 +68,46 @@ function SignUpContent() {
 
     const routeChange = (path: string, params?: any) => {
         navigate(path, { state: params });
+    }
+
+    const handleNameInput = (value: string) => {
+        const validRegex = /^(?=.{1,40}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/gm;
+        if (value.length === 0) {
+            setValidForm((prev) => { return { ...prev, name: true } })
+            return
+        }
+        if (value.match(validRegex)) {
+            setValidForm((prev) => { return { ...prev, name: true } })
+        } else {
+            setValidForm((prev) => { return { ...prev, name: false } })
+        }
+    }
+
+    const handleEmailInput = (value: string) => {
+        setSignupForm((prev) => { return { ...prev, email: value } });
+        const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (value.length === 0) {
+            setValidForm((prev) => { return { ...prev, email: true } })
+            return
+        }
+        if (value.match(validRegex)) {
+            setValidForm((prev) => { return { ...prev, email: true } })
+        } else {
+            setValidForm((prev) => { return { ...prev, email: false } })
+        }
+    }
+
+    const handlePasswordInput = (value: string) => {
+        setSignupForm((prev) => { return { ...prev, password: value } });
+        if (value.length === 0) {
+            setValidForm((prev) => { return { ...prev, password: true } })
+            return
+        }
+        if (value.length >= 8) {
+            setValidForm((prev) => { return { ...prev, password: true } })
+        } else {
+            setValidForm((prev) => { return { ...prev, password: false } })
+        }
     }
 
     return (
@@ -81,32 +124,37 @@ function SignUpContent() {
                         {errorMsg && <div className='font-medium text-red-600'>{errorMsg}</div>}
                         <div className="mb-6 font-medium">
                             <input type="text" id="firstName" name="firstName" placeholder='First Name'
-                                onChange={(event) => setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } })}
+                                onChange={(event) => {
+                                    setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } });
+                                    handleNameInput(signupForm.first_name + ' ' + signupForm.last_name)
+                                }}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                                {!valideForm.first_name && <span className='font-medium mt-1 text-red-600'>{"First Name is required"}</span>}
+                            {!valideForm.name && <span className='font-medium mt-1 text-red-600'>{"First Name is required"}</span>}
 
                         </div>
                         <div className="mb-6">
                             <input type="text" id="lastName" name="lastName" placeholder='Last Name'
-                                onChange={(event) => setSignupForm((prev) => { return { ...prev, last_name: event?.target.value } })}
-                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                                {!valideForm.last_name && <span className='font-medium mt-1 text-red-600'>{"Last Name is required"}</span>}
+                                onChange={(event) => {
+                                    setSignupForm((prev) => { return { ...prev, last_name: event?.target.value } });
+                                    handleNameInput(signupForm.first_name + ' ' + signupForm.last_name)
+                                }}                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                            {!valideForm.name && <span className='font-medium mt-1 text-red-600'>{"Last Name is required"}</span>}
                         </div>
                         <div className="mb-6">
                             <input type="text" id="email" name="email" placeholder='Email'
-                                onChange={(event) => setSignupForm((prev) => { return { ...prev, email: event?.target.value } })}
+                                onChange={(event) => handleEmailInput(event.target.value)}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
                             {!valideForm.email && <span className='font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
 
                         </div>
                         <div className="mb-6">
                             <input type="password" id="password" name="password" placeholder='Password'
-                                onChange={(event) => setSignupForm((prev) => { return { ...prev, password: event?.target.value } })}
+                                onChange={(event) => handlePasswordInput(event.target.value)}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
                             {!valideForm.password && <span className='font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
 
                         </div>
-                        <div className={`mb-6' ${(valideForm.first_name && valideForm.last_name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
+                        <div className={`mb-6' ${(valideForm.name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
                             <button type="submit" className="bg-primary text-white font-medium rounded-xmd py-2 px-4 w-full">SIGNUP</button>
                         </div>
                     </form>
