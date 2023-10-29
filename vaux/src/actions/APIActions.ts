@@ -48,10 +48,10 @@ export const login = async (loginForm: any) => {
 
 export const userSignup = async (signupForm: any) => {
 	try {
-		const response = await vauxAPI().post<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_SIGNUP, signupForm);
+		const response = await vauxAPI().post<VAUX_LOGIN_RESPONSE>(VAUX_SIGNUP, signupForm);
 		const { data } = response;
 		if (response.status === 200 && data) {
-			console.log(data);
+			return data;
 		}
 	}
 	catch (error) {
