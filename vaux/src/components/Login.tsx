@@ -32,9 +32,9 @@ function LoginContent() {
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
-    const token = await login({ email: email, password: password });
-    if (token) {
-      console.log(token);
+    const data:any = await login({ email: email, password: password });
+    if (data.Token) {
+      console.log(data.Token);
     }
   };
 
