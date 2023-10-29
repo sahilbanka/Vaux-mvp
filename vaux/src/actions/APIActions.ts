@@ -24,7 +24,7 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 		const response = await vauxAPI(token).get<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_VOICE_PREVIEW_TYPE + `${id}/${name}`);
 		const {data} = response;
 		if(response.status ===200 && data){
-			return data?.S3_link;
+			return data?.Preview_link;
 		}
 	} catch (error) {
 		console.log(error);

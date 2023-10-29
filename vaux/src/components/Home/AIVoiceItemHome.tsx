@@ -6,6 +6,7 @@ import Avatar_male_2 from "assets/M2.png";
 import Avatar_female_1 from "assets/F1.png";
 import Avatar_female_2 from "assets/F2.png";
 import pauseBtn from "assets/pause.svg";
+import { Constants } from "utils/constants";
 interface AIVoiceItemHomePropsInterface {
 	AIVoiceItem: {
 		Gender: string;
@@ -40,11 +41,12 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 	};
 	const fetchAIVoiceAudioLink = async (VoiceId: string, name: string) => {
 		// const url = await fetchAIVoicePreview(VoiceId, name);
-		const url = await fetchAIVoicePreview("55", "Timothy");
+		const url = await fetchAIVoicePreview(VoiceId, name);
 		if (url) {
 			setAiAudioLink(url);
 		}
 	};
+
 	const audioPlayHandler = async () => {
 		setIsAudioPlaying(AIVoiceItem.Id);
 		ref.current?.play();
@@ -55,6 +57,15 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 	const audioPauseHandler = () => {
 		ref.current?.pause();
 	};
+	useEffect(() => {
+		const fetchAIVoiceAudioLink = async () => {
+			const url = await fetchAIVoicePreview(AIVoiceItem.Id, AIVoiceItem.Name);
+			if (url) {
+				setAiAudioLink(url);
+			}
+		};
+		fetchAIVoiceAudioLink();
+	},[]);
 	useEffect(() => {
 		if (isAudioPlaying !== AIVoiceItem.Id && !ref.current?.paused) {
 			ref.current?.pause();
@@ -69,40 +80,50 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 				<img
 					src={imageObj[AIVoiceItem.img_id as keyof typeof imageObj]}
 					alt="AI voice Avatar"
-					className="absolute z-[1] left-[50%] top-[-85px] min-w-[260px]"
+					className="absolute z-[1] left-[50%] top-[-100px] min-w-[250px]"
 					width={260}
 					style={{ transform: "translate(-50%, 0%)" }}
 				/>
 			</div>
-			<div className="flex gap-2 font-medium">
+			<div className="flex gap-2 font-medium text-3xl">
 				<span>{AIVoiceItem.Name}</span>
-				<span>{AIVoiceItem.Gender}</span>
+				<span>({AIVoiceItem.Gender})</span>
 			</div>
-			<div>English: Us & canada</div>
+			<div className="text-xl font-medium">
+				{
+					Constants.LANGUAGE_MAPPING[
+						AIVoiceItem.Language as keyof typeof Constants.LANGUAGE_MAPPING
+					]
+				}
+				: {Constants.COUNTRY_MAPPING[AIVoiceItem.Country as keyof typeof Constants.COUNTRY_MAPPING]}
+			</div>
 			<div>
-				{playControls.playMode && (
-					<img
-						src={playBtn}
-						alt="play"
-						className="cursor-pointer"
-						onClick={() => {
-							audioPlayHandler();
-						}}
-					/>
-				)}
-				{playControls.pauseMode && (
-					<img
-						src={pauseBtn}
-						alt="pause"
-						className="cursor-pointer"
-						onClick={() => {
-							audioPauseHandler();
-						}}
-					/>
-				)}
+				<img
+					src={playBtn}
+					alt="play"
+					className={`${
+						!AIAudioLink
+							? "opacity-50 pointer-events-none"
+							: "cursor-pointer transition-opacity delay-300"
+					} ${playControls.playMode ? "visible" : "hidden"}	`}
+					onClick={() => {
+						audioPlayHandler();
+					}}
+				/>
+
+				<img
+					src={pauseBtn}
+					alt="pause"
+					className={`cursor-pointer transition-opacity delay-300  ${
+						playControls.pauseMode ? "visible" : "hidden"
+					}`}
+					onClick={() => {
+						audioPauseHandler();
+					}}
+				/>
+
 				{AIAudioLink && (
 					<audio
-						autoPlay
 						src={AIAudioLink}
 						ref={ref}
 						id={`${AIVoiceItem.Id}_${AIVoiceItem.Name}_${AIVoiceItem.Gender}`}
@@ -118,8 +139,6 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 						}}
 					/>
 				)}
-				{/* <source src={AIAudioLink} type="audio/wav" />
-				</audio> */}
 			</div>
 		</div>
 	);

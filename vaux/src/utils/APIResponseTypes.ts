@@ -15,6 +15,6 @@ export interface VAUX_AI_VOICES {
 
 export interface VAUX_AI_VOICES_RESPONSE extends Array<VAUX_AI_VOICES>{}
 export interface VAUX_AI_VOICES_PREVIEW_RESPONSE {
-    S3_link:string;
+    Preview_link:string;
     Status:boolean;
 }

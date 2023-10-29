@@ -46,18 +46,19 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 	// 		setAiAudioLink(url);
 	// 	}
 	// };
-	useEffect(() => {
-		const fetchAIVoiceAudioLink = async () => {
-			// const url = await fetchAIVoicePreview(VoiceId, name);
-			const url = Voice_preview_MockData.S3_link;
-			// const url = await fetchAIVoicePreview("55", "Timothy");
-			if (url) {
-				setAiAudioLink(url);
-			}
-		};
-		fetchAIVoiceAudioLink();
-	}, []);
+	const fetchAIVoiceAudioLink = async () => {
+		const url = await fetchAIVoicePreview(AIVoiceItem.Id, AIVoiceItem.Name);
+		// const url = Voice_preview_MockData.Preview_link;
+		// const url = await fetchAIVoicePreview("55", "Timothy");
+		if (url) {
+			setAiAudioLink(url);
+		}
+	};
+	fetchAIVoiceAudioLink();
 	const audioPlayHandler = async () => {
+		if (!AIAudioLink?.length) {
+			await fetchAIVoiceAudioLink();
+		}
 		setIsAudioPlaying(AIVoiceItem.Id);
 		console.log(ref.current?.currentTime, "cureent time");
 		if (ref.current && ref.current.currentTime > 0) {
@@ -67,9 +68,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 		setDisplayControls((prev) => {
 			return { ...prev, display: "", opacity: "opacity-50" };
 		});
-		// if (!AIAudioLink?.length) {
-		// 	await fetchAIVoiceAudioLink(AIVoiceItem.Id, AIVoiceItem.Name);
-		// }
+		
 	};
 	const audioPauseHandler = () => {
 		ref.current?.pause();
@@ -152,6 +151,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 			{/* </div> */}
 			{AIAudioLink && (
 				<audio
+					autoPlay
 					src={AIAudioLink}
 					ref={ref}
 					id={`${AIVoiceItem.Id}_${AIVoiceItem.Name}_${AIVoiceItem.Gender}`}

@@ -19,7 +19,7 @@ const AIVoicesListHome = () => {
 	}, []);
 
 	return (
-		<div className="flex m-auto gap-3 overflow-x-auto">
+		<div className="flex m-auto gap-6 overflow-x-auto pt-[6rem] md:justify-evenly">
 			{AIVoices.map(
 				(voice: {
 					Gender: string;

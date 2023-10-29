@@ -42,7 +42,10 @@ function Overview() {
             </span>
           </div>
       <button type='button' className='my-4 md:my-10 rounded-md border bg-primary text-white py-4 px-8'>{Constants.Overview_Labels.explore + ' >>'}</button>
+      <div>
       <AIVoicesListHome />
+      </div>
+     
       <div className='vaux-introduction overflow-x-auto'>
         <h1 className='w-full text-5xl font-semibold my-10 md:text-center'>{Constants.Overview_Labels.introduce_vaux}</h1>
         <div className='flex mt-4 mb-8 md:justify-center'>

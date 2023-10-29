@@ -1211,6 +1211,6 @@ export const List_all_voicesMockData = [
     }
 ]
 export const Voice_preview_MockData = {
-    "S3_link": "https://vaux-contents.s3.us-east-2.amazonaws.com/voice_preview/dummy_voice_preview.wav",
+    "Preview_link": "https://vaux-contents.s3.us-east-2.amazonaws.com/voice_preview/dummy_voice_preview.wav",
     "Status": true
 }
