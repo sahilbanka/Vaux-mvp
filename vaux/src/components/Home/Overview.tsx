@@ -1,4 +1,4 @@
-import AIVoicesListHome from 'components/Home/AIVoicesListHome';
+import AIVoicesListHome from 'components/home/AIVoicesListHome';
 import { Constants } from 'utils/constants';
 import mainImage from 'assets/main.svg';
 import voiceAi from 'assets/voice_ai.svg';

@@ -117,7 +117,7 @@ function SignUpContent() {
     }
 
     return (
-        <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] overflow-y-auto">
+        <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] flex flex-col justify-center overflow-y-auto">
             <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Create an Account</h1>
             <div className='flex flex-col gap-3 items-center'>
                 <button className='w-full flex justify-center border border-solid border-indigo rounded-xmd py-2 px-3 focus:outline-none text-black hover:bg-button-hover' onClick={() => googleLogin()}>

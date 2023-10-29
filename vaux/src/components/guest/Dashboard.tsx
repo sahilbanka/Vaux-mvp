@@ -1,6 +1,5 @@
-import React from 'react'
-import MainHeader from 'components/MainHeader';
-import Overview from 'components/Overview';
+import MainHeader from 'components/home/MainHeader';
+import Overview from 'components/home/Overview';
 
 
 function Dashboard() {

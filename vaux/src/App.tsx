@@ -1,12 +1,11 @@
 import { useRoutes } from 'react-router';
-import { useState } from 'react';
-import './App.css';
-import Dashboard from 'components/Dashboard';
-import Login from 'components/Login';
-import { ProtectedRoute } from 'components/ProtectedRoute';
-import SignUp from 'components/SignUp';
+import Dashboard from 'components/guest/Dashboard';
+import Login from 'components/guest/Login';
+import { ProtectedRoute } from 'components/routeGuard/ProtectedRoute';
+import SignUp from 'components/guest/SignUp';
 import Studio from 'components/Studio';
-import { GuestRoute } from 'components/GuestRoute';
+import { GuestRoute } from 'components/routeGuard/GuestRoute';
+import './App.css';
 
 function App() {
   const routes = useRoutes([
