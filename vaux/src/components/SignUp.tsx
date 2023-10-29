@@ -4,6 +4,7 @@ import signup from 'assets/signup.svg';
 import { useState } from 'react';
 import { userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
+import { VAUX_LOGIN_RESPONSE } from 'utils/APIResponseTypes';
 
 
 function SignUp() {
@@ -37,20 +38,23 @@ function SignUpContent() {
         }
     );
 
+    const handleSignup = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
+        if (!fromGoogle) {
+            event.preventDefault();
+        }
+        const data: any = await userSignup(fromGoogle ? {token: gToken} : signupForm);
+        if (data?.Token) {
+            console.log(data?.Token);
+          }
+    };
+
     const googleLogin = useGoogleLogin({
-        onSuccess: async (credentialResponse) => {
-            console.log(credentialResponse);
+        onSuccess: async (tokenResponse) => {
+            console.log(tokenResponse);
+            handleSignup(null, true, tokenResponse?.access_token)
         },
         onError: errorResponse => console.log(errorResponse),
     });
-
-    const handleSignup = async (event: any) => {
-        event.preventDefault();
-        const token = await userSignup(signupForm);
-        if (token) {
-            console.log(token);
-        }
-    };
 
     const routeChange = (path: string, params?: any) => {
         navigate(path, { state: params });
@@ -66,7 +70,7 @@ function SignUpContent() {
                 </button>
                 <div className='text-center'><span className='text-indigo text-xl font-normal'>OR</span></div>
                 <div className='w-full'>
-                    <form onSubmit={handleSignup}>
+                    <form onSubmit={(event) => handleSignup(event, false, undefined)}>
                         <div className="mb-6">
                             <input type="text" id="firstName" name="firstName" placeholder='First Name'
                                 onChange={(event) => setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } })}

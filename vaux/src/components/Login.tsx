@@ -31,17 +31,19 @@ function LoginContent() {
   const navigate = useNavigate();
 
 
-  const handleLogin = async (event: any) => {
-    event.preventDefault();
-    const data:any = await login({ email: email, password: password });
-    if (data.Token) {
-      console.log(data.Token);
+  const handleLogin = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
+    if (!fromGoogle) {
+      event.preventDefault();
+    }
+    const data: any = await login(fromGoogle ? {token: gToken} : { email: email, password: password });
+    if (data?.Token) {
+      console.log(data?.Token);
     }
   };
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse);
+      handleLogin(null, true, tokenResponse?.access_token)
       // const userInfo = await axios.get(
       //   'https://www.googleapis.com/oauth2/v3/userinfo',
       //   { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } },
@@ -74,7 +76,7 @@ function LoginContent() {
         </button>
         <div className='text-center'><span className='text-indigo text-xl font-normal'>OR</span></div>
         <div className='w-full'>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={(event: any) => handleLogin(event, false, undefined)}>
             <div className="mb-6">
               <input type="text" id="email" name="email" placeholder='Email' value={email}
                 onChange={(event) => setEmail(event.target.value)}
