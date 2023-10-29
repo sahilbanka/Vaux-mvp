@@ -27,9 +27,17 @@ module.exports = {
       scale: {
         '80': '0.8',
         '85': '0.85'
-      }
+      },
+      borderColor:{
+        "primary": '#394689',
+      },
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+        display: ["group-hover","group-active"],
+    },
+},
 }
 

@@ -23,5 +23,12 @@ export const Constants = {
 	},
 	optionDropdownDataProducts: [
 		{ label: "Text to Speech", link: "" },
-	]
+	],
+	LANGUAGE_MAPPING: {
+		"en": "English",
+	},
+	COUNTRY_MAPPING: {
+		"us": "USA"
+	}
 }
+

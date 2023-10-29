@@ -15,7 +15,7 @@ export const formatAIVoicesResponseForLanding = (
 		total: 0,
 	};
 	for (let voice of voices) {
-		if (limit.total === MaleCount + FemaleCount) {
+		if (limit.total === MaleCount + FemaleCount || limit.total === voices.length) {
 			break;
 		}
 		if (

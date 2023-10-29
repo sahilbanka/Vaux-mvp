@@ -8,23 +8,24 @@ interface GlobalModalProps {
 	onCloseHandler?: (value: any) => void;
 	openState: boolean;
     children?: React.ReactNode;
-    MinWidth?:number;
+    MinWidth?:string;
+	iskeepMounted?:boolean;
 }
 const GlobalModal = (props: GlobalModalProps) => {
-	const { onCloseHandler, openState = false ,children,MinWidth} = props;
+	const { onCloseHandler, openState = false ,children,MinWidth,iskeepMounted=false} = props;
 	const style = {
 		position: "absolute" as "absolute",
 		top: "50%",
 		left: "50%",
 		transform: "translate(-50%, -50%)",
-		MinWidth: MinWidth ? MinWidth : 400,
 		bgcolor: "background.paper",
 		boxShadow: 24,
 		border: "0",
 		p: 4,
 		outline: "none",
         borderRadius:"5px",
-        overflowY:"auto"
+        overflowY:"auto",
+		padding:'0'
 	};
 
 	return (
@@ -40,9 +41,10 @@ const GlobalModal = (props: GlobalModalProps) => {
 					timeout: 500,
 				},
 			}}
+			keepMounted = {iskeepMounted}
 		>
 			<Fade in={openState}>
-				<Box sx={style} className=" max-sm:min-w-[300px] md:min-w-[500px] lg:max-w-[750px]">
+				<Box sx={style} className=" max-sm:min-w-[300px] w-[70%]">
 					{children}
 				</Box>
 			</Fade>

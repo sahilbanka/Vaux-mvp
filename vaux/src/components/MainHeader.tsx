@@ -51,7 +51,7 @@ const MainHeader = () => {
 					<GlobalModal
 						openState={openContactUsModal}
 						onCloseHandler={handleCloseContactUsModal}
-						MinWidth={400}
+						MinWidth={'400'}
 					>
 						<ContactUs />
 					</GlobalModal>
