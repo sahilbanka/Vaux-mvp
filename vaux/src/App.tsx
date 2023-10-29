@@ -3,7 +3,7 @@ import Dashboard from 'components/guest/Dashboard';
 import Login from 'components/guest/Login';
 import { ProtectedRoute } from 'components/routeGuard/ProtectedRoute';
 import SignUp from 'components/guest/SignUp';
-import Studio from 'components/Studio';
+import Studio from 'components/studio/Studio';
 import { GuestRoute } from 'components/routeGuard/GuestRoute';
 import './App.css';
 

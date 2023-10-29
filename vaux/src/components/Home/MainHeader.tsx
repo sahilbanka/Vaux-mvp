@@ -2,7 +2,7 @@ import { useState } from "react";
 import OptionsDropdown from "components/common/dropdown/OptionsDropdown";
 import { Constants } from "utils/constants";
 import GlobalModal from "components/common/GlobalModal";
-import ContactUs from "components/ContactUs";
+import ContactUs from "components/common/ContactUs";
 import { useNavigate } from "react-router";
 
 const MainHeader = () => {
