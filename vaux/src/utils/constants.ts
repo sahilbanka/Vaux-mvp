@@ -1,6 +1,6 @@
 export const Constants = {
 	Overview_Labels: {
-		subtitle: 'Your Voice Over solution',
+		subtitle: 'Your Voice Over Solution',
 		description_heading: 'Empower authentic  human voices through AI',
 		detail_descripton: 'At VAux, we\'re passionate about the power of voice. We believe that every word has a unique melody, and we\'re here to help you find the perfect voice for your project. Our platform is your gateway to a world of AI voices, each with its own distinctive tone, style, and personality.',
 		btn_generate: 'Generate Now',

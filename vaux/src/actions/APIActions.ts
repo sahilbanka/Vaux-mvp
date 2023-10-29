@@ -1,4 +1,4 @@
-import { VAUX_LOGIN, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE } from "utils/APITypes";
+import { VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE } from "utils/APITypes";
 import { vauxAPI } from "utils/NetworkInstance";
 import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE } from "utils/APIResponseTypes";
 
@@ -19,7 +19,7 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 	try {
 		const response = await vauxAPI(token).get<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_VOICE_PREVIEW_TYPE + `${id}/${name}`);
 		const {data} = response;
-		if(response.status==200 && data){
+		if(response.status ===200 && data){
 			return data?.S3_link;
 		}
 	} catch (error) {
@@ -30,7 +30,25 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 
 export const login = async (loginForm: any) => {
 	try {
-		const response = await vauxAPI().post<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_LOGIN, loginForm)
+		const response = await vauxAPI().post<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_LOGIN, loginForm);
+		const { data } = response;
+		if (response.status === 200 && data) {
+			console.log(data);
+		}
+	}
+	catch (error) {
+		console.log(error);
+		return '';
+	}
+}
+
+export const userSignup = async (signupForm: any) => {
+	try {
+		const response = await vauxAPI().post<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_SIGNUP, signupForm);
+		const { data } = response;
+		if (response.status === 200 && data) {
+			console.log(data);
+		}
 	}
 	catch (error) {
 		console.log(error);
