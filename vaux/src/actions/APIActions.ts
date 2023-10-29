@@ -7,7 +7,7 @@ export const getAllAIVoiceSample = async () => {
 	try {
 		const response = await vauxAPI(token).get<VAUX_AI_VOICES_RESPONSE>(VAUX_VOICE_LIST_TYPE);
 		const { data } = response;
-		if (response.status == 200 && data) {
+		if (response.status === 200 && data) {
 			return data;
 		}
 	} catch (error) {
