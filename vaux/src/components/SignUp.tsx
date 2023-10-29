@@ -37,15 +37,22 @@ function SignUpContent() {
             privilege_type: "free"
         }
     );
+    const [errorMsg, setErrMsg] = useState("");
+    const [valideForm, setValidForm] = useState({
+        first_name: true,
+        last_name: true,
+        email: true,
+        password: true
+    });
 
     const handleSignup = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
         if (!fromGoogle) {
             event.preventDefault();
         }
-        const data: any = await userSignup(fromGoogle ? {token: gToken} : signupForm);
+        const data: any = await userSignup(fromGoogle ? { token: gToken } : signupForm);
         if (data?.Token) {
             console.log(data?.Token);
-          }
+        }
     };
 
     const googleLogin = useGoogleLogin({
@@ -70,28 +77,36 @@ function SignUpContent() {
                 </button>
                 <div className='text-center'><span className='text-indigo text-xl font-normal'>OR</span></div>
                 <div className='w-full'>
-                    <form onSubmit={(event) => handleSignup(event, false, undefined)}>
-                        <div className="mb-6">
+                    <form onSubmit={(event: any) => handleSignup(event, false, undefined)}>
+                        {errorMsg && <div className='font-medium text-red-600'>{errorMsg}</div>}
+                        <div className="mb-6 font-medium">
                             <input type="text" id="firstName" name="firstName" placeholder='First Name'
                                 onChange={(event) => setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } })}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                                {!valideForm.first_name && <span className='font-medium mt-1 text-red-600'>{"First Name is required"}</span>}
+
                         </div>
                         <div className="mb-6">
                             <input type="text" id="lastName" name="lastName" placeholder='Last Name'
                                 onChange={(event) => setSignupForm((prev) => { return { ...prev, last_name: event?.target.value } })}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                                {!valideForm.last_name && <span className='font-medium mt-1 text-red-600'>{"Last Name is required"}</span>}
                         </div>
                         <div className="mb-6">
                             <input type="text" id="email" name="email" placeholder='Email'
                                 onChange={(event) => setSignupForm((prev) => { return { ...prev, email: event?.target.value } })}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                            {!valideForm.email && <span className='font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
+
                         </div>
                         <div className="mb-6">
                             <input type="password" id="password" name="password" placeholder='Password'
                                 onChange={(event) => setSignupForm((prev) => { return { ...prev, password: event?.target.value } })}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                            {!valideForm.password && <span className='font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
+
                         </div>
-                        <div className='mb-6'>
+                        <div className={`mb-6' ${(valideForm.first_name && valideForm.last_name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
                             <button type="submit" className="bg-primary text-white font-medium rounded-xmd py-2 px-4 w-full">SIGNUP</button>
                         </div>
                     </form>

@@ -2,6 +2,7 @@
 export interface VAUX_LOGIN_RESPONSE {
     Token: string;
     Id:string;
+    Error?:string;
 }
 export interface VAUX_AI_VOICES {
     Gender:string;

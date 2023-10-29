@@ -35,14 +35,15 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 export const login = async (loginForm: any) => {
 	try {
 		const response = await vauxAPI().post<VAUX_LOGIN_RESPONSE>(VAUX_LOGIN, loginForm);
-		const { data } = response;
-		if (response.status === 200 && data) {
+		const { data } = response || {};
+		if (data) {
 			return data;
 		}
+		
 	}
-	catch (error) {
-		console.log(error);
-		return '';
+	catch (error:any) {
+		console.log(error.data);
+		return error.data
 	}
 }
 
