@@ -118,14 +118,14 @@ function LoginContent() {
               <input type="text" id="email" name="email" placeholder='Email' value={email}
                 onChange={(event) => handleEmailInput(event.target.value)}
                 className={`w-full border ${!valideForm.email ? "border-red-500 focus:border-red-500" : "border-indigo "} py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd`} autoComplete="off" />
-              {!valideForm.email && <span className='font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
+              {!valideForm.email && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
 
             </div>
             <div className="mb-6 font-medium">
               <input type="password" id="password" name="password" placeholder='Password' value={password}
                 onChange={(event) => handlePasswordInput(event.target.value)}
                 className={`w-full border ${!valideForm.password ? "border-red-500 focus:border-red-500" : "border-indigo "}  py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd`} autoComplete="off" />
-              {!valideForm.password && <span className='font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
+              {!valideForm.password && <span className='text-xs font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
             </div>
             <div className={`mb-6' ${(valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
               <button type="submit" className="bg-primary text-white font-medium rounded-xmd py-2 px-4 w-full">Login</button>

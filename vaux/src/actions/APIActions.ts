@@ -55,8 +55,8 @@ export const userSignup = async (signupForm: any) => {
 			return data;
 		}
 	}
-	catch (error) {
+	catch (error: any) {
 		console.log(error);
-		return '';
+		return error.data;
 	}
 }

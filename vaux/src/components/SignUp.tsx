@@ -4,6 +4,7 @@ import signup from 'assets/signup.svg';
 import { useState } from 'react';
 import { userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
+import { StringDecoder } from 'string_decoder';
 
 
 function SignUp() {
@@ -38,7 +39,8 @@ function SignUpContent() {
     );
     const [errorMsg, setErrMsg] = useState("");
     const [valideForm, setValidForm] = useState({
-        name: true,
+        first_name: true,
+        last_name: true,
         email: true,
         password: true
     });
@@ -70,16 +72,16 @@ function SignUpContent() {
         navigate(path, { state: params });
     }
 
-    const handleNameInput = (value: string) => {
+    const handleNameInput = (value: string, key: string) => {
         const validRegex = /^(?=.{1,40}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/gm;
         if (value.length === 0) {
-            setValidForm((prev) => { return { ...prev, name: true } })
+            setValidForm((prev) => { return { ...prev, [key]: true } })
             return
         }
         if (value.match(validRegex)) {
-            setValidForm((prev) => { return { ...prev, name: true } })
+            setValidForm((prev) => { return { ...prev, [key]: true } })
         } else {
-            setValidForm((prev) => { return { ...prev, name: false } })
+            setValidForm((prev) => { return { ...prev, [key]: false } })
         }
     }
 
@@ -126,35 +128,35 @@ function SignUpContent() {
                             <input type="text" id="firstName" name="firstName" placeholder='First Name'
                                 onChange={(event) => {
                                     setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } });
-                                    handleNameInput(signupForm.first_name + ' ' + signupForm.last_name)
+                                    handleNameInput(signupForm.first_name, 'first_name')
                                 }}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.name && <span className='font-medium mt-1 text-red-600'>{"First Name is required"}</span>}
+                            {!valideForm.first_name && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid First Name"}</span>}
 
                         </div>
                         <div className="mb-6">
                             <input type="text" id="lastName" name="lastName" placeholder='Last Name'
                                 onChange={(event) => {
                                     setSignupForm((prev) => { return { ...prev, last_name: event?.target.value } });
-                                    handleNameInput(signupForm.first_name + ' ' + signupForm.last_name)
+                                    handleNameInput(signupForm.last_name, 'last_name')
                                 }}                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.name && <span className='font-medium mt-1 text-red-600'>{"Last Name is required"}</span>}
+                            {!valideForm.last_name && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Last Name"}</span>}
                         </div>
                         <div className="mb-6">
                             <input type="text" id="email" name="email" placeholder='Email'
                                 onChange={(event) => handleEmailInput(event.target.value)}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.email && <span className='font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
+                            {!valideForm.email && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
 
                         </div>
                         <div className="mb-6">
                             <input type="password" id="password" name="password" placeholder='Password'
                                 onChange={(event) => handlePasswordInput(event.target.value)}
                                 className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.password && <span className='font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
+                            {!valideForm.password && <span className='text-xs font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
 
                         </div>
-                        <div className={`mb-6' ${(valideForm.name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
+                        <div className={`mb-6' ${(valideForm.first_name && valideForm.last_name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
                             <button type="submit" className="bg-primary text-white font-medium rounded-xmd py-2 px-4 w-full">SIGNUP</button>
                         </div>
                     </form>
