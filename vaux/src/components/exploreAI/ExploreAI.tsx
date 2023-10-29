@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAllAIVoiceSample } from "../../actions/APIActions";
-import { formatAIVoicesResponseForLanding } from "../../utils/common.utils";
+import { getAllAIVoiceSample } from "actions/APIActions";
+import { formatAIVoicesResponseForLanding } from "utils/common.utils";
 import ExploreAIVoiceItem from "./ExploreAIItem";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";

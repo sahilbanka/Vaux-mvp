@@ -4,7 +4,7 @@ import signup from 'assets/signup.svg';
 import { useState } from 'react';
 import { userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
-import { StringDecoder } from 'string_decoder';
+import { useCookie } from 'hooks/useCookie';
 
 
 function SignUp() {
@@ -18,7 +18,7 @@ function SignUp() {
                         Back to Homepage
                     </div>
                 </a>
-                <img src={signup} alt="signup" />
+                <img className='h=[100%]' src={signup} alt="signup" />
             </div>
             <SignUpContent />
         </div>
@@ -28,6 +28,8 @@ function SignUp() {
 function SignUpContent() {
 
     const navigate = useNavigate();
+    const [token, setToken] = useCookie('vaux-staff-token', null);
+
     const [signupForm, setSignupForm] = useState(
         {
             email: "",
@@ -57,6 +59,8 @@ function SignUpContent() {
         }
         if (Token) {
           setErrMsg("");
+          setToken(Token);
+          routeChange('/studio');
         }
     };
 
@@ -113,7 +117,7 @@ function SignUpContent() {
     }
 
     return (
-        <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%]">
+        <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] overflow-y-auto">
             <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Create an Account</h1>
             <div className='flex flex-col gap-3 items-center'>
                 <button className='w-full flex justify-center border border-solid border-indigo rounded-xmd py-2 px-3 focus:outline-none text-black hover:bg-button-hover' onClick={() => googleLogin()}>

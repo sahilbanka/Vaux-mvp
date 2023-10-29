@@ -1,10 +1,10 @@
 import google from 'assets/google.svg';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import signin from 'assets/signin.svg';
 import { useState } from 'react';
 import { login } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
+import { useCookie } from 'hooks/useCookie';
 
 function Login() {
 
@@ -17,7 +17,7 @@ function Login() {
             Back to Homepage
           </div>
         </a>
-        <img src={signin} alt="login" />
+        <img className='h-[100%]' src={signin} alt="login" />
       </div>
       <LoginContent />
     </div>
@@ -27,13 +27,15 @@ function Login() {
 function LoginContent() {
 
   const navigate = useNavigate();
+  const [token, setToken] = useCookie('vaux-staff-token', null);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrMsg] = useState("");
   const [valideForm, setValidForm] = useState({
     email: true,
     password: true
-  })
+  });
 
 
   const handleLogin = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
@@ -46,8 +48,10 @@ function LoginContent() {
       setErrMsg(Error);
       return
     }
-    if (Token) {
+    if (Token && Token?.length > 0) {
       setErrMsg("");
+      setToken(Token);
+      routeChange('/studio');
     }
   };
 
@@ -70,7 +74,7 @@ function LoginContent() {
       setValidForm((prev) => { return { ...prev, password: true } })
       return
     }
-    if (value.length >= 8) {
+    if (value.length >= 4) {
       setValidForm((prev) => { return { ...prev, password: true } })
     } else {
       setValidForm((prev) => { return { ...prev, password: false } })
@@ -80,12 +84,6 @@ function LoginContent() {
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       handleLogin(null, true, tokenResponse?.access_token)
-      // const userInfo = await axios.get(
-      //   'https://www.googleapis.com/oauth2/v3/userinfo',
-      //   { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } },
-      // );
-
-      // console.log(userInfo);
     },
     onError: errorResponse => console.log(errorResponse),
   });
@@ -95,7 +93,7 @@ function LoginContent() {
   }
 
   return (
-    <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%]">
+    <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] overflow-y-auto">
       <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Login to VAux</h1>
       <div className='flex flex-col gap-3 items-center'>
         {/* <GoogleLogin

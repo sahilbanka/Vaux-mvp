@@ -1,15 +1,15 @@
-import { useLocalStorage } from "./useLocalStorage";
+import { useCookie } from "./useCookie";
 
 export const useAuth = () => {
-  const [user, setUser] = useLocalStorage("user", null);
+  const [token, setToken] = useCookie("vaux-staff-token", null);
 
-  const login = async (user: any) => {
-    setUser(user);
+  const login = async (token: any) => {
+    setToken(token);
   };
 
   const logout = () => {
-    setUser(null);
+    setToken(null);
   };
 
-  return { user, login, logout };
+  return { token, login, logout };
 };

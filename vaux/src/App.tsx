@@ -5,7 +5,7 @@ import Dashboard from 'components/Dashboard';
 import Login from 'components/Login';
 import { ProtectedRoute } from 'components/ProtectedRoute';
 import SignUp from 'components/SignUp';
-import Explore from 'components/Explore';
+import Studio from 'components/Studio';
 
 function App() {
   const routes = useRoutes([
@@ -23,8 +23,8 @@ function App() {
       element: <SignUp />
     },
     {
-      path: '/explore',
-      element: <Explore />
+      path: '/studio',
+      element: <ProtectedRoute><Studio /></ProtectedRoute>
     }
   ]);
   return routes;

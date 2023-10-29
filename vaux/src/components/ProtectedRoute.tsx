@@ -3,10 +3,10 @@ import { useAuth } from "hooks/useAuth";
 import { AuthContext } from "context/AuthContext";
 
 export const ProtectedRoute = ({ children }: { children: any }) => {
-  const { user, setUser }: any = useAuth();
-  if (!user) {
+  const { token, setToken }: any = useAuth();
+  if (!token) {
     // user is not authenticated
     return <Navigate to="/" />;
   }
-  return <AuthContext.Provider value={{user, setUser}}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{token, setToken}}>{children}</AuthContext.Provider>;
 };

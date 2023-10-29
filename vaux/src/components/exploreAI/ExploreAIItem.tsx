@@ -151,7 +151,6 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 			{/* </div> */}
 			{AIAudioLink && (
 				<audio
-					autoPlay
 					src={AIAudioLink}
 					ref={ref}
 					id={`${AIVoiceItem.Id}_${AIVoiceItem.Name}_${AIVoiceItem.Gender}`}

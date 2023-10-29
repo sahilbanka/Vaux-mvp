@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ExploreAI from 'components/exploreAI/ExploreAI';
 import GlobalModal from 'components/common/GlobalModal';
 
-function Explore() {
+function Studio() {
     const [openExploreAIsModal, setOpenExploreAIsModal] = useState(false);
     const handleOpenExploreAIsModal = () => setOpenExploreAIsModal(true);
     const handleCloseExploreAIsModal = () => setOpenExploreAIsModal(false);
@@ -24,4 +24,4 @@ function Explore() {
     )
 }
 
-export default Explore
+export default Studio;
