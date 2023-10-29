@@ -1,7 +1,7 @@
 import google from 'assets/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import signin from 'assets/signin.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
 import { useCookie } from 'hooks/useCookie';
@@ -27,7 +27,7 @@ function Login() {
 function LoginContent() {
 
   const navigate = useNavigate();
-  const [token, setToken] = useCookie('vaux-staff-token', null);
+  const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null), { expires: 7, secure: true });
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +36,6 @@ function LoginContent() {
     email: true,
     password: true
   });
-
 
   const handleLogin = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
     if (!fromGoogle) {

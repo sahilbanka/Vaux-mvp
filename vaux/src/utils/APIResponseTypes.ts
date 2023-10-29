@@ -20,3 +20,8 @@ export interface VAUX_AI_VOICES_PREVIEW_RESPONSE {
     Preview_link:string;
     Status:boolean;
 }
+
+export interface VAUX_TTS_RESPONSE {
+    speech_s3_link: string;
+    status: boolean;
+}

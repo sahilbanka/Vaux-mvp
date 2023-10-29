@@ -30,7 +30,7 @@ module.exports = {
         '80': '0.8',
         '85': '0.85'
       },
-      borderColor:{
+      borderColor: {
         "primary": '#394689',
       },
       fontFamily: {
@@ -41,8 +41,8 @@ module.exports = {
   plugins: [],
   variants: {
     extend: {
-        display: ["group-hover","group-active"],
+      display: ["group-hover", "group-active"],
     },
-},
+  }
 }
 

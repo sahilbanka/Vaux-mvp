@@ -28,7 +28,7 @@ function SignUp() {
 function SignUpContent() {
 
     const navigate = useNavigate();
-    const [token, setToken] = useCookie('vaux-staff-token', null);
+    const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null), { expires: 7, secure: true });
 
     const [signupForm, setSignupForm] = useState(
         {

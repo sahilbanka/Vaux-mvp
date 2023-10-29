@@ -6,21 +6,21 @@ import Login from 'components/Login';
 import { ProtectedRoute } from 'components/ProtectedRoute';
 import SignUp from 'components/SignUp';
 import Studio from 'components/Studio';
+import { GuestRoute } from 'components/GuestRoute';
 
 function App() {
   const routes = useRoutes([
     {
       path: "/",
-      element: 
-        <Dashboard />
+      element: <GuestRoute><Dashboard /></GuestRoute>
       },
     {
       path: "/login",
-      element: <Login />
+      element: <GuestRoute><Login /></GuestRoute>
     },
     {
       path: "/signup",
-      element: <SignUp />
+      element: <GuestRoute><SignUp /></GuestRoute>
     },
     {
       path: '/studio',

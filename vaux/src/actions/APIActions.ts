@@ -1,6 +1,6 @@
-import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE } from "utils/APITypes";
+import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS } from "utils/APITypes";
 import { vauxAPI } from "utils/NetworkInstance";
-import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE } from "utils/APIResponseTypes";
+import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_TTS_RESPONSE } from "utils/APIResponseTypes";
 
 export const getAllAIVoiceSample = async (sample:boolean=false) => {
 	let endPoint = VAUX_VOICE_LIST_TYPE;
@@ -25,6 +25,19 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 		const {data} = response;
 		if(response.status ===200 && data){
 			return data?.Preview_link;
+		}
+	} catch (error) {
+		console.log(error);
+		return "";
+	}
+}
+
+export const fetchLandingTTS = async (ttsBody: any) => {
+	try {
+		const response = await vauxAPI('None').post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, { ttsBody });
+		const {data} = response;
+		if(response.status ===200 && data){
+			return data?.speech_s3_link;
 		}
 	} catch (error) {
 		console.log(error);

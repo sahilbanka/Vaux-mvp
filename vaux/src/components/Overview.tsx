@@ -5,11 +5,19 @@ import voiceAi from 'assets/voice_ai.svg';
 import { useRef, useState } from 'react';
 import playBtn from "assets/play.svg";
 import pauseBtn from "assets/pause.svg";
+import { useNavigate } from 'react-router';
+import { fetchLandingTTS } from 'actions/APIActions';
 
 
 
 function Overview() {
+
+  const navigate = useNavigate();
+  const voicesDivRef = useRef<HTMLDivElement>(null);
+  const generateRef = useRef<HTMLTextAreaElement>(null);
+  const ttsAudioRef = useRef<HTMLAudioElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
   const [playControls, setPlayControls] = useState<{
     playMode: boolean;
     pauseMode: boolean;
@@ -21,9 +29,32 @@ function Overview() {
   const videoPlayHandler = async () => {
     videoRef.current?.play();
   };
+
   const videoPauseHandler = () => {
     videoRef.current?.pause();
   };
+
+  const handleExplore = () => {
+    if (voicesDivRef && voicesDivRef.current) {
+      voicesDivRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  const handleTTSListen = async () => {
+    if (generateRef?.current?.value && generateRef?.current?.value.length <= 100) {
+      const link = await fetchLandingTTS({ text: generateRef?.current?.value });
+      if (ttsAudioRef.current) {
+        ttsAudioRef.current.src = link ?? '';
+        if (ttsAudioRef.current.paused) {
+          ttsAudioRef.current.play();
+        }
+      }
+    }
+  }
+
+  const routeChange = (path: string, params?: any) => {
+    navigate(path, { state: params });
+  }
 
   return (
     <div className='overview-main bg-background w-full p-8 md:px-16 md:py-12'>
@@ -47,17 +78,18 @@ function Overview() {
         </span>
       </div>
       <div className='text-center md:text-left my-4'>
-        <button type='button' className='my-4 mx-2 md:my-10 rounded-md border bg-primary text-white py-4 px-8'>{Constants.Overview_Labels.explore + ' >>'}</button>
+        <button type='button' className='my-4 mx-2 md:my-10 rounded-md border bg-primary text-white py-4 px-8'
+          onClick={handleExplore}>{Constants.Overview_Labels.explore + ' >>'}</button>
       </div>
-      
-      <div className='voices-div'>
+
+      <div ref={voicesDivRef}>
         <div className="voices-list border border-solid border-grey-white bg-grey-white rounded-[25px] p-8">
           <AIVoicesListHome />
           <div className='flex flex-col items-center my-8'>
             <h1 className='text-3xl md:text-5xl font-semibold mb-6'>{'Every necessity has a corresponding voice'}</h1>
             <span className='text-xl md:text-3xl font-normal font-ink-free mb-6'>{"It's as if you've spoken without uttering a word."}</span>
             <div>
-              <button className='rounded-xmd bg-primary text-white font-semibold px-12 py-3 mt-4'>Start Now Free</button>
+              <button className='rounded-xmd bg-primary text-white font-semibold px-12 py-3 mt-4' onClick={() => routeChange('/login')}>Start Now Free</button>
             </div>
           </div>
         </div>
@@ -87,9 +119,11 @@ function Overview() {
             <img className='p-4 md:max-w-[350px] md:max-h-[350px] mx-auto' src={voiceAi} alt='voice-ai' />
           </div>
           <div className="flex flex-col items-center md:w-1/2 p-4">
-            <textarea className='w-full p-6' style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }} name="convo" rows={10} maxLength={100}></textarea>
+            <textarea ref={generateRef} className='w-full p-6' style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
+              name="convo" rows={10} maxLength={100} defaultValue={Constants.Overview_Labels.listen_tts_text}></textarea>
+            <audio src={''} ref={ttsAudioRef} />
             <div>
-              <button className='rounded-xmd bg-primary text-white font-semibold px-12 py-2 my-8'>Listen</button>
+              <button className='rounded-xmd bg-primary text-white font-semibold px-12 py-2 my-8' onClick={handleTTSListen}>Listen</button>
             </div>
           </div>
         </div>

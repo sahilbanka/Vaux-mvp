@@ -6,6 +6,7 @@ export const Constants = {
 		btn_generate: 'Generate Now',
 		explore: 'Explore',
 		introduce_vaux: 'Introducing VAux',
+		listen_tts_text: 'Welcome to VAux! Simply click \'Listen\' or unleash your creativity by typing your own text here.',
 		introduction_list: [
 			{
 				key: 1, img: 'dynamic_assets/introduce_1.png', title: 'The Voice Library', scale: 'scale-80',
@@ -29,6 +30,6 @@ export const Constants = {
 	},
 	COUNTRY_MAPPING: {
 		"us": "USA"
-	}
+	},
 }
 

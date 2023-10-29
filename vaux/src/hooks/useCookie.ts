@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Cookies from 'js-cookie';
 
-export const useCookie = (keyName: any, defaultValue: any, options?: any) => {
+export const useCookie = (keyName: any, defaultValue: string, options?: any) => {
+
     const [storedValue, setStoredValue] = useState(() => {
         try {
             const value = Cookies.get(keyName);
             if (value) {
                 return JSON.parse(value);
             } else {
-                Cookies.set(keyName, (typeof defaultValue === 'string' ? defaultValue : JSON.stringify(defaultValue)), options);
+                Cookies.set(keyName, defaultValue, options);
                 return defaultValue;
             }
         } catch (err) {
@@ -16,9 +17,9 @@ export const useCookie = (keyName: any, defaultValue: any, options?: any) => {
         }
     });
 
-    const setValue = (newValue: any) => {
+    const setValue = (newValue: string) => {
         try {
-            Cookies.set(keyName, (typeof newValue === 'string' ? newValue : JSON.stringify(newValue)), options);
+            Cookies.set(keyName, newValue, options);
         } catch (err) { }
         setStoredValue(newValue);
     };
