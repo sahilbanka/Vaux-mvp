@@ -65,7 +65,7 @@ const DropdownItems = ({
      onMouseDown={(e) => {
        !disabled && handleOnSelect(e);
      }}
-     className={`h-8 flex items-center pt-6 pb-4 px-4 min-w-[150px] max-w-[160px] ${
+     className={`h-8 flex items-center py-4 px-4 min-w-[150px] max-w-[160px] ${
        disabled
          ? "cursor-not-allowed"
          : "cursor-pointer"

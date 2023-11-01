@@ -29,6 +29,8 @@ function SignUpContent() {
 
     const navigate = useNavigate();
     const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null), { expires: 7, secure: true });
+    const [userId, setUserId] = useCookie('userId', JSON.stringify(null));
+
 
     const [signupForm, setSignupForm] = useState(
         {
@@ -52,7 +54,7 @@ function SignUpContent() {
             event.preventDefault();
         }
         const data: any = await userSignup(fromGoogle ? { token: gToken } : signupForm);
-        let { Error, Token } = data || {}
+        let { Error, Id, Token } = data || {}
         if (Error) {
           setErrMsg(Error);
           return
@@ -60,6 +62,7 @@ function SignUpContent() {
         if (Token) {
           setErrMsg("");
           setToken(Token);
+          setUserId(Id);
           routeChange('/studio');
         }
     };

@@ -36,7 +36,7 @@ function AuthHeader() {
                         </button>
                     </li>
                     <li className="cursor-pointer md:px-4 md:py-4 block">
-                        <OptionsDropdown options_classes='absolute top-[50px] right-0 p-0 block max-h-[60vh] min-h-[50px] shadow-md bg-white block'
+                        <OptionsDropdown options_classes='absolute top-[50px] right-0 py-2 block max-h-[60vh] min-h-[50px] shadow-md bg-white block'
                             DD_data={Constants.optionDropdownDataProfile} DD_Item_classes='text-[14px] px-2 text-primary' itemTextColor='text-primary'
                             arrowStyles={`top-[-15%] right-[10px]`}>
                             <div className='flex items-center text-primary gap-1 border border-solid border-primary bg-gray-200 p-2 rounded-circle'>
