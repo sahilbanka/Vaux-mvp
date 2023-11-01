@@ -51,8 +51,8 @@ function LoginContent() {
     }
     if (Token && Token?.length > 0) {
       setErrMsg("");
-      setUserId(Id);
-      setToken(Token);
+      setUserId(JSON.stringify(Id));
+      setToken(JSON.stringify(Token));
       routeChange('/studio');
     }
   };

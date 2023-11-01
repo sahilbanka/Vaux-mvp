@@ -1,5 +1,4 @@
-import UserIcon from 'assets/user_icon.svg';
-// import UpArrow from 'assets/up_arrow.svg';
+import {ReactComponent as AddCircle} from 'assets/add_circle.svg';
 import OptionsDropdown from '../common/dropdown/OptionsDropdown'
 import { Constants } from 'utils/constants'
 import { useNavigate } from 'react-router';
@@ -32,7 +31,8 @@ function AuthHeader() {
             <div className={`flex items-center w-auto`} id="menu">
                 <ul className="flex items-center justify-between pt-0 px-2 gap-4 md:gap-0">
                     <li className="cursor-pointer md:px-6 md:py-3 block">
-                        <button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-semibold" onClick={() => routeChange('/')}>
+                        <button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-medium hover:bg-primary hover:text-white" onClick={() => routeChange('/')}>
+                            <AddCircle className='fill-white inline w-[20px] h-[20px] mx-1' />
                             Create Project
                         </button>
                     </li>
