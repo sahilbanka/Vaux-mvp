@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import DropdownItem from "components/common/dropdown/DropdownItems";
-import downArrow from "assets/dropdown_arrow.svg";
-import upArrow from "assets/up_arrow.svg";
+import {ReactComponent as UpArrow} from 'assets/up_arrow.svg';
+
 const OptionsDropdown = (props:any) => {
 	/**
 	 ** Initially, setting hardcoded values for Option Dropdown, once the preferences changes, we can update it in the success of data call
 	 */
-  const{ DD_label="",disabled = false, DD_data=[] } = props;
+  const{ disabled = false, DD_data=[], DD_Item_classes, options_classes, itemTextColor, arrowStyles, children} = props;
 	const [optionsDropdownData, setOptionsDropdownData] = useState(DD_data);
 	const [optionDropdownOpen, setOptionDropdownOpen] = useState<boolean>(false);
 	const optionDropdown = useRef<HTMLDivElement>(null);
@@ -52,24 +52,24 @@ const OptionsDropdown = (props:any) => {
 				if (!disabled) toggleOptionDropdown();
 			}}
 		>
-			<div className="text-0 flex items-center text-white gap-1">
+			{/* <div className={`${DD_classes}`}>
 				{DD_label}
 				{!optionDropdownOpen && <img src={downArrow} alt="down-arrow" />}
 				{optionDropdownOpen && <img src={upArrow} alt="down-arrow" />}
 				
-			</div>
+			</div> */}
+			{ children }
 			<div
 				ref={optionDropdown}
-				className={`absolute top-[100%] left-4 md:top-[43px] md:left-0 block text-Gray-700 mt-2 md:mt-0
-        border-1 border-Gray-300  max-h-[60vh] min-h[50px] shadow-md bg-primary border border-solid border-white md:border-transparent
-       ${optionDropdownOpen ? "block" : "hidden"}`}
+				className={`${options_classes} ${optionDropdownOpen ? "block" : "hidden"}`}
 			>
+				<UpArrow className={` w-[18px] h-[18px] absolute ${arrowStyles}`} />
 				{optionsDropdownData.map(
 					(d: { label: string; link: string }, i: number) => {
 						return (
 							<DropdownItem
-								key={i}
-								className={`text-[14px] px-[12px] py-[24px] hover:bg-Gray-200`}
+								key={i} textColor={`${itemTextColor}`}
+								className={`${DD_Item_classes}`}
 								onSelect={() => optionDropdownItemClickHandler(d.link)}
 								label={d.label}
 							/>

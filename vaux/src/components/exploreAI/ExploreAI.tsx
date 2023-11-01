@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { getAllAIVoiceSample } from "actions/APIActions";
 import { formatAIVoicesResponseForLanding } from "utils/common.utils";
 import ExploreAIVoiceItem from "./ExploreAIItem";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { List_all_voicesMockData } from "MockData";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 interface ExploreAIProps {
@@ -34,6 +32,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 		};
 		getAllAIVoices();
 	}, []);
+
 	const filterAiVoicesHandler = (field: string, value: string) => {
 		switch (field) {
 			case "gender":
@@ -54,6 +53,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 				break;
 		}
 	};
+
 	return (
 		<div>
 			<div className="flex items-center justify-between px-4 py-3 bg-white border-solid border-b-[1px] border-gray-300">
@@ -67,7 +67,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 					<svg data-icon="cross" width="16" height="16" viewBox="0 0 16 16">
 						<path
 							d="M9.41 8l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71L8 6.59l-3.29-3.3a1.003 1.003 0 00-1.42 1.42L6.59 8 3.3 11.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71L8 9.41l3.29 3.29c.18.19.43.3.71.3a1.003 1.003 0 00.71-1.71L9.41 8z"
-							fill-rule="evenodd"
+							fillRule="evenodd"
 						></path>
 					</svg>
 				</button>
@@ -75,38 +75,38 @@ const ExploreAI = (props: ExploreAIProps) => {
 			<div className="grid grid-cols-[240px_auto]">
 				<div className="w-[240px] flex flex-col items-center p-5 border-solid border-gray-300 border-r-[1px]">
 					<div className="flex">
-						<ButtonGroup variant="outlined" aria-label="outlined button group" className="rounded-[40px] border-solid border-[1px] border-[rgba(25, 118, 210, 0.5)]" >
-							<Button
+						<div className="inline-flex shadow-sm rounded-[40px] border-solid border-[1px] border-[rgba(25, 118, 210, 0.5)]" >
+							<button type="button"
 								className={`${
-									filterAIVoices.gender == "ALL"
+									filterAIVoices.gender === "ALL"
 										? "text-white bg-primary"
 										: "text-primary"
-								} rounded-l-[40px]`}
+								} rounded-l-[40px] px-4 py-2`}
 								onClick={() => filterAiVoicesHandler("gender", "ALL")}
 							>
 								All
-							</Button>
-							<Button
+							</button>
+							<button type="button"
 								className={`${
-									filterAIVoices.gender == "M"
+									filterAIVoices.gender === "M"
 										? "text-white bg-primary"
 										: "text-primary"
-								}`}
+								} px-4 py-2`}
 								onClick={() => filterAiVoicesHandler("gender", "M")}
 							>
 								Male
-							</Button>
-							<Button
+							</button>
+							<button type="button"
 								className={`${
-									filterAIVoices.gender == "F"
+									filterAIVoices.gender === "F"
 										? "text-white bg-primary"
 										: "text-primary"
-								} rounded-r-[40px]`}
+								} rounded-r-[40px] px-4 py-2`}
 								onClick={() => filterAiVoicesHandler("gender", "F")}
 							>
 								Female
-							</Button>
-						</ButtonGroup>
+							</button>
+						</div>
 					</div>
 				</div>
 				{filteredVoices && (

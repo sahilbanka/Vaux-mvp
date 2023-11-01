@@ -28,6 +28,8 @@ function LoginContent() {
 
   const navigate = useNavigate();
   const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null), { expires: 7, secure: true });
+  const [userId, setUserId] = useCookie('userId', JSON.stringify(null));
+
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,13 +44,14 @@ function LoginContent() {
       event.preventDefault();
     }
     const data: any = await login(fromGoogle ? { token: gToken } : { email: email, password: password });
-    let { Error, Token } = data || {}
+    let { Error, Id,  Token } = data || {}
     if (Error) {
       setErrMsg(Error);
       return
     }
     if (Token && Token?.length > 0) {
       setErrMsg("");
+      setUserId(Id);
       setToken(Token);
       routeChange('/studio');
     }
