@@ -2,6 +2,7 @@ import { useAuth } from "hooks/useAuth";
 import { useState } from "react"
 
 function ProjectsList() {
+    const { token, setToken }: any = useAuth();
     const [projectsList, setProjectsList] = useState([]);
 
     return (

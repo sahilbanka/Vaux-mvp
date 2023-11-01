@@ -61,8 +61,8 @@ function SignUpContent() {
         }
         if (Token) {
           setErrMsg("");
-          setToken(Token);
-          setUserId(Id);
+          setUserId(JSON.stringify(Id));
+          setToken(JSON.stringify(Token));
           routeChange('/studio');
         }
     };
