@@ -83,7 +83,7 @@ function Overview() {
       </div>
 
       <div ref={voicesDivRef}>
-        <div className="voices-list border border-solid border-grey-white bg-grey-white rounded-[25px] p-8">
+        <div className="voices-list border border-solid border-light-white bg-light-white rounded-[25px] p-8">
           <AIVoicesListHome />
           <div className='flex flex-col items-center my-8'>
             <h1 className='text-3xl md:text-5xl font-semibold mb-6'>{'Every necessity has a corresponding voice'}</h1>

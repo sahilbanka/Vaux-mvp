@@ -14,10 +14,13 @@ module.exports = {
         "black": '#000',
         "light-blue": '#C3DDFB',
         'indigo': '#A59B9B',
-        'grey-white': '#F6F7F9'
+        'light-white': '#F6F7F9',
+        'black-second': '#3a4358',
+        'light-grey': '#eeeff2'
       },
       borderRadius: {
-        'xmd': '0.25rem'
+        'xmd': '0.25rem',
+        'circle': '50%'
       },
       fontSize: {
         '20': '20px',

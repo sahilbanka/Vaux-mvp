@@ -26,7 +26,7 @@ const MainHeader = () => {
 							className="h-8 mr-3"
 							alt="Flowbite Logo"
 						/>
-						<span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+						<span className="self-center text-2xl font-semibold whitespace-nowrap">
 							VAux
 						</span>
 					</div>
@@ -39,13 +39,18 @@ const MainHeader = () => {
 			</div>
 			<div className={`${!showMenu ? 'hidden' : ''} w-full md:flex md:items-center md:w-auto`} id="menu">
 				<ul className="pt-4 text-base text-white md:flex md:items-center md:justify-between md:pt-0 ">
-					<li className="md:p-4 px-2 block py-3">
-						<OptionsDropdown
-							DD_data={Constants.optionDropdownDataProducts}
-							DD_label="Products"
-						/>
+					<li className="cursor-pointer px-4 py-4 block">
+						<OptionsDropdown options_classes='absolute top-[50px] right-0 p-0 block max-h-[60vh] min-h-[50px] shadow-md bg-white block'
+							DD_data={Constants.optionDropdownDataProducts} DD_Item_classes='text-[14px] px-2 text-primary' itemTextColor='text-primary'
+							arrowStyles={`top-[-20%] right-[10px]`}>
+							<div className={`text-0 flex items-center text-white gap-1`}>
+								{'Products'}
+								{/* {!optionDropdownOpen && <img src={downArrow} alt="down-arrow" />}
+								{optionDropdownOpen && <img src={upArrow} alt="down-arrow" />} */}
+							</div>
+						</OptionsDropdown>
 					</li>
-					<li className="cursor-pointer md:p-4 px-2 block py-3" onClick={handleOpenContactUsModal}>
+					<li className="cursor-pointer px-4 py-4 block" onClick={handleOpenContactUsModal}>
 						Contact Us
 					</li>
 					<GlobalModal

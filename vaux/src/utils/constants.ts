@@ -25,6 +25,10 @@ export const Constants = {
 	optionDropdownDataProducts: [
 		{ label: "Text to Speech", link: "" },
 	],
+	optionDropdownDataProfile: [
+		{ label: "My Account", link: "" },
+		{ label: "Logout", link: "" },
+	],
 	LANGUAGE_MAPPING: {
 		"en": "English",
 	},

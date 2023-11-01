@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 interface DropdownItemsProps {
     className?: string;
+    textColor: string;
     label: string;
     start_icon?: string;
     end_icon?: string;
@@ -16,6 +17,7 @@ interface DropdownItemsProps {
  
 const DropdownItems = ({
  className,
+ textColor,
  label,
  value,
  disabled,
@@ -63,14 +65,13 @@ const DropdownItems = ({
      onMouseDown={(e) => {
        !disabled && handleOnSelect(e);
      }}
-     className={`h-8 flex items-center px-2 w-max ${
+     className={`h-8 flex items-center pt-6 pb-4 px-4 min-w-[150px] max-w-[160px] ${
        disabled
          ? "cursor-not-allowed"
-         : "hover:bg-Blue_gray-100 cursor-pointer"
+         : "cursor-pointer"
      } ${className}`}
      onMouseEnter={onMouseEnterHandler}
      onMouseLeave={onMouseLeaveHandler}
-     style={{ maxWidth: "93.5vw" }}
      ref={ddRef}
    >
      {Boolean(start_icon) && (
@@ -92,7 +93,7 @@ const DropdownItems = ({
     
        <div
          className={`flex-1  ${
-           disabled ? "text-Gray-200" : "text-white"
+           disabled ? "text-Gray-200" : `${textColor}`
          } ${className}`}
          title={checkOverFlow() ? label : undefined}
          ref={ref}
