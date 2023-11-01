@@ -1,8 +1,8 @@
-import { useAuth } from "hooks/useAuth";
+import { useCookie } from "hooks/useCookie";
 import { useState } from "react"
 
 function ProjectsList() {
-    const { token, setToken }: any = useAuth();
+    const [token, setToken] = useCookie("vaux-staff-token", JSON.stringify(null));
     const [projectsList, setProjectsList] = useState([]);
 
     return (
