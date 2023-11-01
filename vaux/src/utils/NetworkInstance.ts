@@ -9,7 +9,7 @@ const commonConfig = {
     'Content-Type': 'application/json',
   },
 };
-export const vauxAPI = (token = '') => {
+export const vauxAPI = (token:any = '') => {
     const vauxInstance = axios.create({
       ...commonConfig,
       baseURL: baseURL,

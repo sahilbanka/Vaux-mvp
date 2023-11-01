@@ -1,13 +1,14 @@
-import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS } from "utils/APITypes";
+import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_USER_DETAIL_TYPE } from "utils/APITypes";
 import { vauxAPI } from "utils/NetworkInstance";
-import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_TTS_RESPONSE } from "utils/APIResponseTypes";
+import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_TTS_RESPONSE, VAUX_USER_DETAIL_RESPONSE } from "utils/APIResponseTypes";
+import { useCookie } from "hooks/useCookie";
 
 export const getAllAIVoiceSample = async (sample:boolean=false) => {
+	const token = "";
 	let endPoint = VAUX_VOICE_LIST_TYPE;
 	if(sample){
 		endPoint = VAUX_SAMPLE_VOICE_LIST_TYPE;
 	}
-	const token = "";
 	try {
 		const response = await vauxAPI(token).get<VAUX_AI_VOICES_RESPONSE>(endPoint);
 		const { data } = response;
@@ -63,6 +64,24 @@ export const login = async (loginForm: any) => {
 export const userSignup = async (signupForm: any) => {
 	try {
 		const response = await vauxAPI().post<VAUX_LOGIN_RESPONSE>(VAUX_SIGNUP, signupForm);
+		const { data } = response;
+		if (response.status === 200 && data) {
+			return data;
+		}
+	}
+	catch (error: any) {
+		console.log(error);
+		return error.data;
+	}
+}
+export const fetchUserDetailsById = async (userID:string,token:string = "") =>{
+
+	try {
+		if(!userID.length){
+			throw new Error("Invalid User");
+		}
+		// const token = useCookie('vaux-staff-token',JSON.stringify(null));
+		const response = await vauxAPI(token).get<VAUX_USER_DETAIL_RESPONSE>(VAUX_USER_DETAIL_TYPE + userID);
 		const { data } = response;
 		if (response.status === 200 && data) {
 			return data;

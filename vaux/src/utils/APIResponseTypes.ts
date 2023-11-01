@@ -25,3 +25,10 @@ export interface VAUX_TTS_RESPONSE {
     speech_s3_link: string;
     status: boolean;
 }
+export interface VAUX_USER_DETAIL_RESPONSE {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string | null;
+}

@@ -5,3 +5,4 @@ export const VAUX_VOICE_LIST_TYPE = 'api/v1/list_all_voices';
 export const VAUX_LOGIN = 'api/v1/login_user';
 export const VAUX_SIGNUP = 'api/v1/signup_user';
 export const VAUX_SAMPLE_VOICE_LIST_TYPE = 'api/v1/list_sample_voices';
+export const VAUX_USER_DETAIL_TYPE = 'api/v1/get_user_details/';

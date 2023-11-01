@@ -6,6 +6,7 @@ import SignUp from 'components/guest/SignUp';
 import Studio from 'components/studio/Studio';
 import { GuestRoute } from 'components/routeGuard/GuestRoute';
 import './App.css';
+import UserProfile from 'components/UserDetail/UserProfile';
 
 function App() {
   const routes = useRoutes([
@@ -24,6 +25,10 @@ function App() {
     {
       path: '/studio',
       element: <ProtectedRoute><Studio /></ProtectedRoute>
+    },
+    {
+      path: '/user-profile',
+      element: <ProtectedRoute><UserProfile/></ProtectedRoute>
     }
   ]);
   return routes;
