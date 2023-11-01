@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllAIVoiceSample } from "actions/APIActions";
 import { formatAIVoicesResponseForLanding } from "utils/common.utils";
-import AIVoiceItemHome from "components/home/AIVoiceItemHome";
+import AIVoiceItemHome from "components/Home/AIVoiceItemHome";
 
 const AIVoicesListHome = () => {
 	const [AIVoices, setAIVoices] = useState<any>([]);
