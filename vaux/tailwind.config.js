@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#394689',
+        'primary': '#182a75',
         'secondary': '',
         'button-hover': '#C3DDFB80',
-        'background': '#EFF1FF',
+        'background': '#fff',
         "white": '#FFFFFF',
         "black": '#000',
         "light-blue": '#C3DDFB',
@@ -33,11 +33,11 @@ module.exports = {
         '80': '0.8',
         '85': '0.85'
       },
-      borderColor: {
-        "primary": '#394689',
-      },
       fontFamily: {
         'ink-free': `'Shadows Into Light', cursive`
+      },
+      padding: {
+        3: '0.75rem',
       }
     },
   },

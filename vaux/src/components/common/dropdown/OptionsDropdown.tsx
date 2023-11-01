@@ -63,7 +63,7 @@ const OptionsDropdown = (props:any) => {
 				ref={optionDropdown}
 				className={`${options_classes} ${optionDropdownOpen ? "block" : "hidden"}`}
 			>
-				<UpArrow className={`w-[18px] h-[18px] absolute ${arrowStyles}`} />
+				<UpArrow className={` w-[18px] h-[18px] absolute ${arrowStyles}`} />
 				{optionsDropdownData.map(
 					(d: { label: string; link: string }, i: number) => {
 						return (

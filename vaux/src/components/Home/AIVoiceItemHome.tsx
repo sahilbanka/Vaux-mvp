@@ -74,8 +74,7 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 	return (
 		<div className="flex flex-col w-[250px] justify-center items-center gap-2 relative">
 			<div
-				className=" w-[206px] h-[206px] rounded-[50%]"
-				style={{ backgroundColor: "#394689" }}
+				className=" w-[206px] h-[206px] rounded-[50%] bg-primary"
 			>
 				<img
 					src={imageObj[AIVoiceItem.img_id as keyof typeof imageObj]}
