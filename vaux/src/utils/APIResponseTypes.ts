@@ -25,3 +25,13 @@ export interface VAUX_TTS_RESPONSE {
     speech_s3_link: string;
     status: boolean;
 }
+
+export interface VAUX_PROJECTS_LIST_RESPONSE {
+    [key: string] : VAUX_PROJECT_LIST_ITEM
+}
+
+export interface VAUX_PROJECT_LIST_ITEM {
+    id: string;
+    name: string;
+    user_id: string
+}
