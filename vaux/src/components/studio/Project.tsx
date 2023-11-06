@@ -9,7 +9,6 @@ function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
 
   const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState([1]);
   const [aiVoicesList, setAiVoiceList] = useState<Array<VAUX_AI_VOICES>>(aiList);
-  const [selectedAIVoice, setSelectedAIVoice] = useState<VAUX_AI_VOICES>(aiList[0]);
 
   const addBlockHandler = () => {
     setGenerateVoiceBlocks((prev) => {
@@ -19,8 +18,7 @@ function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
 
 
   useEffect(() => {
-    setAiVoiceList(List_all_voicesMockData);
-    setSelectedAIVoice(List_all_voicesMockData[0]);
+    setAiVoiceList([...List_all_voicesMockData]);
   }, [aiList]);
 
   return (
@@ -28,7 +26,7 @@ function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
       <div className='mx-auto'>
         {
           generateVoiceBlocks.map((item) => {
-            return <GenerateAIBlock key={item} selectedAIVoice={selectedAIVoice} />
+            return <GenerateAIBlock key={item} aiVoicesList={aiVoicesList} />
           })
         }
         <div className='flex justify-center'>

@@ -84,6 +84,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 	const audioSelectHandler = () => {
 		setIsAudioSelected(true);
 		setIsAnyAudioSelected(AIVoiceItem.Id);
+		SelectCallbackFunc && SelectCallbackFunc();
 	};
 	useEffect(() => {
 		if (isAudioPlaying !== AIVoiceItem.Id && !ref.current?.paused) {

@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as DownArrow } from 'assets/dropdown_arrow.svg';
 import { ReactComponent as GenerateButton } from 'assets/generate.svg';
 import GlobalModal from 'components/common/GlobalModal';
 import ExploreAI from 'components/exploreAI/ExploreAI';
 import { VAUX_AI_VOICES } from 'utils/APIResponseTypes';
 
-function GenerateAIBlock({ selectedAIVoice }: { selectedAIVoice: VAUX_AI_VOICES }) {
+function GenerateAIBlock({ aiVoicesList }: { aiVoicesList: Array<VAUX_AI_VOICES> }) {
+    const [selectedAIVoice, setSelectedAIVoice] = useState<VAUX_AI_VOICES>(aiVoicesList[0]);
+
+    useEffect(() => {
+        console.log(aiVoicesList);
+        setSelectedAIVoice(aiVoicesList[0])
+    }, [aiVoicesList])
+
     const [openExploreAIsModal, setOpenExploreAIsModal] = useState(false);
     const handleOpenExploreAIsModal = () => setOpenExploreAIsModal(true);
     const handleCloseExploreAIsModal = () => setOpenExploreAIsModal(false);
 
     return (
         <>
-            <div className='bg-white border border-transparent rounded-lg p-4 m-10'>
+            {selectedAIVoice && <div className='bg-white border border-transparent rounded-lg p-4 m-10'>
                 <div className="flex justify-between items-center">
                     <div className='flex gap-4'>
                         <div className='flex rounded-3xl border border-gray-300 justify-center items-center px-1 py-0 text-xs cursor-pointer' onClick={handleOpenExploreAIsModal}>
@@ -34,9 +41,9 @@ function GenerateAIBlock({ selectedAIVoice }: { selectedAIVoice: VAUX_AI_VOICES 
                 <div>
                     <input type="text" placeholder='Enter your text here' className='text-sm font-normal border border-gray-300 rounded-md w-full p-2 mt-4 focus-visible:outline-none' />
                 </div>
-            </div>
+            </div>}
             <GlobalModal openState={openExploreAIsModal} onCloseHandler={handleCloseExploreAIsModal} MinWidth={"700px"} iskeepMounted={true} >
-                <ExploreAI handleCloseModal={handleCloseExploreAIsModal} isSelectionRequired={true} />
+                <ExploreAI handleCloseModal={handleCloseExploreAIsModal} isSelectionRequired={true} SelectCallbackFunc={(voice) => setSelectedAIVoice({...voice})} />
             </GlobalModal>
         </>
     )

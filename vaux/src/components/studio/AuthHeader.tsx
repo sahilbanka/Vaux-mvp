@@ -1,7 +1,6 @@
 import { ReactComponent as AddCircle } from 'assets/add_circle.svg';
 import OptionsDropdown from '../common/dropdown/OptionsDropdown'
 import { Constants } from 'utils/constants'
-import { useNavigate } from 'react-router';
 import CreateProject from 'components/common/CreateProject';
 import GlobalModal from 'components/common/GlobalModal';
 import { useState } from 'react';
@@ -9,15 +8,9 @@ import { useState } from 'react';
 
 function AuthHeader() {
 
-    const navigate = useNavigate();
-
     const [openCreateProject, setOpenCreateProject] = useState(false);
 
     const handleProjectCloseModal = () => setOpenCreateProject(false);
-
-    const routeChange = (path: string, params?: any) => {
-        navigate(path, { state: params });
-    }
 
     return (
         <nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full p-0 border-b border-gray-300 bg-white">
