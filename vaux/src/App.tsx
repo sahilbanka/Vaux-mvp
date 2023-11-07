@@ -1,9 +1,11 @@
-import { useRoutes } from 'react-router';
+import { useRoutes, Outlet } from 'react-router';
 import Dashboard from 'components/guest/Dashboard';
 import Login from 'components/guest/Login';
 import { ProtectedRoute } from 'components/routeGuard/ProtectedRoute';
 import SignUp from 'components/guest/SignUp';
 import Studio from 'components/studio/Studio';
+import ProjectList from 'components/studio/ProjectsList';
+import Project from 'components/studio/Project';
 import { GuestRoute } from 'components/routeGuard/GuestRoute';
 import './App.css';
 import UserProfile from 'components/UserDetail/UserProfile';
@@ -13,7 +15,7 @@ function App() {
     {
       path: "/",
       element: <GuestRoute><Dashboard /></GuestRoute>
-      },
+    },
     {
       path: "/login",
       element: <GuestRoute><Login /></GuestRoute>
@@ -24,10 +26,24 @@ function App() {
     },
     {
       path: '/studio',
-      element: <ProtectedRoute><Studio /></ProtectedRoute>
-    },
+      element: <ProtectedRoute><Studio content={<Outlet />} /></ProtectedRoute>,
+      children: [
+        {
+          path: '',
+          element: <ProtectedRoute><ProjectList /></ProtectedRoute>
+        },
+        {
+          path: 'projects',
+          element: <ProtectedRoute><ProjectList /></ProtectedRoute>
+        },
+        {
+          path: 'projects/:id',
+          element: <ProtectedRoute><Project aiList={[]} /></ProtectedRoute>
+        },
+      ]
+    }, 
     {
-      path: '/user-profile',
+      path: 'user-profile',
       element: <ProtectedRoute><UserProfile/></ProtectedRoute>
     }
   ]);

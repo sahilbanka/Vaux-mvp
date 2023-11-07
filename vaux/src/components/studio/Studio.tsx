@@ -1,13 +1,12 @@
 import AuthHeader from 'components/studio/AuthHeader';
 import SideNav from 'components/studio/SideNav';
-import ProjectsList from 'components/studio/ProjectsList';
 
-function Studio() {
+function Studio({ content }: any) {
     return (
         <>
             <AuthHeader />
             <SideNav />
-            <ProjectsList />
+            <main className='p-8 ml-[90px] bg-[#f6f7f9]' style={{height: 'calc(100% - 68px)'}}>{content}</main>
         </>
     )
 }

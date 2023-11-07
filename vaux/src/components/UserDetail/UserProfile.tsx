@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { VAUX_USER_DETAIL_RESPONSE } from 'utils/APIResponseTypes';
 
 const UserProfile = () => {
-    const [userId, setUserId] = useCookie("userId","");
-    const token = useCookie('vaux-staff-token',"");
+    const [userId, setUserId] = useCookie("userId", JSON.stringify(null));
+    const [token, setToken] = useCookie('vaux-staff-token',JSON.stringify(null));
     const [UserDetail, setUserDetail] = useState<object>({});
     useEffect(()=>{
         if(userId){

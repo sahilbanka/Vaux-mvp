@@ -31,4 +31,14 @@ export interface VAUX_USER_DETAIL_RESPONSE {
     last_name: string;
     email: string;
     password: string | null;
+
+}
+export interface VAUX_PROJECTS_LIST_RESPONSE {
+    [key: string] : VAUX_PROJECT_LIST_ITEM
+}
+
+export interface VAUX_PROJECT_LIST_ITEM {
+    id: string;
+    name: string;
+    user_id: string
 }

@@ -33,6 +33,9 @@ export const vauxAPI = (token:any = '') => {
       },
       (error: AxiosError) => {
         const { response, request } = error || {};
+        if (error.status === 401) {
+
+        }
         return Promise.reject(response || request);
       }
     );

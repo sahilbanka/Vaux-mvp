@@ -32,7 +32,7 @@ function AuthHeader() {
                 <ul className="flex items-center justify-between pt-0 px-2 gap-4 md:gap-0">
                     <li className="cursor-pointer md:px-6 md:py-3 block">
                         <button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-medium hover:bg-primary hover:text-white" onClick={() => routeChange('/')}>
-                            <AddCircle className='fill-white inline w-[20px] h-[20px] mx-1' />
+                            {/* <AddCircle className='fill-white inline w-[20px] h-[20px] mx-1' /> */}
                             Create Project
                         </button>
                     </li>
