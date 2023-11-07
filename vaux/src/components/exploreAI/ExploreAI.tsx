@@ -6,7 +6,7 @@ import { List_all_voicesMockData } from "MockData";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 interface ExploreAIProps {
 	isSelectionRequired?: boolean;
-	SelectCallbackFunc?: () => void;
+	SelectCallbackFunc?: (selectedAIVoice: VAUX_AI_VOICES) => void;
 	handleCloseModal: () => void;
 }
 const ExploreAI = (props: ExploreAIProps) => {
@@ -53,6 +53,12 @@ const ExploreAI = (props: ExploreAIProps) => {
 				break;
 		}
 	};
+
+	const voiceCallbackFunctionHandler = (voice: VAUX_AI_VOICES) => {
+		console.log('hello');
+		handleCloseModal();
+		SelectCallbackFunc && SelectCallbackFunc(voice);
+	}
 
 	return (
 		<div>
@@ -115,7 +121,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 							return (
 								<ExploreAIVoiceItem
 									key={voice.Id}
-									SelectCallbackFunc={SelectCallbackFunc}
+									SelectCallbackFunc={() => voiceCallbackFunctionHandler(voice)}
 									isSelectionRequired={isSelectionRequired}
 									AIVoiceItem={voice}
 									isAudioPlaying={isAudioPlaying}

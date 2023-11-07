@@ -1,49 +1,42 @@
 import { useEffect, useState } from 'react';
 import { VAUX_AI_VOICES } from 'utils/APIResponseTypes';
 import { List_all_voicesMockData } from "MockData";
-import { ReactComponent as DownArrow } from 'assets/dropdown_arrow.svg';
-import GlobalModal from 'components/common/GlobalModal';
-import ExploreAI from 'components/exploreAI/ExploreAI';
+import GenerateAIBlock from 'components/projects/GenerateAIBlock';
+import {ReactComponent as AddCircle} from 'assets/add_circle.svg';
 
 
 function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
 
+  const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState([1]);
   const [aiVoicesList, setAiVoiceList] = useState<Array<VAUX_AI_VOICES>>(aiList);
-  const [selectedAIVoice, setSelectedAIVoice] = useState<VAUX_AI_VOICES>(aiList[0]);
 
-  const [openExploreAIsModal, setOpenExploreAIsModal] = useState(false);
-  const handleOpenExploreAIsModal = () => setOpenExploreAIsModal(true);
-  const handleCloseExploreAIsModal = () => setOpenExploreAIsModal(false);
+  const addBlockHandler = () => {
+    setGenerateVoiceBlocks((prev) => {
+      return [...prev, (prev.length ? prev.length + 1 : 1)];
+    })
+  }
+
 
   useEffect(() => {
-    setAiVoiceList(List_all_voicesMockData);
-    setSelectedAIVoice(List_all_voicesMockData[0]);
+    setAiVoiceList([...List_all_voicesMockData]);
   }, [aiList]);
 
   return (
     <>
       <div className='mx-auto'>
-        <div className='bg-white border border-transparent rounded-lg py-4 px-2'>
-          <div className="flex">
-            <div className='flex rounded-3xl border border-gray-300 justify-center items-center px-1 py-0 text-xs' onClick={handleOpenExploreAIsModal}>
-              <img className={`w-[32px] h-[32px] border border-transparent rounded-circle mr-1`} src={selectedAIVoice?.Img_url} alt={selectedAIVoice?.Name} />
-              <span>{`${selectedAIVoice?.Name} (${selectedAIVoice?.Gender})`}</span>
-              <DownArrow className='fill-primary mx-2' />
-            </div>
+        {
+          generateVoiceBlocks.map((item) => {
+            return <GenerateAIBlock key={item} aiVoicesList={aiVoicesList} />
+          })
+        }
+        <div className='flex justify-center'>
+          <div className='flex justify-center items-center rounded-3xl border border-gray-300 text-center px-2 py-1 text-xs cursor-pointer hover:bg-gray-200' onClick={addBlockHandler}>
+            <AddCircle className='w-5 h-5 fill-black'/>
+            <span className='text-gray-500 font-semibold'>{`Add a block`}</span>
           </div>
         </div>
       </div>
-      <GlobalModal
-        openState={openExploreAIsModal}
-        onCloseHandler={handleCloseExploreAIsModal}
-        MinWidth={"700px"}
-        iskeepMounted={true}
-      >
-        <ExploreAI
-          handleCloseModal={handleCloseExploreAIsModal}
-          isSelectionRequired={false}
-        />
-      </GlobalModal>
+
     </>
 
   )

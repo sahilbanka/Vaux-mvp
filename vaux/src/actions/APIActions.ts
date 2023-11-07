@@ -1,4 +1,4 @@
-import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_USER_DETAIL_TYPE } from "utils/APITypes";
+import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_USER_DETAIL_TYPE, VAUX_CREATE_PROJECT } from "utils/APITypes";
 import { vauxAPI } from "utils/NetworkInstance";
 import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_PROJECTS_LIST_RESPONSE, VAUX_TTS_RESPONSE, VAUX_USER_DETAIL_RESPONSE } from "utils/APIResponseTypes";
 import { useCookie } from "hooks/useCookie";
@@ -107,3 +107,17 @@ export const fetchUserDetailsById = async (userID:string,token:string = "") =>{
 		return error.data;
 	}
 }
+export const createProject = async (token: string, projectForm: {name: string, user_id: string}) => {
+	try {
+		const response = await vauxAPI(token).post<any>(VAUX_CREATE_PROJECT, projectForm);
+		const { data } = response;
+		if (response.status === 200 && data) {
+			return data; 
+		}
+
+	} catch (error) {
+		console.log(error);
+		return { Error: "Error in Creating Project" };
+	}
+}
+

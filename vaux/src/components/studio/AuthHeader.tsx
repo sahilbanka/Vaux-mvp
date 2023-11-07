@@ -1,16 +1,16 @@
-import {ReactComponent as AddCircle} from 'assets/add_circle.svg';
+import { ReactComponent as AddCircle } from 'assets/add_circle.svg';
 import OptionsDropdown from '../common/dropdown/OptionsDropdown'
 import { Constants } from 'utils/constants'
-import { useNavigate } from 'react-router';
+import CreateProject from 'components/common/CreateProject';
+import GlobalModal from 'components/common/GlobalModal';
+import { useState } from 'react';
 
 
 function AuthHeader() {
 
-    const navigate = useNavigate();
+    const [openCreateProject, setOpenCreateProject] = useState(false);
 
-    const routeChange = (path: string, params?: any) => {
-        navigate(path, { state: params });
-    }
+    const handleProjectCloseModal = () => setOpenCreateProject(false);
 
     return (
         <nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full p-0 border-b border-gray-300 bg-white">
@@ -31,7 +31,7 @@ function AuthHeader() {
             <div className={`flex items-center w-auto`} id="menu">
                 <ul className="flex items-center justify-between pt-0 px-2 gap-4 md:gap-0">
                     <li className="cursor-pointer md:px-6 md:py-3 block">
-                        <button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-medium hover:bg-primary hover:text-white" onClick={() => routeChange('/')}>
+                        <button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-medium hover:bg-primary hover:text-white" onClick={() => setOpenCreateProject(true)}>
                             {/* <AddCircle className='fill-white inline w-[20px] h-[20px] mx-1' /> */}
                             Create Project
                         </button>
@@ -48,6 +48,13 @@ function AuthHeader() {
                     </li>
                 </ul>
             </div>
+            <GlobalModal
+                openState={openCreateProject}
+                onCloseHandler={handleProjectCloseModal}
+                MinWidth={'400'}
+            >
+                <CreateProject handleCloseModal={handleProjectCloseModal}/>
+            </GlobalModal>
         </nav>
     )
 }
