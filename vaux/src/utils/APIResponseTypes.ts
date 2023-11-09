@@ -42,3 +42,7 @@ export interface VAUX_PROJECT_LIST_ITEM {
     name: string;
     user_id: string
 }
+export interface VAUX_UPDATE_USER_RESPONSE{
+    Status: boolean,
+    error: string
+}

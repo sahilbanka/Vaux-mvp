@@ -8,3 +8,4 @@ export const VAUX_SAMPLE_VOICE_LIST_TYPE = 'api/v1/list_sample_voices';
 export const VAUX_USER_DETAIL_TYPE = 'api/v1/get_user_details/';
 export const VAUX_PROJECTS_LIST='api/v1/list_all_projects_for_user';
 export const VAUX_CREATE_PROJECT='api/v1/create_project';
+export const VAUX_UPDATE_USER= "/api/v1/update_user_details";

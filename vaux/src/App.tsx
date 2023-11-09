@@ -8,7 +8,6 @@ import ProjectList from 'components/studio/ProjectsList';
 import Project from 'components/studio/Project';
 import { GuestRoute } from 'components/routeGuard/GuestRoute';
 import './App.css';
-import UserProfile from 'components/UserDetail/UserProfile';
 
 function App() {
   const routes = useRoutes([
@@ -42,10 +41,6 @@ function App() {
         },
       ]
     }, 
-    {
-      path: 'user-profile',
-      element: <ProtectedRoute><UserProfile/></ProtectedRoute>
-    }
   ]);
   return routes;
 }
