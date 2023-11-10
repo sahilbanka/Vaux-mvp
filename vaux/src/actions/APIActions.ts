@@ -62,7 +62,7 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 	}
 }
 
-export const fetchLandingTTS = async (ttsBody: any) => {
+export const generateTTS = async (token:string="None",ttsBody: any) => {
 	try {
 		const response = await vauxAPI('None').post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, { ttsBody });
 		const {data} = response;

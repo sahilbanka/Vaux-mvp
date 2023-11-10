@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import playBtn from "assets/play.svg";
 import pauseBtn from "assets/pause.svg";
 import { useNavigate } from 'react-router';
-import { fetchLandingTTS } from 'actions/APIActions';
+import { generateTTS } from 'actions/APIActions';
 
 
 
@@ -42,7 +42,7 @@ function Overview() {
 
   const handleTTSListen = async () => {
     if (generateRef?.current?.value && generateRef?.current?.value.length <= 100) {
-      const link = await fetchLandingTTS({ text: generateRef?.current?.value });
+      const link = await generateTTS("None",{ text: generateRef?.current?.value });
       if (ttsAudioRef.current) {
         ttsAudioRef.current.src = link ?? '';
         if (ttsAudioRef.current.paused) {
@@ -121,7 +121,7 @@ function Overview() {
           <div className="flex flex-col items-center md:w-1/2 p-4">
             <textarea ref={generateRef} className='w-full p-6' style={{ boxShadow: 'rgba(0, 0, 0, 0.25) 0px 2px 4px 4px' }}
               name="convo" rows={10} maxLength={100} defaultValue={Constants.Overview_Labels.listen_tts_text}></textarea>
-            <audio src={''} ref={ttsAudioRef} />
+            <audio src={""} ref={ttsAudioRef} />
             <div>
               <button className='rounded-xmd border border-primary bg-primary text-white hover:bg-white hover:text-primary font-semibold px-12 py-2 my-8' onClick={handleTTSListen}>Listen</button>
             </div>
