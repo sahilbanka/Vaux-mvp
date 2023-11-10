@@ -38,7 +38,7 @@ function SideNav() {
       {openExploreAIsModal && <GlobalModal
         openState={openExploreAIsModal}
         onCloseHandler={handleCloseExploreAIsModal}
-        MinWidth={"700px"}
+        MinWidth={"min-w-[70%]"}
         iskeepMounted={true}
       >
         <ExploreAI

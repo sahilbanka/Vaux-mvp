@@ -23,7 +23,7 @@ function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
 
   return (
     <>
-      <div className='mx-auto'>
+      <div className='mx-auto w-[70%]'>
         {
           generateVoiceBlocks.map((item) => {
             return <GenerateAIBlock key={item} aiVoicesList={aiVoicesList} />
