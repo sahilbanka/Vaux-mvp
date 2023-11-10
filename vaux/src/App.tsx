@@ -38,9 +38,9 @@ function App() {
         {
           path: 'projects/:id',
           element: <ProtectedRoute><Project aiList={[]} /></ProtectedRoute>
-        }
+        },
       ]
-    },
+    }, 
   ]);
   return routes;
 }

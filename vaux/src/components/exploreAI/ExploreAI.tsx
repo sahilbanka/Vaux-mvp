@@ -4,6 +4,7 @@ import { formatAIVoicesResponseForLanding } from "utils/common.utils";
 import ExploreAIVoiceItem from "./ExploreAIItem";
 import { List_all_voicesMockData } from "MockData";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
+import { useCookie } from "hooks/useCookie";
 interface ExploreAIProps {
 	isSelectionRequired?: boolean;
 	SelectCallbackFunc?: (selectedAIVoice: VAUX_AI_VOICES) => void;
@@ -20,11 +21,12 @@ const ExploreAI = (props: ExploreAIProps) => {
 	const [filterAIVoices, setFilterAIVoices] = useState({
 		gender: "ALL",
 	});
+	const [token, setToken] = useCookie("vaux-staff-token", JSON.stringify(null));
 
 	useEffect(() => {
 		const getAllAIVoices = async () => {
-			// const voices = await getAllAIVoiceSample(false);
-			const voices = List_all_voicesMockData;
+			const voices = await getAllAIVoiceSample(token,false);
+			// const voices = List_all_voicesMockData;
 			if (voices?.length) {
 				setAIVoices(voices);
 				setFilteredVoices(voices);

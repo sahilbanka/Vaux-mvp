@@ -26,7 +26,7 @@ export const Constants = {
 		{ label: "Text to Speech", link: "" },
 	],
 	optionDropdownDataProfile: [
-		{ label: "My Account", link: "" },
+		{ label: "My Account", link: "/user-profile" },
 		{ label: "Logout", link: "" },
 	],
 	LANGUAGE_MAPPING: {

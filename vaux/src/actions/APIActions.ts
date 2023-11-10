@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_CREATE_PROJECT, VAUX_FETCH_PROJECT_DETAILS } from "utils/APITypes";
+=======
+import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_USER_DETAIL_TYPE, VAUX_CREATE_PROJECT, VAUX_UPDATE_USER } from "utils/APITypes";
+>>>>>>> refs/remotes/origin/feature/products-page
 import { vauxAPI } from "utils/NetworkInstance";
-import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_PROJECTS_LIST_RESPONSE, VAUX_TTS_RESPONSE } from "utils/APIResponseTypes";
+import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_PROJECTS_LIST_RESPONSE, VAUX_TTS_RESPONSE, VAUX_UPDATE_USER_RESPONSE, VAUX_USER_DETAIL_RESPONSE } from "utils/APIResponseTypes";
+import { useCookie } from "hooks/useCookie";
+import { error } from "console";
 
 export const login = async (loginForm: any) => {
 	try {
@@ -31,12 +37,11 @@ export const userSignup = async (signupForm: any) => {
 	}
 }
 
-export const getAllAIVoiceSample = async (sample:boolean=false) => {
+export const getAllAIVoiceSample = async (token:string = "",sample:boolean=false) => {
 	let endPoint = VAUX_VOICE_LIST_TYPE;
 	if(sample){
 		endPoint = VAUX_SAMPLE_VOICE_LIST_TYPE;
 	}
-	const token = "";
 	try {
 		const response = await vauxAPI(token).get<VAUX_AI_VOICES_RESPONSE>(endPoint);
 		const { data } = response;
@@ -61,7 +66,7 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 	}
 }
 
-export const fetchLandingTTS = async (ttsBody: any) => {
+export const generateTTS = async (token:string="None",ttsBody: any) => {
 	try {
 		const response = await vauxAPI('None').post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, { ttsBody });
 		const {data} = response;
@@ -88,7 +93,24 @@ export const fetchProjectsListByUser =async (token: string, userId : string) => 
 		return { Error: "Error in Fetching Details" };
 	}
 }
+export const fetchUserDetailsById = async (userID:string,token:string = "") =>{
 
+	try {
+		if(!userID.length){
+			throw new Error("Invalid User");
+		}
+		// const token = useCookie('vaux-staff-token',JSON.stringify(null));
+		const response = await vauxAPI(token).get<VAUX_USER_DETAIL_RESPONSE>(VAUX_USER_DETAIL_TYPE + userID);
+		const { data } = response;
+		if (response.status === 200 && data) {
+			return data;
+		}
+	}
+	catch (error: any) {
+		console.log(error);
+		return error.data;
+	}
+}
 export const createProject = async (token: string, projectForm: {name: string, user_id: string}) => {
 	try {
 		const response = await vauxAPI(token).post<any>(VAUX_CREATE_PROJECT, projectForm);
@@ -113,3 +135,20 @@ export const fetchProjectDetailsById = async (token: string, projectId: string) 
 	}
 }
 
+export const updateUserDetails =async (token:string ,parms:object) => {
+	try {
+		const response = await vauxAPI(token).put<VAUX_UPDATE_USER_RESPONSE>(VAUX_UPDATE_USER, {...parms});
+		const { data } = response;  
+	
+		if (response.status === 200 && data) {
+			if(data?.error?.length && !data.Status){
+				throw new Error(data?.error);
+			}
+			return true; 
+		}
+
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
