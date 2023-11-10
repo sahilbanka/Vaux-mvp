@@ -9,6 +9,7 @@ import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 import { generateTTS } from "actions/APIActions";
 import { useCookie } from "hooks/useCookie";
 
+
 function GenerateAIBlock({
 	aiVoicesList,
 }: {
@@ -22,6 +23,7 @@ function GenerateAIBlock({
 	const ttsAudioRef = useRef<HTMLAudioElement>(null);
 	const [AudioLink, setAudioLink] = useState<string>("");
 	const [isLoading, setIsloading] = useState<boolean>(false);
+	const downloadAudioRef = useRef<HTMLAnchorElement>(null);
 
 	useEffect(() => {
 		console.log(aiVoicesList);
@@ -36,7 +38,7 @@ function GenerateAIBlock({
 			setIsloading(true);
 			const link = await generateTTS(token, {
 				text: AIBoxInpRef?.current?.value,
-                "speaker_id": selectedAIVoice.Id,
+				speaker_id: selectedAIVoice.Id,
 			});
 			if (link) {
 				setAudioLink(link);
@@ -47,8 +49,25 @@ function GenerateAIBlock({
 			}
 		}
 	};
-	const handleDownloadTTS = () => {
-    };
+	const handleDownloadTTS = async () => {
+		try {
+			if (!AudioLink) {
+				throw new Error("Resource URL not provided! You need to provide one");
+			}
+			setIsloading(true);
+			const response = await fetch(AudioLink);
+			const blob = await response.blob();
+			const blobURL = URL.createObjectURL(blob);
+			if (downloadAudioRef?.current) {
+				downloadAudioRef.current.href = blobURL;
+				downloadAudioRef.current.click();
+			}
+			setIsloading(false);
+		} catch (error) {
+			console.log(error);
+			setIsloading(false);
+		}
+	};
 	return (
 		<>
 			{selectedAIVoice && (
@@ -85,13 +104,23 @@ function GenerateAIBlock({
 										onClick={handleTTSListen}
 									/>
 									{AudioLink && (
-										<a href={AudioLink} download={`${selectedAIVoice.Name +"-"+selectedAIVoice.Id}.wav`}><DownloadButton
-											className="w-[24px] font-medium h-[24px] cursor-pointer"
-											onClick={handleDownloadTTS}
-										/></a>
+										<div>
+											<DownloadButton
+												className="w-[24px] font-medium h-[24px] cursor-pointer"
+												onClick={handleDownloadTTS}
+											/>
+										</div>
 									)}
 								</div>
 							)}
+							<a
+								href=""
+								ref={downloadAudioRef}
+								className="invisible"
+								download={`VOAUX-${
+									selectedAIVoice.Name + "-" + selectedAIVoice.Id
+								}.wav`}
+							></a>
 							{isLoading && (
 								<img
 									src={loadingGIF}
@@ -113,6 +142,7 @@ function GenerateAIBlock({
 					{AudioLink && (
 						<div className="mt-3 w-full">
 							<audio
+								autoPlay
 								className="w-full h-[32px]"
 								controls
 								controlsList={"nofullscreen nodownload noremoteplayback"}
