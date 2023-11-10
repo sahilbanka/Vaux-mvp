@@ -1,4 +1,4 @@
-import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_CREATE_PROJECT } from "utils/APITypes";
+import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_CREATE_PROJECT, VAUX_FETCH_PROJECT_DETAILS } from "utils/APITypes";
 import { vauxAPI } from "utils/NetworkInstance";
 import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_PROJECTS_LIST_RESPONSE, VAUX_TTS_RESPONSE } from "utils/APIResponseTypes";
 
@@ -100,6 +100,16 @@ export const createProject = async (token: string, projectForm: {name: string, u
 	} catch (error) {
 		console.log(error);
 		return { Error: "Error in Creating Project" };
+	}
+}
+
+export const fetchProjectDetailsById = async (token: string, projectId: string) => {
+	try {
+		const response = await vauxAPI(token).get(`${VAUX_FETCH_PROJECT_DETAILS}/${projectId}`)
+	}
+	catch (error) {
+		console.log(error);
+		return { Error: "Error in fetching details"}
 	}
 }
 

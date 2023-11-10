@@ -16,10 +16,13 @@ function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
     })
   }
 
-
   useEffect(() => {
     setAiVoiceList([...List_all_voicesMockData]);
   }, [aiList]);
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <>
