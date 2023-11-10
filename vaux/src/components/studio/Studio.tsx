@@ -6,7 +6,7 @@ function Studio({ content }: any) {
         <>
             <AuthHeader />
             <SideNav />
-            <main className='p-8 ml-[90px] bg-[#f6f7f9]' style={{height: 'calc(100% - 68px)'}}>{content}</main>
+            <main className='p-8 ml-[90px] bg-light-white' style={{height: 'calc(100% - 68px)'}}>{content}</main>
         </>
     )
 }

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllAIVoiceSample } from "actions/APIActions";
-import { formatAIVoicesResponseForLanding } from "utils/common.utils";
 import ExploreAIVoiceItem from "./ExploreAIItem";
-import { List_all_voicesMockData } from "MockData";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 import { useCookie } from "hooks/useCookie";
 interface ExploreAIProps {
@@ -41,7 +39,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 				setFilterAIVoices((prev) => {
 					return { ...prev, gender: value };
 				});
-				if (value.length && value == "ALL") {
+				if (value.length && value === "ALL") {
 					setFilteredVoices(AIVoices);
 				} else {
 					const filteredVoiceListBygender = AIVoices.filter(

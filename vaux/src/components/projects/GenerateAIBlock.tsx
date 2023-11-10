@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactComponent as DownArrow } from "assets/dropdown_arrow.svg";
 import { ReactComponent as GenerateButton } from "assets/generate.svg";
 import { ReactComponent as DownloadButton } from "assets/download.svg";
@@ -17,7 +17,7 @@ function GenerateAIBlock({
 	const [selectedAIVoice, setSelectedAIVoice] = useState<VAUX_AI_VOICES>(
 		aiVoicesList[0],
 	);
-	const [token, setToken] = useCookie("vaux-staff-token", JSON.stringify(null));
+	const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
 	const AIBoxInpRef = useRef<HTMLInputElement>(null);
 	const ttsAudioRef = useRef<HTMLAudioElement>(null);
 	const [AudioLink, setAudioLink] = useState<string>("");

@@ -1,6 +1,6 @@
 import { fetchProjectsListByUser } from "actions/APIActions";
 import { useCookie } from "hooks/useCookie";
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import { VAUX_PROJECT_LIST_ITEM } from "utils/APIResponseTypes";
 import ProjectFolder from "assets/project_folder.svg";
 import { useNavigate } from "react-router";
@@ -9,8 +9,8 @@ function ProjectsList() {
 
     const navigate = useNavigate();
 
-    const [token, setToken] = useCookie("vaux-staff-token", JSON.stringify(null));
-    const [userId, setUserId] = useCookie("userId", JSON.stringify(null));
+    const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
+    const [userId] = useCookie("userId", JSON.stringify(null));
     const [projectsList, setProjectsList] = useState<Array<VAUX_PROJECT_LIST_ITEM>>([]);
 
 

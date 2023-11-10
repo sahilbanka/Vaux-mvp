@@ -1,6 +1,3 @@
-import { ReactComponent as AddCircle } from "assets/add_circle.svg";
-import OptionsDropdown from "../common/dropdown/OptionsDropdown";
-import { Constants } from "utils/constants";
 import CreateProject from "components/common/CreateProject";
 import GlobalModal from "components/common/GlobalModal";
 import { useState } from "react";
@@ -13,8 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import UserProfile from "components/UserDetail/UserProfile";
+import { useAuth } from "hooks/useAuth";
+import { useNavigate } from "react-router";
 
 function AuthHeader() {
+	const { logout }: any = useAuth();
+	const navigate = useNavigate();
+
 	const [openCreateProject, setOpenCreateProject] = useState(false);
     const [openMyAccountModal, setOpenMyAccountModal] = useState(false);
 	const handleProjectCloseModal = () => setOpenCreateProject(false);
@@ -25,7 +27,8 @@ function AuthHeader() {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleLogout = () => {
-        console.log("logout");
+        logout();
+		navigate('/login');
 	};
     const handleOnClickMyAccBtn = () => {
         setOpenMyAccountModal(true);

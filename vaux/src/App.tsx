@@ -37,7 +37,7 @@ function App() {
         },
         {
           path: 'projects/:id',
-          element: <ProtectedRoute><Project aiList={[]} /></ProtectedRoute>
+          element: <ProtectedRoute><Project /></ProtectedRoute>
         },
       ]
     }, 

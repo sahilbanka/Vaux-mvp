@@ -3,9 +3,7 @@ import playBtn from "assets/play.svg";
 import pauseBtn from "assets/pause.svg";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 import { fetchAIVoicePreview } from "actions/APIActions";
-import { url } from "inspector";
 import { Constants } from "utils/constants";
-import { Voice_preview_MockData } from "MockData";
 import smallLoader from "assets/smallLoader.svg";
 interface ExploreAIVoiceItemPropsInterface {
 	AIVoiceItem: VAUX_AI_VOICES;

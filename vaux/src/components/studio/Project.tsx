@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
 import { VAUX_AI_VOICES } from 'utils/APIResponseTypes';
-import { List_all_voicesMockData } from "MockData";
 import GenerateAIBlock from 'components/projects/GenerateAIBlock';
 import {ReactComponent as AddCircle} from 'assets/add_circle.svg';
+import { fetchProjectDetailsById, getAllAIVoiceSample } from 'actions/APIActions';
+import { useCookie } from 'hooks/useCookie';
+import { useParams } from 'react-router';
 
 
-function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
+function Project() {
 
+  const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
+  const params = useParams();
   const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState([1]);
-  const [aiVoicesList, setAiVoiceList] = useState<Array<VAUX_AI_VOICES>>(aiList);
+  const [aiVoicesList, setAiVoiceList] = useState<Array<VAUX_AI_VOICES>>([]);
 
   const addBlockHandler = () => {
     setGenerateVoiceBlocks((prev) => {
@@ -16,13 +20,24 @@ function Project({ aiList }: { aiList: Array<VAUX_AI_VOICES> }) {
     })
   }
 
-  useEffect(() => {
-    setAiVoiceList([...List_all_voicesMockData]);
-  }, [aiList]);
+	useEffect(() => {
+		const getAllAIVoices = async () => {
+			const voices = await getAllAIVoiceSample(token, false);
+			// const voices = List_all_voicesMockData;
+      setAiVoiceList(voices?.length ? [...voices] : []);
+		};
+		getAllAIVoices();
+	}, [token]);
 
   useEffect(() => {
-
-  }, [])
+    if (params && params.id) {
+      const fetchDetailsById = async () => {
+        const details = await fetchProjectDetailsById(token, params.id ?? undefined);
+        console.log(details);
+      }
+      fetchDetailsById();
+    }
+  }, [params, token])
 
   return (
     <>

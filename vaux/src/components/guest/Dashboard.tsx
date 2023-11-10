@@ -1,5 +1,6 @@
-import MainHeader from 'components/Home/MainHeader';
-import Overview from 'components/Home/Overview';
+import MainHeader from "components/Home/MainHeader"
+import Overview from "components/Home/Overview"
+
 
 
 function Dashboard() {

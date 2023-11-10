@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { List, ListItem } from "@mui/material";
 import contactUsbanner from "assets/contactUs.svg";
 const ContactUs = () => {

@@ -19,8 +19,8 @@ export const formatAIVoicesResponseForLanding = (
 			break;
 		}
 		if (
-			(voice?.Gender == "M" && limit[voice.Gender] < MaleCount) ||
-			(voice?.Gender == "F" && limit[voice.Gender] < FemaleCount)
+			(voice?.Gender === "M" && limit[voice.Gender] < MaleCount) ||
+			(voice?.Gender === "F" && limit[voice.Gender] < FemaleCount)
 		) {
 			limit[voice.Gender] = limit[voice.Gender] + 1;
 			result.push({ ...voice, img_id: voice.Gender + limit[voice.Gender] });
