@@ -6,6 +6,7 @@ import { fetchAIVoicePreview } from "actions/APIActions";
 import { url } from "inspector";
 import { Constants } from "utils/constants";
 import { Voice_preview_MockData } from "MockData";
+import smallLoader from "assets/smallLoader.svg";
 interface ExploreAIVoiceItemPropsInterface {
 	AIVoiceItem: VAUX_AI_VOICES;
 	isAudioPlaying: string;
@@ -39,28 +40,39 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 		opacity: "opacity-100",
 	});
 	const [isAudioSelected, setIsAudioSelected] = useState(false);
-	// const fetchAIVoiceAudioLink = async (VoiceId: string, name: string) => {
-	// 	// const url = await fetchAIVoicePreview(VoiceId, name);
-	// 	const url = await fetchAIVoicePreview("55", "Timothy");
-	// 	if (url) {
-	// 		setAiAudioLink(url);
-	// 	}
-	// };
+	const [isLoading, setIsLoading] = useState(false);
 	const fetchAIVoiceAudioLink = async () => {
 		const url = await fetchAIVoicePreview(AIVoiceItem.Id, AIVoiceItem.Name);
 		// const url = Voice_preview_MockData.Preview_link;
 		// const url = await fetchAIVoicePreview("55", "Timothy");
+	
 		if (url) {
 			setAiAudioLink(url);
+			// setIsLoading(false);
+			// setDisplayControls((prev) => {
+			// 	return { ...prev, display: "", opacity: "opacity-100" };
+			// });
+			// setDisplayControls((prev) => {
+			// 	return { ...prev, display: "", opacity: "opacity-100" };
+			// });
+			return
 		}
+		// setIsLoading(false);
+		// setDisplayControls((prev) => {
+		// 	return { ...prev, display: "", opacity: "opacity-100" };
+		// });
 	};
-	fetchAIVoiceAudioLink();
+	// fetchAIVoiceAudioLink();
 	const audioPlayHandler = async () => {
 		if (!AIAudioLink?.length) {
+			setIsLoading(true);
+			setDisplayControls((prev) => {
+				return { ...prev, display: "", opacity: "opacity-50" };
+			});
 			await fetchAIVoiceAudioLink();
+			setIsLoading(false);
 		}
 		setIsAudioPlaying(AIVoiceItem.Id);
-		console.log(ref.current?.currentTime, "cureent time");
 		if (ref.current && ref.current.currentTime > 0) {
 			ref.current.currentTime = 0;
 		}
@@ -110,7 +122,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 					alt="AI logo"
 					className={`${displayControls.opacity} group-hover:opacity-50`}
 				/>
-				{playControls.playMode && (
+				{!isLoading && playControls.playMode && (
 					<img
 						src={playBtn}
 						alt="play"
@@ -122,7 +134,16 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 						}}
 					/>
 				)}
-				{playControls.pauseMode && (
+				{isLoading && (
+					<img
+						src={smallLoader}
+						alt="loading"
+						className={`cursor-pointer  absolute top-[55%] left-[50%]`}
+						width={45}
+						style={{ transform: "translate(-50%, -50%)" }}
+					/>
+				)}
+				{!isLoading && playControls.pauseMode && (
 					<img
 						src={pauseBtn}
 						alt="play"
@@ -152,6 +173,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 			{/* </div> */}
 			{AIAudioLink && (
 				<audio
+					autoPlay
 					src={AIAudioLink}
 					ref={ref}
 					id={`${AIVoiceItem.Id}_${AIVoiceItem.Name}_${AIVoiceItem.Gender}`}

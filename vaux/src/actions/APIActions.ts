@@ -33,8 +33,7 @@ export const userSignup = async (signupForm: any) => {
 	}
 }
 
-export const getAllAIVoiceSample = async (sample:boolean=false) => {
-	const token = "";
+export const getAllAIVoiceSample = async (token:string = "",sample:boolean=false) => {
 	let endPoint = VAUX_VOICE_LIST_TYPE;
 	if(sample){
 		endPoint = VAUX_SAMPLE_VOICE_LIST_TYPE;

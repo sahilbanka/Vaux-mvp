@@ -72,7 +72,7 @@ function AuthHeader() {
 							<IconButton
 								onClick={handleClick}
 								size="small"
-								sx={{ ml: 2, background: "rgb(24 42 117 / 1)",  "&:hover": {
+								sx={{ ml: 2,  background: "rgb(24 42 117 / 1)",  "&:hover": {
                                     background: "rgb(24 42 117 / 1)",
                                   }}}
 								aria-controls={open ? "account-menu" : undefined}
@@ -81,9 +81,10 @@ function AuthHeader() {
 							>
 								<Avatar
 									sx={{
-										width: 40,
-										height: 40,
+										width: 30,
+										height: 30,
 										background: "rgb(24 42 117 / 1)",
+                                        fontSize:"16px",
 									}}
 								>
 									{makeBadge()}
@@ -103,8 +104,8 @@ function AuthHeader() {
 									filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
 									mt: 1.5,
 									"& .MuiAvatar-root": {
-										width: 32,
-										height: 32,
+										width: 24,
+										height: 24,
 										ml: -0.5,
 										mr: 1,
 									},
