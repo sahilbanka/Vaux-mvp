@@ -4,6 +4,7 @@ import ExploreAIVoiceItem from "./ExploreAIItem";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 import { useCookie } from "hooks/useCookie";
 import { AiVoicesContext } from 'context/AiVoicesContext';
+import { useLocalStorage } from "hooks/useLocalStorage";
 interface ExploreAIProps {
 	isSelectionRequired?: boolean;
 	selectedAiVoice?: VAUX_AI_VOICES;
@@ -21,7 +22,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 	const [filterAIVoices, setFilterAIVoices] = useState({
 		gender: "ALL",
 	});
-	const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
+	const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
 	const { addAiVoice } = useContext(AiVoicesContext);
 
 	// useEffect(() => {

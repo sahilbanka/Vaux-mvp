@@ -1,5 +1,6 @@
 import { createProject } from 'actions/APIActions';
 import { useCookie } from 'hooks/useCookie';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -9,8 +10,8 @@ interface CreateProjectProps {
 
 function CreateProject(props: CreateProjectProps ) {
 
-  const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null));
-  const [userId, setUserId] = useCookie('userId', JSON.stringify(null));
+  const [token, setToken] = useLocalStorage('vaux-staff-token', JSON.stringify(null));
+  const [userId, setUserId] = useLocalStorage('userId', JSON.stringify(null));
 
   const [ projectTitle, setProjectTitle ] = useState('');
   const navigate = useNavigate();
