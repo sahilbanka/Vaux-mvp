@@ -35,7 +35,7 @@ function SideNav() {
         </div>
         <div className="border-b border-b-gray-300 m-2"></div>
       </aside>
-      {openExploreAIsModal && <GlobalModal
+      {<GlobalModal
         openState={openExploreAIsModal}
         onCloseHandler={handleCloseExploreAIsModal}
         MinWidth={"min-w-[70%]"}

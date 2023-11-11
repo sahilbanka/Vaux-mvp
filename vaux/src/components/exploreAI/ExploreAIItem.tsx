@@ -37,7 +37,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 		display: "hidden",
 		opacity: "opacity-100",
 	});
-	const [isAudioSelected, setIsAudioSelected] = useState(false);
+	const [isAudioSelected, setIsAudioSelected] = useState(props.isAnyAudioSelected === AIVoiceItem?.Id ?? false);
 	const [isLoading, setIsLoading] = useState(false);
 	const fetchAIVoiceAudioLink = async () => {
 		const url = await fetchAIVoicePreview(AIVoiceItem.Id, AIVoiceItem.Name);
@@ -111,6 +111,7 @@ const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 			setIsAudioSelected(false);
 		}
 	}, [isAudioPlaying, isAnyAudioSelected, AIVoiceItem.Id, isSelectionRequired, isAudioSelected]);
+
 	return (
 		<div className="flex  group flex-col px-2 pt-2 pb-5 cursor-pointer  w-[150px] h-[180px] hover:shadow-lg hover:border-primary hover:border-2 justify-center items-center gap-2 relative border-[1px] border-gray-300 rounded-lg  border-solid bg-white ">
 			<div className="w-[64px] h-[64px] rounded-[50%]  z-[1] relative">

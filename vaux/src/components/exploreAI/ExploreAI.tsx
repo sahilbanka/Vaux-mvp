@@ -24,6 +24,11 @@ const ExploreAI = (props: ExploreAIProps) => {
 	const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
 	const { addAiVoice } = useContext(AiVoicesContext);
 
+	// useEffect(() => {
+	// 	if(props && props.selectedAiVoice && props.selectedAiVoice.Id)
+	// 	setIsAnyAudioSelected(props.selectedAiVoice?.Id ?? '');	
+	// }, [])
+
 	useEffect(() => {
 		const getAllAIVoices = async () => {
 			const voices = await getAllAIVoiceSample(token,false);
@@ -31,14 +36,11 @@ const ExploreAI = (props: ExploreAIProps) => {
 			if (voices?.length) {
 				setAIVoices(voices);
 				setFilteredVoices(voices);
+				addAiVoice(voices);
 			}
 		};
 		getAllAIVoices();
 	}, [token]);
-
-	useEffect(() => {
-		addAiVoice(AIVoices);
-	}, [AIVoices])
 
 	const filterAiVoicesHandler = (field: string, value: string) => {
 		switch (field) {

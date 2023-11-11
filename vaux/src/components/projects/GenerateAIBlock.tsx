@@ -12,9 +12,9 @@ import SliderDropdown from "components/common/SliderDropdown";
 import { AiVoicesContext } from 'context/AiVoicesContext';
 
 function GenerateAIBlock({
-	blockDetail,
+	blockDetail, updateBlockDetail
 }: {
-	blockDetail: VAUX_GENERATE_TTS,
+	blockDetail: VAUX_GENERATE_TTS, updateBlockDetail: (item: VAUX_GENERATE_TTS) => void
 }) {
 	const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
 	const { aiVoices } = useContext(AiVoicesContext);
@@ -34,9 +34,11 @@ function GenerateAIBlock({
 	}, [blockDetail]);
 
 	const updateGenerateBlockDetail = (key: string, value: string | number) => {
-		setGenerateBlockDetail((detail: VAUX_GENERATE_TTS) => {
-			return {...detail, [key]: value }
-		})
+		const block = {...generateBlockDetail, [key]: value};
+		setGenerateBlockDetail(() => {
+			return {...block }
+		});
+		updateBlockDetail({...block});
 	}
 
 	const [openExploreAIsModal, setOpenExploreAIsModal] = useState(false);
@@ -46,7 +48,17 @@ function GenerateAIBlock({
 	const handleTTSListen = async () => {
 		if (generateBlockDetail && generateBlockDetail.text && generateBlockDetail.text.length > 0) {
 			setIsloading(true);
-			const link = await generateTTS(token, generateBlockDetail);
+			const payload = {
+				project_id: generateBlockDetail.project_id,
+				text: generateBlockDetail.text,
+				language: generateBlockDetail.language,
+				emotion: generateBlockDetail.emotion,
+				speaker_id: generateBlockDetail.speaker_id,
+				duration: generateBlockDetail.duration,
+				block_number: generateBlockDetail.block_number,
+				pitch: generateBlockDetail.pitch
+			}
+			const link = await generateTTS(token, payload);
 			if (link) {
 				setAudioLink(link);
 			}

@@ -34,7 +34,7 @@ export default function SliderDropdown({positionStyles, sliderValue, sliderChang
         <Box className={`custom-slider bg-white position-absolute py-4 px-8 border border-gray-200 rounded-xmd shadow-md ${positionStyles}`} sx={{ width: 300, position: 'absolute' }}>
             <Slider
                 aria-label="Percentages"
-                defaultValue={sliderValue ?? 0} min={-50} max={50}
+                value={sliderValue ?? 0} defaultValue={0} min={-50} max={50}
                 getAriaValueText={valuetext} autoFocus 
                 valueLabelDisplay="auto"
                 marks={marks} onChangeCommitted={(event, value) => sliderChanged(value as number)}

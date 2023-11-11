@@ -14,12 +14,12 @@ function Project() {
   const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
   const { id } = useParams();
   const { aiVoices } = useContext(AiVoicesContext);
-  const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState<VAUX_GENERATE_TTS[]>([{ project_id: id ?? '', speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 1 }]);
+  const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState<VAUX_GENERATE_TTS[]>([{ project_id: id ?? '', speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 0 }]);
 
   const addBlockHandler = () => {
     if (id && aiVoices?.length > 0) {
         setGenerateVoiceBlocks((prev: VAUX_GENERATE_TTS[]) => {
-          return [ ...prev, { project_id: id, speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 1 } ];
+          return [ ...prev, { project_id: id, speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: generateVoiceBlocks.length } ];
         });
     }
   }
@@ -27,27 +27,34 @@ function Project() {
   useEffect(() => {
     if (id) {
       const fetchDetailsById = async () => {
-        const { details } = await fetchProjectDetailsById(token, id ?? undefined);
+        const { details } = await fetchProjectDetailsById(token, id);
         const result = Object.values(details);
         if (result.length > 0) {
-          setGenerateVoiceBlocks([]);
-          result.forEach((item: any) => {
-            setGenerateVoiceBlocks((prev) => {
-              return [...prev, {...item.tts_details, speaker_id: item.speaker_details?.id}]
-            })
-          })
+          const list: VAUX_GENERATE_TTS[] = [];
+          result.forEach((item: any, index: number) => {
+            list.push({...item.tts_details, project_id: id, language: 'en', speaker_id: item.speaker_details?.id, block_number: index});
+          });
+          setGenerateVoiceBlocks([...list]);
         }
       }
       fetchDetailsById();
     }
-  }, [id, token])
+  }, [id, token]);
+
+  const updateGenerateBlockHandler = (item: VAUX_GENERATE_TTS) => {
+    setGenerateVoiceBlocks((prev: VAUX_GENERATE_TTS[]) => {
+      let list = [...prev];
+      list = list.map(element => element.block_number === item.block_number ? item : element);
+      return [...list];
+    });
+  }
 
   return (
     <>
       <div className='mx-auto w-[70%]'>
         {
           generateVoiceBlocks.map((item, index) => {
-            return <GenerateAIBlock key={`generate-block-` + index} blockDetail={item} />
+            return <GenerateAIBlock key={`generate-block-` + index} blockDetail={item} updateBlockDetail={updateGenerateBlockHandler}  />
           })
         }
         <div className='flex justify-center'>
