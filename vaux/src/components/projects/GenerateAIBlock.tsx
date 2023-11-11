@@ -12,11 +12,14 @@ import SliderDropdown from "components/common/SliderDropdown";
 import {ReactComponent as UpArrow} from 'assets/up_arrow.svg';
 
 
+import { useParams } from "react-router-dom";
 
 function GenerateAIBlock({
 	aiVoicesList,
+	rowNo
 }: {
 	aiVoicesList: Array<VAUX_AI_VOICES>;
+	rowNo:number
 }) {
 	const [selectedAIVoice, setSelectedAIVoice] = useState<VAUX_AI_VOICES>(
 		aiVoicesList[0],
@@ -34,22 +37,25 @@ function GenerateAIBlock({
 	}, [aiVoicesList]);
 
 	const [openExploreAIsModal, setOpenExploreAIsModal] = useState(false);
+	let { id } = useParams();
 	const handleOpenExploreAIsModal = () => setOpenExploreAIsModal(true);
 	const handleCloseExploreAIsModal = () => setOpenExploreAIsModal(false);
 	const handleTTSListen = async () => {
 		if (AIBoxInpRef?.current?.value && AIBoxInpRef?.current?.value.length > 0) {
 			setIsloading(true);
 			const link = await generateTTS(token, {
+				project_id: id,
 				text: AIBoxInpRef?.current?.value,
 				speaker_id: selectedAIVoice.Id,
+				language: "en",
+				emotion: "neutral",
+				duration: 1.2,
+				block_number: rowNo,
 			});
 			if (link) {
 				setAudioLink(link);
-				if (ttsAudioRef?.current?.paused) {
-					ttsAudioRef.current.play();
-				}
-				setIsloading(false);
 			}
+			setIsloading(false);
 		}
 	};
 	const handleDownloadTTS = async () => {
@@ -152,9 +158,10 @@ function GenerateAIBlock({
 								autoPlay
 								className="w-full h-[32px]"
 								controls
-								controlsList={"nofullscreen nodownload noremoteplayback"}
+								controlsList={"nofullscreen nodownload "}
 								src={AudioLink}
 								ref={ttsAudioRef}
+
 							/>
 						</div>
 					)}

@@ -43,8 +43,8 @@ function Project() {
     <>
       <div className='mx-auto w-[70%]'>
         {
-          generateVoiceBlocks.map((item) => {
-            return <GenerateAIBlock key={item} aiVoicesList={aiVoicesList} />
+          generateVoiceBlocks.map((item,index) => {
+            return <GenerateAIBlock key={item} rowNo={index+1}  aiVoicesList={aiVoicesList} />
           })
         }
         <div className='flex justify-center'>
