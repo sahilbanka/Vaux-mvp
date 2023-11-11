@@ -25,10 +25,9 @@ const ExploreAI = (props: ExploreAIProps) => {
 	const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
 	const { addAiVoice } = useContext(AiVoicesContext);
 
-	// useEffect(() => {
-	// 	if(props && props.selectedAiVoice && props.selectedAiVoice.Id)
-	// 	setIsAnyAudioSelected(props.selectedAiVoice?.Id ?? '');	
-	// }, [])
+	useEffect(() => {
+		setIsAnyAudioSelected(props.selectedAiVoice?.Id ?? '');	
+	}, [props.selectedAiVoice?.Id])
 
 	useEffect(() => {
 		const getAllAIVoices = async () => {

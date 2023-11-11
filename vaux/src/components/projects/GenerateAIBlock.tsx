@@ -11,6 +11,7 @@ import { useCookie } from "hooks/useCookie";
 import SliderDropdown from "components/common/SliderDropdown";
 import { AiVoicesContext } from 'context/AiVoicesContext';
 import { useLocalStorage } from "hooks/useLocalStorage";
+import { MenuItem, Select, SxProps, Theme } from "@mui/material";
 
 function GenerateAIBlock({
 	blockDetail,
@@ -29,6 +30,31 @@ function GenerateAIBlock({
 	const [openSpeed, setOpenSpeed] = useState(false);
 	const [generateBlockDetail, setGenerateBlockDetail] = useState(blockDetail);
 	const [selectedAIVoice, setSelectedAIVoice] = useState(aiVoices[0]);
+
+	const selectStyles: SxProps<Theme> = {
+		border: 'none',
+		padding:' 0 1rem 0rem 0.5rem',
+		maxWidth: '6rem',
+		':focus-visible': {
+			outline: 'none !important'
+		},
+		'.MuiSelect-select': {
+			padding: '0',
+			paddingRight: '8px !important',
+			fontSize: '12px',
+			fontWeight: '500 !important',
+			fontFamily: `'Inter', sans-serif`
+		},
+		'.MuiOutlinedInput-notchedOutline': {
+			borderWidth: '0px !important',
+			':focus-visible': {
+				outline: 'none !important'
+			},
+		},
+		'.MuiSvgIcon-root': {
+			right: '0px'
+		},
+	}
 
 	useEffect(() => {
 		setGenerateBlockDetail(blockDetail);
@@ -65,7 +91,7 @@ function GenerateAIBlock({
 				block_number: generateBlockDetail.block_number,
 				pitch: generateBlockDetail.pitch,
 			};
-			const link = await generateTTS(token, payload);
+			const link = await generateTTS(token, [payload]);
 			if (link) {
 				setAudioLink(link);
 			}
@@ -110,6 +136,17 @@ function GenerateAIBlock({
 									/>
 									<span>{`${selectedAIVoice?.Name} (${selectedAIVoice?.Gender})`}</span>
 									<DownArrow className="fill-primary mx-2" />
+								</div>
+								<div
+									className="flex rounded-3xl font-medium border border-gray-300 justify-center items-center px-2 py-1 text-xs cursor-pointer">
+									<Select className="generate-block-select" sx={selectStyles} defaultValue="Neutral" value={generateBlockDetail.emotion} onChange={(event) => updateGenerateBlockDetail('emotion', event.target.value)}>
+										{
+											selectedAIVoice && selectedAIVoice?.Emotion.length > 0 &&
+											selectedAIVoice.Emotion.map(emotion => {
+												return <MenuItem key={emotion} value={emotion.toLowerCase()}>{emotion}</MenuItem>
+											})
+										}
+									</Select>
 								</div>
 								<div className="relative">
 									<div
@@ -172,10 +209,8 @@ function GenerateAIBlock({
 											<a
 												href={AudioLink}
 												ref={downloadAudioRef}
-												className="invisible"
-												download={`VOAUX-${
-													selectedAIVoice.Name + "-" + selectedAIVoice.Id
-												}.wav`}
+												download={`VOAUX-${selectedAIVoice.Name + "-" + selectedAIVoice.Id
+													}.wav`}
 											>
 												<DownloadButton
 													className="w-[24px] font-medium h-[24px] cursor-pointer"
@@ -208,14 +243,14 @@ function GenerateAIBlock({
 						</div>
 						{AudioLink && (
 							<div className="mt-3 w-full ">
-								 <audio
+								<audio
 									autoPlay
 									className="w-full h-[32px]"
 									controls
 									controlsList={"nofullscreen nodownload "}
 									src={AudioLink}
 									ref={ttsAudioRef}
-									/> 
+								/>
 							</div>
 						)}
 					</div>

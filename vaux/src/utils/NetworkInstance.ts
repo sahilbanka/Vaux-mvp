@@ -33,8 +33,10 @@ export const vauxAPI = (token:any = '') => {
       },
       (error: AxiosError) => {
         const { response, request } = error || {};
-        if (error.status === 401) {
-
+        if (response?.status === 401) {
+          window.localStorage.removeItem('vaux-staff-token');
+          window.localStorage.removeItem('userId');
+          window.location.href = '/login';
         }
         return Promise.reject(response || request);
       }

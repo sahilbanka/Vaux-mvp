@@ -1,4 +1,5 @@
 import { VAUX_AI_VOICES_RESPONSE } from "./APIResponseTypes";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 
 export const formatAIVoicesResponseForLanding = (
 	voices: VAUX_AI_VOICES_RESPONSE,
@@ -29,3 +30,8 @@ export const formatAIVoicesResponseForLanding = (
 	}
 	return result;
 };
+
+export const decodeToken = (token: string) => {
+	const details: any = jwtDecode(token);
+	window.localStorage.setItem('userDetails', details?.payload);
+}
