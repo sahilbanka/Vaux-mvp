@@ -2,16 +2,18 @@ import { useContext, useEffect, useState } from 'react';
 import { VAUX_GENERATE_TTS } from 'utils/APIResponseTypes';
 import GenerateAIBlock from 'components/projects/GenerateAIBlock';
 import {ReactComponent as AddCircle} from 'assets/add_circle.svg';
+import { ReactComponent as GenerateButton } from "assets/generate.svg";
+import { ReactComponent as DownloadButton } from "assets/download.svg";
 import { fetchProjectDetailsById } from 'actions/APIActions';
-import { useCookie } from 'hooks/useCookie';
 import { useParams } from 'react-router';
 import { AiVoicesContext } from 'context/AiVoicesContext';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
 
 
 function Project() {
 
-  const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
+  const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
   const { id } = useParams();
   const { aiVoices } = useContext(AiVoicesContext);
   const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState<VAUX_GENERATE_TTS[]>([{ project_id: id ?? '', speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 0 }]);
@@ -57,10 +59,18 @@ function Project() {
             return <GenerateAIBlock key={`generate-block-` + index} blockDetail={item} updateBlockDetail={updateGenerateBlockHandler}  />
           })
         }
-        <div className='flex justify-center'>
+        <div className='flex justify-center gap-2'>
           <div className='flex justify-center items-center rounded-3xl border border-gray-300 text-center px-2 py-1 text-xs cursor-pointer hover:bg-gray-200' onClick={addBlockHandler}>
             <AddCircle className='w-5 h-5 fill-black'/>
             <span className='text-gray-500 font-semibold'>{`Add a block`}</span>
+          </div>
+          <div className='flex justify-center items-center rounded-3xl border border-gray-300 text-center px-2 py-1 text-xs cursor-pointer hover:bg-gray-200' onClick={addBlockHandler}>
+            <GenerateButton className='w-4 h-4 mr-1' style={{ padding: '0.1rem', filter: 'brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(664%) hue-rotate(182deg) brightness(92%) contrast(86%)'}}/>
+            <span className='text-gray-500 font-semibold'>{`Play All`}</span>
+          </div>
+          <div className='flex justify-center items-center rounded-3xl border border-gray-300 text-center px-2 py-1 text-xs cursor-pointer hover:bg-gray-200' onClick={addBlockHandler}>
+            <DownloadButton className='w-4 h-4 mr-1' style={{ padding: '0.1rem', filter: 'brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(664%) hue-rotate(182deg) brightness(92%) contrast(86%)'}}/>
+            <span className='text-gray-500 font-semibold'>{`Download All`}</span>
           </div>
         </div>
       </div>

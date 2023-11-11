@@ -1,10 +1,11 @@
 import { fetchUserDetailsById, updateUserDetails } from "actions/APIActions";
 import { useCookie } from "hooks/useCookie";
+import { useLocalStorage } from "hooks/useLocalStorage";
 import React, { useEffect, useState } from "react";
 
 const UserProfile = (props: any) => {
-	const [userId, setUserId] = useCookie("userId", JSON.stringify(null));
-	const [token, setToken] = useCookie("vaux-staff-token", JSON.stringify(null));
+	const [userId, setUserId] = useLocalStorage("userId", JSON.stringify(null));
+	const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
 	const [UserDetail, setUserDetail] = useState<any>({});
 	const [inputUserDetail, setInputUserDetail] = useState<any>({});
 	const [disabledInput, setDisabledInput] = useState<any>({

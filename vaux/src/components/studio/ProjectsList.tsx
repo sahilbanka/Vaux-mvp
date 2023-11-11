@@ -4,13 +4,14 @@ import { useEffect, useState } from "react"
 import { VAUX_PROJECT_LIST_ITEM } from "utils/APIResponseTypes";
 import ProjectFolder from "assets/project_folder.svg";
 import { useNavigate } from "react-router";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 function ProjectsList() {
 
     const navigate = useNavigate();
 
-    const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
-    const [userId] = useCookie("userId", JSON.stringify(null));
+    const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
+    const [userId] = useLocalStorage("userId", JSON.stringify(null));
     const [projectsList, setProjectsList] = useState<Array<VAUX_PROJECT_LIST_ITEM>>([]);
 
 

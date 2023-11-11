@@ -10,13 +10,14 @@ import { generateTTS } from "actions/APIActions";
 import { useCookie } from "hooks/useCookie";
 import SliderDropdown from "components/common/SliderDropdown";
 import { AiVoicesContext } from 'context/AiVoicesContext';
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 function GenerateAIBlock({
 	blockDetail, updateBlockDetail
 }: {
 	blockDetail: VAUX_GENERATE_TTS, updateBlockDetail: (item: VAUX_GENERATE_TTS) => void
 }) {
-	const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
+	const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
 	const { aiVoices } = useContext(AiVoicesContext);
 	const ttsAudioRef = useRef<HTMLAudioElement>(null);
 	const [AudioLink, setAudioLink] = useState<string>("");
