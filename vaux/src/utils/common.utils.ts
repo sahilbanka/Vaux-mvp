@@ -1,4 +1,5 @@
 import { VAUX_AI_VOICES_RESPONSE } from "./APIResponseTypes";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 
 export const formatAIVoicesResponseForLanding = (
 	voices: VAUX_AI_VOICES_RESPONSE,
@@ -19,8 +20,8 @@ export const formatAIVoicesResponseForLanding = (
 			break;
 		}
 		if (
-			(voice?.Gender == "M" && limit[voice.Gender] < MaleCount) ||
-			(voice?.Gender == "F" && limit[voice.Gender] < FemaleCount)
+			(voice?.Gender === "M" && limit[voice.Gender] < MaleCount) ||
+			(voice?.Gender === "F" && limit[voice.Gender] < FemaleCount)
 		) {
 			limit[voice.Gender] = limit[voice.Gender] + 1;
 			result.push({ ...voice, img_id: voice.Gender + limit[voice.Gender] });
@@ -29,3 +30,8 @@ export const formatAIVoicesResponseForLanding = (
 	}
 	return result;
 };
+
+export const decodeToken = (token: string) => {
+	const details: any = jwtDecode(token);
+	window.localStorage.setItem('userDetails', details?.payload);
+}

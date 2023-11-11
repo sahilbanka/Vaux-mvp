@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
 import { useCookie } from 'hooks/useCookie';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
 
 function SignUp() {
@@ -28,8 +29,8 @@ function SignUp() {
 function SignUpContent() {
 
     const navigate = useNavigate();
-    const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null), { expires: 7, secure: true });
-    const [userId, setUserId] = useCookie('userId', JSON.stringify(null));
+    const [token, setToken] = useLocalStorage('vaux-staff-token', JSON.stringify(null));
+    const [userId, setUserId] = useLocalStorage('userId', JSON.stringify(null));
 
 
     const [signupForm, setSignupForm] = useState(
@@ -61,8 +62,8 @@ function SignUpContent() {
         }
         if (Token) {
           setErrMsg("");
-          setToken(Token);
-          setUserId(Id);
+          setUserId(JSON.stringify(Id));
+          setToken(JSON.stringify(Token));
           routeChange('/studio');
         }
     };

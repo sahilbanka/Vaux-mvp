@@ -1,55 +1,166 @@
-import UserIcon from 'assets/user_icon.svg';
-// import UpArrow from 'assets/up_arrow.svg';
-import OptionsDropdown from '../common/dropdown/OptionsDropdown'
-import { Constants } from 'utils/constants'
-import { useNavigate } from 'react-router';
-
+import CreateProject from "components/common/CreateProject";
+import GlobalModal from "components/common/GlobalModal";
+import { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Logout from "@mui/icons-material/Logout";
+import UserProfile from "components/UserDetail/UserProfile";
+import { useAuth } from "hooks/useAuth";
+import { useNavigate } from "react-router";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 function AuthHeader() {
+	const { logout }: any = useAuth();
+	const [userDetails] = useLocalStorage('userDetails', JSON.stringify(null));
+	const navigate = useNavigate();
 
-    const navigate = useNavigate();
-
-    const routeChange = (path: string, params?: any) => {
-        navigate(path, { state: params });
-    }
-
-    return (
-        <nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full p-0 border-b border-gray-300 bg-white">
-            <div className='flex bg-primary w-[90px] h-[67px] items-center justify-center'>
-                <a href="/studio">
-                    <div className="flex">
-                        {/* <img
+	const [openCreateProject, setOpenCreateProject] = useState(false);
+    const [openMyAccountModal, setOpenMyAccountModal] = useState(false);
+	const handleProjectCloseModal = () => setOpenCreateProject(false);
+    const handleCloseMyAccountModal = () => setOpenMyAccountModal(false);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleLogout = () => {
+        logout();
+		navigate('/login');
+	};
+    const handleOnClickMyAccBtn = () => {
+        setOpenMyAccountModal(true);
+	};
+    const handleClose = () => {
+        setAnchorEl(null);
+      };
+    const makeBadge = () => {
+		const name = [userDetails?.first_name, userDetails?.last_name];
+        if (name.length > 1) {
+          return name[0].charAt(0).toUpperCase() + name[1].charAt(0).toUpperCase();
+        }
+        return name[0].charAt(0);
+      };
+	return (
+		<nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full p-0 border-b border-gray-300 bg-white">
+			<div className="flex bg-primary w-[90px] h-[67px] items-center justify-center">
+				<a href="/studio">
+					<div className="flex">
+						{/* <img
                             src="https://flowbite.com/docs/images/logo.svg"
                             className="h-8 mr-3"
                             alt="VAux Logo"
                         /> */}
-                        <span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
-                            VAUX
-                        </span>
-                    </div>
-                </a>
-            </div>
-            <div className={`flex items-center w-auto`} id="menu">
-                <ul className="flex items-center justify-between pt-0 px-2 gap-4 md:gap-0">
-                    <li className="cursor-pointer md:px-6 md:py-3 block">
-                        <button className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-semibold" onClick={() => routeChange('/')}>
-                            Create Project
-                        </button>
-                    </li>
-                    <li className="cursor-pointer md:px-4 md:py-3 block">
-                        <OptionsDropdown options_classes='absolute top-[50px] right-0 py-2 block max-h-[60vh] min-h-[50px] shadow-md bg-primary block'
-                            DD_data={Constants.optionDropdownDataProfile} DD_Item_classes='text-[14px] px-2 text-white' itemTextColor='text-white'
-                            arrowStyles={`top-[-15%] right-[10px] fill-primary`}>
-                            <div className='flex items-center text-white gap-1 border border-solid border-white bg-primary p-2 rounded-circle font-semibold'>
-                                {/* <img width={20} height={20} src={UserIcon} alt="user-icon" /> */}
-                                {'OR'}
-                            </div>
-                        </OptionsDropdown>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    )
+						<span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
+							VAUX
+						</span>
+					</div>
+				</a>
+			</div>
+			<div className={`flex items-center w-auto`} id="menu">
+				<ul className="flex items-center justify-between pt-0 px-2 gap-4 md:gap-0">
+					<li className="cursor-pointer md:px-6 md:py-3 block">
+						<button
+							className="text-primary bg-white border border-solid border-primary px-4 py-2 rounded-xmd font-medium hover:bg-primary hover:text-white"
+							onClick={() => setOpenCreateProject(true)}
+						>
+							{/* <AddCircle className='fill-white inline w-[20px] h-[20px] mx-1' /> */}
+							Create Project
+						</button>
+					</li>
+					<li className="cursor-pointer md:px-4 md:py-3 block">
+						<Tooltip title="Account settings">
+							<IconButton
+								onClick={handleClick}
+								size="small"
+								sx={{ ml: 2,  background: "rgb(24 42 117 / 1)",  "&:hover": {
+                                    background: "rgb(24 42 117 / 1)",
+                                  }}}
+								aria-controls={open ? "account-menu" : undefined}
+								aria-haspopup="true"
+								aria-expanded={open ? "true" : undefined}
+							>
+								<Avatar
+									sx={{
+										width: 30,
+										height: 30,
+										background: "rgb(24 42 117 / 1)",
+                                        fontSize:"16px",
+									}}
+								>
+									{makeBadge()}
+								</Avatar>
+							</IconButton>
+						</Tooltip>
+						<Menu
+							anchorEl={anchorEl}
+							id="account-menu"
+							open={open}
+							onClose={handleClose}
+							onClick={handleClose}
+							PaperProps={{
+								elevation: 0,
+								sx: {
+									overflow: "visible",
+									filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+									mt: 1.5,
+									"& .MuiAvatar-root": {
+										width: 24,
+										height: 24,
+										ml: -0.5,
+										mr: 1,
+									},
+									"&:before": {
+										content: '""',
+										display: "block",
+										position: "absolute",
+										top: 0,
+										right: 14,
+										width: 10,
+										height: 10,
+										bgcolor: "background.paper",
+										transform: "translateY(-50%) rotate(45deg)",
+										zIndex: 0,
+									},
+								},
+							}}
+							transformOrigin={{ horizontal: "right", vertical: "top" }}
+							anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+						>
+							<MenuItem onClick={handleOnClickMyAccBtn}>
+								<Avatar /> My Account
+							</MenuItem>
+							<Divider />
+							<MenuItem onClick={handleLogout}>
+								<ListItemIcon>
+									<Logout fontSize="small" />
+								</ListItemIcon>
+								Logout
+							</MenuItem>
+						</Menu>
+					</li>
+				</ul>
+			</div>
+			<GlobalModal
+				openState={openCreateProject}
+				onCloseHandler={handleProjectCloseModal}
+				MinWidth={"400"}
+			>
+				<CreateProject handleCloseModal={handleProjectCloseModal} />
+			</GlobalModal>
+            {openMyAccountModal && <GlobalModal
+				openState={openMyAccountModal}
+				onCloseHandler={handleCloseMyAccountModal}
+				MinWidth={"400"}
+			>
+                <UserProfile handleCloseModal={handleCloseMyAccountModal}/>
+			</GlobalModal>}
+		</nav>
+	);
 }
 
-export default AuthHeader
+export default AuthHeader;

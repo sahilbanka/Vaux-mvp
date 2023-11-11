@@ -44,7 +44,7 @@ const GlobalModal = (props: GlobalModalProps) => {
 			keepMounted = {iskeepMounted}
 		>
 			<Fade in={openState}>
-				<Box sx={style} className=" max-sm:min-w-[300px] w-[70%]">
+				<Box sx={style} className={`max-sm:min-w-[300px] ${MinWidth ? MinWidth : ""}`}>
 					{children}
 				</Box>
 			</Fade>

@@ -1,10 +1,11 @@
 import google from 'assets/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import signin from 'assets/signin.svg';
-import { useEffect, useState } from 'react';
 import { login } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
-import { useCookie } from 'hooks/useCookie';
+import { useState } from 'react';
+import { useLocalStorage } from 'hooks/useLocalStorage';
+import { decodeToken } from 'utils/common.utils';
 
 function Login() {
 
@@ -27,8 +28,8 @@ function Login() {
 function LoginContent() {
 
   const navigate = useNavigate();
-  const [token, setToken] = useCookie('vaux-staff-token', JSON.stringify(null), { expires: 7, secure: true });
-  const [userId, setUserId] = useCookie('userId', JSON.stringify(null));
+  const [token, setToken] = useLocalStorage('vaux-staff-token', JSON.stringify(null));
+  const [userId, setUserId] = useLocalStorage('userId', JSON.stringify(null));
 
 
   const [email, setEmail] = useState('');
@@ -51,8 +52,9 @@ function LoginContent() {
     }
     if (Token && Token?.length > 0) {
       setErrMsg("");
-      setUserId(Id);
-      setToken(Token);
+      setToken(JSON.stringify(Token));
+      setUserId(JSON.stringify(Id));
+      decodeToken(Token);
       routeChange('/studio');
     }
   };

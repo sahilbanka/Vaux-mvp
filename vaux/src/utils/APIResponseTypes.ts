@@ -25,3 +25,35 @@ export interface VAUX_TTS_RESPONSE {
     speech_s3_link: string;
     status: boolean;
 }
+export interface VAUX_USER_DETAIL_RESPONSE {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string | null;
+
+}
+export interface VAUX_PROJECTS_LIST_RESPONSE {
+    [key: string] : VAUX_PROJECT_LIST_ITEM
+}
+
+export interface VAUX_PROJECT_LIST_ITEM {
+    id: string;
+    name: string;
+    user_id: string
+}
+export interface VAUX_UPDATE_USER_RESPONSE{
+    Status: boolean,
+    error: string
+}
+
+export interface VAUX_GENERATE_TTS {
+    project_id: string;
+    speaker_id: string;
+    text: string;
+    language: string;
+    emotion: string;
+    duration: number;
+    pitch: number;
+    block_number: number
+}

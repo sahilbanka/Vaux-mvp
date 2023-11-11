@@ -1,14 +1,16 @@
 import AuthHeader from 'components/studio/AuthHeader';
 import SideNav from 'components/studio/SideNav';
-import ProjectsList from 'components/studio/ProjectsList';
+import AiVoicesProvider from 'context/AiVoicesContext';
 
-function Studio() {
+function Studio({ content }: any) {
     return (
-        <>
-            <AuthHeader />
-            <SideNav />
-            <ProjectsList />
-        </>
+        <AiVoicesProvider>
+            <>
+                <AuthHeader />
+                <SideNav />
+                <main className='p-8 ml-[90px] bg-light-white overflow-y-auto' style={{ height: 'calc(100% - 68px)' }}>{content}</main>
+            </>
+        </AiVoicesProvider>
     )
 }
 

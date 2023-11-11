@@ -9,7 +9,7 @@ const commonConfig = {
     'Content-Type': 'application/json',
   },
 };
-export const vauxAPI = (token = '') => {
+export const vauxAPI = (token:any = '') => {
     const vauxInstance = axios.create({
       ...commonConfig,
       baseURL: baseURL,
@@ -33,6 +33,11 @@ export const vauxAPI = (token = '') => {
       },
       (error: AxiosError) => {
         const { response, request } = error || {};
+        if (response?.status === 401) {
+          window.localStorage.removeItem('vaux-staff-token');
+          window.localStorage.removeItem('userId');
+          window.location.href = '/login';
+        }
         return Promise.reject(response || request);
       }
     );
