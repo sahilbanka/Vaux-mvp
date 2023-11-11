@@ -172,7 +172,6 @@ function GenerateAIBlock({
 											<a
 												href={AudioLink}
 												ref={downloadAudioRef}
-												className="invisible"
 												download={`VOAUX-${
 													selectedAIVoice.Name + "-" + selectedAIVoice.Id
 												}.wav`}
