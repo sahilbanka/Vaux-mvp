@@ -8,6 +8,9 @@ import ExploreAI from "components/exploreAI/ExploreAI";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 import { generateTTS } from "actions/APIActions";
 import { useCookie } from "hooks/useCookie";
+import SliderDropdown from "components/common/SliderDropdown";
+import {ReactComponent as UpArrow} from 'assets/up_arrow.svg';
+
 
 
 function GenerateAIBlock({
@@ -73,7 +76,7 @@ function GenerateAIBlock({
 			{selectedAIVoice && (
 				<div className="bg-white border border-transparent rounded-lg p-4 m-10">
 					<div className="flex justify-between items-center">
-						<div className="flex gap-4">
+						<div className="flex gap-4 items-center">
 							<div
 								className="flex rounded-3xl border border-gray-300 justify-center items-center px-1 py-0 text-xs cursor-pointer font-medium"
 								onClick={handleOpenExploreAIsModal}
@@ -86,9 +89,13 @@ function GenerateAIBlock({
 								<span>{`${selectedAIVoice?.Name} (${selectedAIVoice?.Gender})`}</span>
 								<DownArrow className="fill-primary mx-2" />
 							</div>
-							<div className="flex rounded-3xl font-medium border border-gray-300 justify-center items-center px-2 py-1 text-xs cursor-pointer">
-								<span>{`Pitch`}</span>
-								<DownArrow className="fill-primary mx-1" />
+							<div className="relative">
+								<div className="flex rounded-3xl font-medium border border-gray-300 justify-center items-center px-2 py-1 text-xs cursor-pointer">
+									<span>{`Pitch`}</span>
+									<DownArrow className="fill-primary mx-1" />								
+								</div>
+								<div className='absolute top-[100%] left-[40%] w-[0px] h-[0px] border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[12px]'></div>
+								<SliderDropdown />
 							</div>
 							<div className="flex rounded-3xl font-medium border border-gray-300 justify-center items-center px-2 py-1 text-xs cursor-pointer">
 								<span>{`Speed`}</span>
