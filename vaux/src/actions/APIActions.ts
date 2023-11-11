@@ -93,7 +93,7 @@ export const fetchUserDetailsById = async (userID:string,token:string = "") =>{
 		if(!userID.length){
 			throw new Error("Invalid User");
 		}
-		// const token = useCookie('vaux-staff-token',JSON.stringify(null));
+		// const token = useLocalStorage('vaux-staff-token',JSON.stringify(null));
 		const response = await vauxAPI(token).get<VAUX_USER_DETAIL_RESPONSE>(VAUX_USER_DETAIL_TYPE + userID);
 		const { data } = response;
 		if (response.status === 200 && data) {
