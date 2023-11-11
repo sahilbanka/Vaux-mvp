@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAllAIVoiceSample } from "actions/APIActions";
 import ExploreAIVoiceItem from "./ExploreAIItem";
 import { VAUX_AI_VOICES } from "utils/APIResponseTypes";
 import { useCookie } from "hooks/useCookie";
+import { AiVoicesContext } from 'context/AiVoicesContext';
 interface ExploreAIProps {
 	isSelectionRequired?: boolean;
+	selectedAiVoice?: VAUX_AI_VOICES;
 	SelectCallbackFunc?: (selectedAIVoice: VAUX_AI_VOICES) => void;
 	handleCloseModal: () => void;
 }
@@ -15,11 +17,12 @@ const ExploreAI = (props: ExploreAIProps) => {
 		[],
 	);
 	const [isAudioPlaying, setIsAudioPlaying] = useState("");
-	const [isAnyAudioSelected, setIsAnyAudioSelected] = useState("");
+	const [isAnyAudioSelected, setIsAnyAudioSelected] = useState(props.selectedAiVoice?.Id ?? '');
 	const [filterAIVoices, setFilterAIVoices] = useState({
 		gender: "ALL",
 	});
-	const [token, setToken] = useCookie("vaux-staff-token", JSON.stringify(null));
+	const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
+	const { addAiVoice } = useContext(AiVoicesContext);
 
 	useEffect(() => {
 		const getAllAIVoices = async () => {
@@ -31,7 +34,11 @@ const ExploreAI = (props: ExploreAIProps) => {
 			}
 		};
 		getAllAIVoices();
-	}, []);
+	}, [token]);
+
+	useEffect(() => {
+		addAiVoice(AIVoices);
+	}, [AIVoices])
 
 	const filterAiVoicesHandler = (field: string, value: string) => {
 		switch (field) {
@@ -121,7 +128,7 @@ const ExploreAI = (props: ExploreAIProps) => {
 							return (
 								<ExploreAIVoiceItem
 									key={voice.Id}
-									SelectCallbackFunc={() => voiceCallbackFunctionHandler(voice)}
+									SelectCallbackFunc={() => {voiceCallbackFunctionHandler(voice);}}
 									isSelectionRequired={isSelectionRequired}
 									AIVoiceItem={voice}
 									isAudioPlaying={isAudioPlaying}

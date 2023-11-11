@@ -26,18 +26,18 @@ const marks = [
 ];
 
 function valuetext(value: number) {
-    return `${value}°C`;
+    return `${value}%`;
 }
 
-export default function SliderDropdown({arrowStyles}: any) {
+export default function SliderDropdown({positionStyles, sliderValue, sliderChanged}: {positionStyles: string, sliderValue: number, sliderChanged: (value: number) => void}) {
     return (
-        <Box className="custom-slider bg-white position-absolute py-4 px-8" sx={{ width: 300, position: 'absolute' }}>
+        <Box className={`custom-slider bg-white position-absolute py-4 px-8 border border-gray-200 rounded-xmd shadow-md ${positionStyles}`} sx={{ width: 300, position: 'absolute' }}>
             <Slider
                 aria-label="Percentages"
-                defaultValue={0} min={-50} max={50}
-                getAriaValueText={valuetext}
+                defaultValue={sliderValue ?? 0} min={-50} max={50}
+                getAriaValueText={valuetext} autoFocus 
                 valueLabelDisplay="auto"
-                marks={marks}
+                marks={marks} onChangeCommitted={(event, value) => sliderChanged(value as number)}
             />
         </Box>
     );

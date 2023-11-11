@@ -46,3 +46,14 @@ export interface VAUX_UPDATE_USER_RESPONSE{
     Status: boolean,
     error: string
 }
+
+export interface VAUX_GENERATE_TTS {
+    project_id: string;
+    speaker_id: string;
+    text: string;
+    language: string;
+    emotion: string;
+    duration: number;
+    pitch: number;
+    block_number: number
+}

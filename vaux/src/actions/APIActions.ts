@@ -1,5 +1,5 @@
 import { VAUX_SAMPLE_VOICE_LIST_TYPE, VAUX_LOGIN, VAUX_SIGNUP, VAUX_VOICE_LIST_TYPE, VAUX_VOICE_PREVIEW_TYPE, VAUX_PROCESS_TTS, VAUX_PROJECTS_LIST, VAUX_USER_DETAIL_TYPE, VAUX_CREATE_PROJECT, VAUX_FETCH_PROJECT_DETAILS, VAUX_UPDATE_USER } from "utils/APITypes";
-import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_LOGIN_RESPONSE, VAUX_PROJECTS_LIST_RESPONSE, VAUX_TTS_RESPONSE, VAUX_UPDATE_USER_RESPONSE, VAUX_USER_DETAIL_RESPONSE } from "utils/APIResponseTypes";
+import { VAUX_AI_VOICES_PREVIEW_RESPONSE, VAUX_AI_VOICES_RESPONSE, VAUX_GENERATE_TTS, VAUX_LOGIN_RESPONSE, VAUX_PROJECTS_LIST_RESPONSE, VAUX_TTS_RESPONSE, VAUX_UPDATE_USER_RESPONSE, VAUX_USER_DETAIL_RESPONSE } from "utils/APIResponseTypes";
 import { vauxAPI } from "utils/NetworkInstance";
 
 export const login = async (loginForm: any) => {
@@ -60,7 +60,7 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 	}
 }
 
-export const generateTTS = async (token:string="None",ttsBody: any) => {
+export const generateTTS = async (token:string="None", ttsBody: VAUX_GENERATE_TTS | {text: string}) => {
 	try {
 		const response = await vauxAPI(token).post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, [{...ttsBody}]);
 		const {data} = response;
@@ -124,7 +124,7 @@ export const fetchProjectDetailsById = async (token: string, projectId: string |
 		const response = await vauxAPI(token).get(`${VAUX_FETCH_PROJECT_DETAILS}/${projectId}`);
 		const { data } = response;
 		if (response.status === 200 && data) {
-			return data; 
+			return data;
 		}
 	}
 	catch (error) {

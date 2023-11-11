@@ -1,50 +1,53 @@
-import { useEffect, useState } from 'react';
-import { VAUX_AI_VOICES } from 'utils/APIResponseTypes';
+import { useContext, useEffect, useState } from 'react';
+import { VAUX_GENERATE_TTS } from 'utils/APIResponseTypes';
 import GenerateAIBlock from 'components/projects/GenerateAIBlock';
 import {ReactComponent as AddCircle} from 'assets/add_circle.svg';
-import { fetchProjectDetailsById, getAllAIVoiceSample } from 'actions/APIActions';
+import { fetchProjectDetailsById } from 'actions/APIActions';
 import { useCookie } from 'hooks/useCookie';
 import { useParams } from 'react-router';
+import { AiVoicesContext } from 'context/AiVoicesContext';
+
 
 
 function Project() {
 
   const [token] = useCookie("vaux-staff-token", JSON.stringify(null));
-  const params = useParams();
-  const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState([1]);
-  const [aiVoicesList, setAiVoiceList] = useState<Array<VAUX_AI_VOICES>>([]);
+  const { id } = useParams();
+  const { aiVoices } = useContext(AiVoicesContext);
+  const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState<VAUX_GENERATE_TTS[]>([{ project_id: id ?? '', speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 1 }]);
 
   const addBlockHandler = () => {
-    setGenerateVoiceBlocks((prev) => {
-      return [...prev, (prev.length ? prev.length + 1 : 1)];
-    })
+    if (id && aiVoices?.length > 0) {
+        setGenerateVoiceBlocks((prev: VAUX_GENERATE_TTS[]) => {
+          return [ ...prev, { project_id: id, speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 1 } ];
+        });
+    }
   }
 
-	useEffect(() => {
-		const getAllAIVoices = async () => {
-			const voices = await getAllAIVoiceSample(token, false);
-			// const voices = List_all_voicesMockData;
-      setAiVoiceList(voices?.length ? [...voices] : []);
-		};
-		getAllAIVoices();
-	}, [token]);
-
   useEffect(() => {
-    if (params && params.id) {
+    if (id) {
       const fetchDetailsById = async () => {
-        const details = await fetchProjectDetailsById(token, params.id ?? undefined);
-        console.log(details);
+        const { details } = await fetchProjectDetailsById(token, id ?? undefined);
+        const result = Object.values(details);
+        if (result.length > 0) {
+          setGenerateVoiceBlocks([]);
+          result.forEach((item: any) => {
+            setGenerateVoiceBlocks((prev) => {
+              return [...prev, {...item.tts_details, speaker_id: item.speaker_details?.id}]
+            })
+          })
+        }
       }
       fetchDetailsById();
     }
-  }, [params, token])
+  }, [id, token])
 
   return (
     <>
       <div className='mx-auto w-[70%]'>
         {
-          generateVoiceBlocks.map((item,index) => {
-            return <GenerateAIBlock key={item} rowNo={index+1}  aiVoicesList={aiVoicesList} />
+          generateVoiceBlocks.map((item, index) => {
+            return <GenerateAIBlock key={`generate-block-` + index} blockDetail={item} />
           })
         }
         <div className='flex justify-center'>
