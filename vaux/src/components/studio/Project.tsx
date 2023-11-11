@@ -57,7 +57,7 @@ function Project() {
   const generatePlayAllHandler = async () => {
     if (generateVoiceBlocks.length > 1) {
       setLoading(true);
-      const link = await generateTTS('', generateVoiceBlocks);
+      const link = await generateTTS(token, generateVoiceBlocks);
       if (link) {
         setPlayAllAudioLink(link);
       }

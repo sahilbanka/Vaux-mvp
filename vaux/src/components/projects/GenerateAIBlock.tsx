@@ -122,7 +122,7 @@ function GenerateAIBlock({
 			{generateBlockDetail &&
 				generateBlockDetail?.speaker_id &&
 				selectedAIVoice && (
-					<div className="bg-white border border-transparent rounded-lg p-4 m-10">
+					<div className="bg-white border border-transparent rounded-lg p-4 m-8">
 						<div className="flex justify-between items-center">
 							<div className="flex gap-4 items-center">
 								<div
