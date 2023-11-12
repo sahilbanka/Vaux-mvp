@@ -3,8 +3,6 @@ import { Constants } from 'utils/constants';
 import mainImage from 'assets/main.svg';
 import voiceAi from 'assets/voice_ai.svg';
 import { useRef, useState } from 'react';
-import playBtn from "assets/play.svg";
-import pauseBtn from "assets/pause.svg";
 import { useNavigate } from 'react-router';
 import { generateTTS } from 'actions/APIActions';
 import VideoCarousel from './VideoCarousel';
@@ -139,39 +137,6 @@ function Overview() {
             <span className='block md:w-[60%] lg:w-[50%]'>Expand your storytelling reach and global content accessibility by entrusting VOAUX to generate engaging, lifelike voiceovers for your documentary films, available in multiple languages</span>
           </div>
           <div className='md:w-2/3 m-auto group relative'>
-            {/* <video ref={videoRef} className='border border-primary rounded-xl' src="dynamic_assets/merc_voice_over.mp4"
-              onPause={() => {
-                setPlayControls((prev: any) => {
-                  return { ...prev, pauseMode: false, playMode: true };
-                });
-              }}
-              onPlay={() => {
-                setPlayControls((prev: any) => {
-                  return { ...prev, pauseMode: true, playMode: false };
-                });
-              }}></video>
-            <div className='absolute top-[50%] left-[50%]' style={{ transform: 'translate(-50%, -50%)' }}>
-              {playControls.playMode && (
-                <img
-                  src={playBtn}
-                  alt="play"
-                  className="cursor-pointer"
-                  onClick={() => {
-                    videoPlayHandler();
-                  }}
-                />
-              )}
-              {playControls.pauseMode && (
-                <img
-                  src={pauseBtn}
-                  alt="pause"
-                  className="cursor-pointer hidden group-hover:block"
-                  onClick={() => {
-                    videoPauseHandler();
-                  }}
-                />
-              )}
-            </div> */}
             <VideoCarousel />
           </div>
         </div>

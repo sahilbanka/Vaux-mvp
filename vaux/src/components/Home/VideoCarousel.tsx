@@ -100,12 +100,12 @@ export default function VideoCarousel() {
                         />
                     )}
                 </div>
-                <MobileStepper sx={{ px: '4rem' }}
+                <MobileStepper sx={{ px: '4.5rem', '.MuiMobileStepper-dotActive': {backgroundColor: '#182a75'} }}
                     steps={maxSteps}
                     position="static"
                     activeStep={activeStep}
                     nextButton={
-                        <Button
+                        <Button sx={{ color: '#182a75'}}
                             size="small"
                             onClick={handleNext}
                             disabled={activeStep === maxSteps - 1}
@@ -119,7 +119,7 @@ export default function VideoCarousel() {
                         </Button>
                     }
                     backButton={
-                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                        <Button sx={{ color: '#182a75'}} size="small" onClick={handleBack} disabled={activeStep === 0}>
                             {theme.direction === 'rtl' ? (
                                 <KeyboardArrowRight />
                             ) : (
