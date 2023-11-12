@@ -12,9 +12,11 @@ import Logout from "@mui/icons-material/Logout";
 import UserProfile from "components/UserDetail/UserProfile";
 import { useAuth } from "hooks/useAuth";
 import { useNavigate } from "react-router";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 function AuthHeader() {
 	const { logout }: any = useAuth();
+	const [userDetails] = useLocalStorage('userDetails', JSON.stringify(null));
 	const navigate = useNavigate();
 
 	const [openCreateProject, setOpenCreateProject] = useState(false);
@@ -37,7 +39,7 @@ function AuthHeader() {
         setAnchorEl(null);
       };
     const makeBadge = () => {
-        let name = "sahil banka".split(" ");
+		const name = [userDetails?.first_name, userDetails?.last_name];
         if (name.length > 1) {
           return name[0].charAt(0).toUpperCase() + name[1].charAt(0).toUpperCase();
         }

@@ -3,9 +3,9 @@ import { useGoogleLogin } from '@react-oauth/google';
 import signin from 'assets/signin.svg';
 import { login } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
-import { useCookie } from 'hooks/useCookie';
 import { useState } from 'react';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { decodeToken } from 'utils/common.utils';
 
 function Login() {
 
@@ -54,6 +54,7 @@ function LoginContent() {
       setErrMsg("");
       setToken(JSON.stringify(Token));
       setUserId(JSON.stringify(Id));
+      decodeToken(Token);
       routeChange('/studio');
     }
   };

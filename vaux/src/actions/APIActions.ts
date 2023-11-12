@@ -60,9 +60,9 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 	}
 }
 
-export const generateTTS = async (token:string="None", ttsBody: VAUX_GENERATE_TTS | {text: string}) => {
+export const generateTTS = async (token:string="None", ttsBody: VAUX_GENERATE_TTS[] | {text: string}) => {
 	try {
-		const response = await vauxAPI(token).post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, [{...ttsBody}]);
+		const response = await vauxAPI(token).post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, ttsBody);
 		const {data} = response;
 		if(response.status ===200 && data){
 			return data?.speech_s3_link;
