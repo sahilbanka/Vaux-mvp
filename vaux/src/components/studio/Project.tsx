@@ -9,6 +9,7 @@ import { useParams } from 'react-router';
 import { AiVoicesContext } from 'context/AiVoicesContext';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import loadingGIF from "assets/smallLoader.svg";
+import { SelectedProjectContext } from 'context/SelectedProjectContext';
 
 
 
@@ -17,6 +18,7 @@ function Project() {
   const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
   const { id } = useParams();
   const { aiVoices } = useContext(AiVoicesContext);
+  const { setSelectedProject } = useContext(SelectedProjectContext);
   const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState<VAUX_GENERATE_TTS[]>([{ project_id: id ?? '', speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 0 }]);
   const [loading, setLoading] = useState(false);
   const [playAllAudioLink, setPlayAllAudioLink] = useState('');
@@ -33,7 +35,8 @@ function Project() {
     if (id) {
       const fetchDetailsById = async () => {
         const { details } = await fetchProjectDetailsById(token, id);
-        const result = Object.values(details);
+        setSelectedProject({id: id ?? null, name: details?.name ?? null})
+        const result = Object.values(details?.block_details);
         if (result.length > 0) {
           const list: VAUX_GENERATE_TTS[] = [];
           result.forEach((item: any, index: number) => {
@@ -43,6 +46,9 @@ function Project() {
         }
       }
       fetchDetailsById();
+    }
+    return () => {
+      setSelectedProject({id: null, name: null});
     }
   }, [id, token]);
 

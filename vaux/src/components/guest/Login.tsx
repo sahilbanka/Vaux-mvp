@@ -98,7 +98,7 @@ function LoginContent() {
 
   return (
     <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] flex flex-col justify-center overflow-y-auto">
-      <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Login to VAux</h1>
+      <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Login to VOAUX</h1>
       <div className='flex flex-col gap-3 items-center'>
         {/* <GoogleLogin
           onSuccess={credentialResponse => {
