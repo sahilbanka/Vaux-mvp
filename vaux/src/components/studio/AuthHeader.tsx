@@ -1,6 +1,6 @@
 import CreateProject from "components/common/CreateProject";
 import GlobalModal from "components/common/GlobalModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,9 +13,11 @@ import UserProfile from "components/UserDetail/UserProfile";
 import { useAuth } from "hooks/useAuth";
 import { useNavigate } from "react-router";
 import { useLocalStorage } from "hooks/useLocalStorage";
+import { SelectedProjectContext } from 'context/SelectedProjectContext';
 
 function AuthHeader() {
 	const { logout }: any = useAuth();
+	const { project } = useContext(SelectedProjectContext);
 	const [userDetails] = useLocalStorage('userDetails', JSON.stringify(null));
 	const navigate = useNavigate();
 
@@ -56,10 +58,13 @@ function AuthHeader() {
                             alt="VAux Logo"
                         /> */}
 						<span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
-							VAUX
+							VOAUX
 						</span>
 					</div>
 				</a>
+			</div>
+			<div className="flex items-center flex-auto text-2xl font-semibold my-2 mx-8">
+				{project?.name}
 			</div>
 			<div className={`flex items-center w-auto`} id="menu">
 				<ul className="flex items-center justify-between pt-0 px-2 gap-4 md:gap-0">

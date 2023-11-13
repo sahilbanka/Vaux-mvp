@@ -27,7 +27,7 @@ const MainHeader = () => {
 							alt="Flowbite Logo"
 						/> */}
 						<span className="self-center text-2xl font-semibold whitespace-nowrap">
-							VAUX
+							VOAUX
 						</span>
 					</div>
 				</a>

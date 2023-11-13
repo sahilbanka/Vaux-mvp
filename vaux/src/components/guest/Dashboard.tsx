@@ -5,7 +5,7 @@ import Overview from "components/Home/Overview"
 
 function Dashboard() {
   return (
-    <div>
+    <div className="h-full">
       <MainHeader />
       <Overview />
     </div>

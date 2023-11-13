@@ -1,7 +1,7 @@
 import google from 'assets/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import signin from 'assets/signin.svg';
-import { login } from 'actions/APIActions';
+import { login, userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { useLocalStorage } from 'hooks/useLocalStorage';
@@ -45,7 +45,7 @@ function LoginContent() {
       event.preventDefault();
     }
     const data: any = await login(fromGoogle ? { token: gToken } : { email: email, password: password });
-    let { Error, Id,  Token } = data || {}
+    let { Error, Id, Token } = data || {}
     if (Error) {
       setErrMsg(Error);
       return
@@ -55,6 +55,24 @@ function LoginContent() {
       setToken(JSON.stringify(Token));
       setUserId(JSON.stringify(Id));
       decodeToken(Token);
+      routeChange('/studio');
+    }
+  };
+
+  const handleSignup = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
+    if (!fromGoogle) {
+      event.preventDefault();
+    }
+    const data: any = await userSignup({ token: gToken });
+    let { Error, Id, Token } = data || {}
+    if (Error) {
+      setErrMsg(Error);
+      return
+    }
+    if (Token) {
+      setErrMsg("");
+      setUserId(JSON.stringify(Id));
+      setToken(JSON.stringify(Token));
       routeChange('/studio');
     }
   };
@@ -87,7 +105,7 @@ function LoginContent() {
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      handleLogin(null, true, tokenResponse?.access_token)
+      handleSignup(null, true, tokenResponse?.access_token)
     },
     onError: errorResponse => console.log(errorResponse),
   });
@@ -98,7 +116,7 @@ function LoginContent() {
 
   return (
     <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] flex flex-col justify-center overflow-y-auto">
-      <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Login to VAux</h1>
+      <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Login to VOAUX</h1>
       <div className='flex flex-col gap-3 items-center'>
         {/* <GoogleLogin
           onSuccess={credentialResponse => {
