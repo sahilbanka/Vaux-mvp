@@ -7,12 +7,12 @@ import { Constants } from "utils/constants";
 import smallLoader from "assets/smallLoader.svg";
 interface ExploreAIVoiceItemPropsInterface {
 	AIVoiceItem: VAUX_AI_VOICES;
-	isAudioPlaying: string;
-	setIsAudioPlaying: React.Dispatch<React.SetStateAction<string>>;
+	isAudioPlaying: number;
+	setIsAudioPlaying: React.Dispatch<React.SetStateAction<number>>;
 	isSelectionRequired?: boolean;
 	SelectCallbackFunc?: () => void;
-	isAnyAudioSelected: string;
-	setIsAnyAudioSelected: React.Dispatch<React.SetStateAction<string>>;
+	isAnyAudioSelected: number;
+	setIsAnyAudioSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 const ExploreAIVoiceItem = (props: ExploreAIVoiceItemPropsInterface) => {
 	let {

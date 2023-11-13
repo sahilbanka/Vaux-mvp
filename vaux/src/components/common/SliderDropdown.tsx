@@ -31,7 +31,7 @@ function valuetext(value: number) {
 
 export default function SliderDropdown({positionStyles, sliderValue, sliderChanged}: {positionStyles: string, sliderValue: number, sliderChanged: (value: number) => void}) {
     return (
-        <Box className={`custom-slider bg-white position-absolute py-4 px-8 border border-gray-200 rounded-xmd shadow-md ${positionStyles}`} sx={{ width: 300, position: 'absolute' }}>
+        <Box className={`custom-slider z-[1] bg-white position-absolute py-4 px-8 border border-gray-200 rounded-xmd shadow-md ${positionStyles}`} sx={{ width: 300, position: 'absolute' }}>
             <Slider
                 aria-label="Percentages"
                 value={sliderValue ?? 0} defaultValue={0} min={-50} max={50}

@@ -7,7 +7,7 @@ export interface VAUX_LOGIN_RESPONSE {
 export interface VAUX_AI_VOICES {
     Gender:string;
     Name:string;
-    Id: string;
+    Id: number;
     Img_url: string;
     Language: string;
     Emotion: Array<string>;
@@ -49,7 +49,7 @@ export interface VAUX_UPDATE_USER_RESPONSE{
 
 export interface VAUX_GENERATE_TTS {
     project_id: string;
-    speaker_id: string;
+    speaker_id: number;
     text: string;
     language: string;
     emotion: string;

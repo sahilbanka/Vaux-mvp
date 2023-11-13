@@ -9,6 +9,8 @@ import { useParams } from 'react-router';
 import { AiVoicesContext } from 'context/AiVoicesContext';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import loadingGIF from "assets/smallLoader.svg";
+import { SelectedProjectContext } from 'context/SelectedProjectContext';
+import Loader from 'components/common/Loader';
 
 
 
@@ -17,14 +19,16 @@ function Project() {
   const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
   const { id } = useParams();
   const { aiVoices } = useContext(AiVoicesContext);
+  const { setSelectedProject } = useContext(SelectedProjectContext);
   const [generateVoiceBlocks, setGenerateVoiceBlocks] = useState<VAUX_GENERATE_TTS[]>([{ project_id: id ?? '', speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: 0 }]);
   const [loading, setLoading] = useState(false);
+  const [apiLoading, setapiLoading] = useState(false); 
   const [playAllAudioLink, setPlayAllAudioLink] = useState('');
 
   const addBlockHandler = () => {
     if (id && aiVoices?.length > 0) {
       setGenerateVoiceBlocks((prev: VAUX_GENERATE_TTS[]) => {
-        return [...prev, { project_id: id, speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 0, pitch: 0, block_number: generateVoiceBlocks.length }];
+        return [...prev, { project_id: id, speaker_id: aiVoices[0]?.Id, text: '', language: 'en', emotion: 'neutral', duration: 1, pitch: 0, block_number: generateVoiceBlocks.length }];
       });
     }
   }
@@ -33,7 +37,8 @@ function Project() {
     if (id) {
       const fetchDetailsById = async () => {
         const { details } = await fetchProjectDetailsById(token, id);
-        const result = Object.values(details);
+        setSelectedProject({id: id ?? null, name: details?.name ?? null})
+        const result = Object.values(details?.block_details);
         if (result.length > 0) {
           const list: VAUX_GENERATE_TTS[] = [];
           result.forEach((item: any, index: number) => {
@@ -41,8 +46,13 @@ function Project() {
           });
           setGenerateVoiceBlocks([...list]);
         }
+        setapiLoading(false);
       }
+      setapiLoading(true);
       fetchDetailsById();
+    }
+    return () => {
+      setSelectedProject({id: null, name: null});
     }
   }, [id, token]);
 
@@ -67,8 +77,9 @@ function Project() {
 
   return (
     <>
-      <div className='mx-auto w-[70%]'>
-        {
+      {apiLoading && <Loader />}
+      {!apiLoading && <div className='mx-auto w-[70%]'>
+        { generateVoiceBlocks.length > 0 &&
           generateVoiceBlocks.map((item, index) => {
             return <GenerateAIBlock key={`generate-block-` + index} blockDetail={item} updateBlockDetail={updateGenerateBlockHandler} />
           })
@@ -110,7 +121,7 @@ function Project() {
             <audio autoPlay src={playAllAudioLink} controls className="m-4 w-full h-[32px]" controlsList={"nofullscreen nodownload "}></audio>
           </div>
         }
-      </div>
+      </div>}
 
     </>
 

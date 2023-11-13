@@ -36,6 +36,7 @@ export const vauxAPI = (token:any = '') => {
         if (response?.status === 401) {
           window.localStorage.removeItem('vaux-staff-token');
           window.localStorage.removeItem('userId');
+          window.localStorage.removeItem('userDetails');
           window.location.href = '/login';
         }
         return Promise.reject(response || request);

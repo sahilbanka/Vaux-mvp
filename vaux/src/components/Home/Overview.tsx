@@ -3,10 +3,9 @@ import { Constants } from 'utils/constants';
 import mainImage from 'assets/main.svg';
 import voiceAi from 'assets/voice_ai.svg';
 import { useRef, useState } from 'react';
-import playBtn from "assets/play.svg";
-import pauseBtn from "assets/pause.svg";
 import { useNavigate } from 'react-router';
 import { generateTTS } from 'actions/APIActions';
+import VideoCarousel from './VideoCarousel';
 
 
 
@@ -40,24 +39,24 @@ function Overview() {
     }
   }
 
-  const handleTTSListen = async () => {
-    if (generateRef?.current?.value && generateRef?.current?.value.length <= 100) {
-      const link = await generateTTS("None",{ text: generateRef?.current?.value });
-      if (ttsAudioRef.current) {
-        ttsAudioRef.current.src = link ?? '';
-        if (ttsAudioRef.current.paused) {
-          ttsAudioRef.current.play();
-        }
-      }
-    }
-  }
+  // const handleTTSListen = async () => {
+  //   if (generateRef?.current?.value && generateRef?.current?.value.length <= 100) {
+  //     const link = await generateTTS("None",[{ text: generateRef?.current?.value }]);
+  //     if (ttsAudioRef.current) {
+  //       ttsAudioRef.current.src = link ?? '';
+  //       if (ttsAudioRef.current.paused) {
+  //         ttsAudioRef.current.play();
+  //       }
+  //     }
+  //   }
+  // }
 
   const routeChange = (path: string, params?: any) => {
     navigate(path, { state: params });
   }
 
   return (
-    <div className='overview-main bg-background w-full p-8 md:px-16 md:py-12'>
+    <div style={{height: 'calc(100% - 75px)'}} className='overview-main bg-background w-full p-8 md:px-16 md:py-12 overflow-y-auto'>
       <div className="overview-head md:flex">
         <div className='mt-6 md:w-[55%] text-center md:text-left'>
           <span className='text-20 md:text-30 leading-normal font-medium my-8'>{Constants.Overview_Labels.subtitle}</span>
@@ -96,7 +95,7 @@ function Overview() {
       </div>
 
       <div className='vaux-introduction overflow-x-auto mb-8'>
-        <h1 className='w-full text-3xl md:text-5xl font-semibold my-10 text-center'>{Constants.Overview_Labels.introduce_vaux}</h1>
+        <h1 className='w-full text-3xl md:text-5xl font-semibold my-10 text-center'>{Constants.Overview_Labels.introduce_voux}</h1>
         <div className='flex flex-col mb-8 md:flex-row md:justify-center md:overflow-x-auto'>
           {
             Constants.Overview_Labels.introduction_list.map((listItem) => {
@@ -112,7 +111,7 @@ function Overview() {
         </div>
       </div>
 
-      <div className='vaux-trail'>
+      {/* <div className='vaux-trail'>
         <h1 className='w-full md:w-[55%] text-3xl md:text-4xl font-semibold mb-6'>Improve Your Projects with Incredibly <br></br><span className='text-4xl md:text-5xl'>AI</span> Vocalizations</h1>
         <div className="md:flex w-full gap-6">
           <div className='md:w-1/2'>
@@ -127,50 +126,18 @@ function Overview() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className='vaux-narrate'>
-        <h1 className='text-2xl md:text-4xl font-bold mb-10'>Discover Voice Narrations Crafted by the VAux AI Voice Generator</h1>
-        <span className='text-[1rem] md:text-xl font-normal'>"Below, you'll find compelling instances of authentic voiceovers, all shaped by the remarkable AI voices of VAux."</span>
+        <h1 className='text-2xl md:text-4xl font-bold mb-10'>Discover Voice Narrations Crafted by the VOAUX AI Voice Generator</h1>
+        <span className='text-[1rem] md:text-xl font-normal'>"Below, you'll find compelling instances of authentic voiceovers, all shaped by the remarkable AI voices of VOAUX."</span>
         <div className='md:flex mt-10 mb-4 gap-6'>
           <div className='md:w-1/3 my-6'>
-            <h1 className='text-2xl md:text-4xl font-semibold my-6'>Documentary</h1>
-            <span className='block md:w-[60%] lg:w-[50%]'>Expand your storytelling reach and global content accessibility by entrusting VAux to generate engaging, lifelike voiceovers for your documentary films, available in multiple languages</span>
+            <h1 className='text-2xl md:text-4xl font-semibold my-6'>Marketing</h1>
+            <span className='block md:w-[60%] lg:w-[50%]'>Expand your storytelling reach and global content accessibility by entrusting VOAUX to generate engaging, lifelike voiceovers for your documentary films, available in multiple languages</span>
           </div>
           <div className='md:w-2/3 m-auto group relative'>
-            <video ref={videoRef} className='border border-primary rounded-xl' src="dynamic_assets/merc_voice_over.mp4"
-              onPause={() => {
-                setPlayControls((prev: any) => {
-                  return { ...prev, pauseMode: false, playMode: true };
-                });
-              }}
-              onPlay={() => {
-                setPlayControls((prev: any) => {
-                  return { ...prev, pauseMode: true, playMode: false };
-                });
-              }}></video>
-            <div className='absolute top-[50%] left-[50%]' style={{ transform: 'translate(-50%, -50%)' }}>
-              {playControls.playMode && (
-                <img
-                  src={playBtn}
-                  alt="play"
-                  className="cursor-pointer"
-                  onClick={() => {
-                    videoPlayHandler();
-                  }}
-                />
-              )}
-              {playControls.pauseMode && (
-                <img
-                  src={pauseBtn}
-                  alt="pause"
-                  className="cursor-pointer hidden group-hover:block"
-                  onClick={() => {
-                    videoPauseHandler();
-                  }}
-                />
-              )}
-            </div>
+            <VideoCarousel />
           </div>
         </div>
       </div>

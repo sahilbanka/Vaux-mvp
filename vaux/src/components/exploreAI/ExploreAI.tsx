@@ -17,8 +17,8 @@ const ExploreAI = (props: ExploreAIProps) => {
 	const [filteredVoices, setFilteredVoices] = useState<Array<VAUX_AI_VOICES>>(
 		[],
 	);
-	const [isAudioPlaying, setIsAudioPlaying] = useState("");
-	const [isAnyAudioSelected, setIsAnyAudioSelected] = useState(props.selectedAiVoice?.Id ?? '');
+	const [isAudioPlaying, setIsAudioPlaying] = useState(-1);
+	const [isAnyAudioSelected, setIsAnyAudioSelected] = useState(props.selectedAiVoice?.Id ?? -1);
 	const [filterAIVoices, setFilterAIVoices] = useState({
 		gender: "ALL",
 	});
@@ -26,14 +26,14 @@ const ExploreAI = (props: ExploreAIProps) => {
 	const { addAiVoice } = useContext(AiVoicesContext);
 
 	useEffect(() => {
-		setIsAnyAudioSelected(props.selectedAiVoice?.Id ?? '');	
+		setIsAnyAudioSelected(props.selectedAiVoice?.Id ?? -1);	
 	}, [props.selectedAiVoice?.Id])
 
 	useEffect(() => {
 		const getAllAIVoices = async () => {
 			const voices = await getAllAIVoiceSample(token,false);
 			// const voices = List_all_voicesMockData;
-			if (voices?.length) {
+			if (voices && voices.length) {
 				setAIVoices(voices);
 				setFilteredVoices(voices);
 				addAiVoice(voices);
