@@ -6,6 +6,8 @@ import { userSignup } from 'actions/APIActions';
 import { useNavigate } from 'react-router';
 import { useCookie } from 'hooks/useCookie';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { decodeToken } from 'utils/common.utils';
+import Loader from 'components/common/Loader';
 
 
 function SignUp() {
@@ -31,6 +33,7 @@ function SignUpContent() {
     const navigate = useNavigate();
     const [token, setToken] = useLocalStorage('vaux-staff-token', JSON.stringify(null));
     const [userId, setUserId] = useLocalStorage('userId', JSON.stringify(null));
+    const [loading, setLoading] = useState(false);
 
 
     const [signupForm, setSignupForm] = useState(
@@ -51,6 +54,7 @@ function SignUpContent() {
     });
 
     const handleSignup = async (event?: any, fromGoogle?: boolean, gToken?: string | undefined) => {
+        setLoading(true);
         if (!fromGoogle) {
             event.preventDefault();
         }
@@ -58,12 +62,15 @@ function SignUpContent() {
         let { Error, Id, Token } = data || {}
         if (Error) {
           setErrMsg(Error);
+          setLoading(false);
           return
         }
         if (Token) {
           setErrMsg("");
           setUserId(JSON.stringify(Id));
           setToken(JSON.stringify(Token));
+          decodeToken(Token);
+          setLoading(false);
           routeChange('/studio');
         }
     };
@@ -121,61 +128,64 @@ function SignUpContent() {
     }
 
     return (
-        <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] flex flex-col justify-center overflow-y-auto">
-            <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Create an Account</h1>
-            <div className='flex flex-col gap-3 items-center'>
-                <button className='w-full flex justify-center border border-solid border-indigo rounded-xmd py-2 px-3 focus:outline-none text-black hover:bg-button-hover' onClick={() => googleLogin()}>
-                    <img src={google} alt="google" className='w-6 h-6 mx-4' />
-                    <span>Sign Up with Google</span>
-                </button>
-                <div className='text-center'><span className='text-indigo text-xl font-normal'>OR</span></div>
-                <div className='w-full'>
-                    <form onSubmit={(event: any) => handleSignup(event, false, undefined)}>
-                        {errorMsg && <div className='font-medium text-red-600'>{errorMsg}</div>}
-                        <div className="mb-6 font-medium">
-                            <input type="text" id="firstName" name="firstName" placeholder='First Name'
-                                onChange={(event) => {
-                                    setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } });
-                                    handleNameInput(signupForm.first_name, 'first_name')
-                                }}
-                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.first_name && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid First Name"}</span>}
+        <>
+            {loading && <Loader />}
+            <div className="lg:py-12 lg:px-20 md:p-32 sm:p-20 p-8 w-full lg:w-[40%] h-[100%] flex flex-col justify-center overflow-y-auto">
+                <h1 className="text-3xl font-semibold mb-12 sm:mb-16 text-center">Create an Account</h1>
+                <div className='flex flex-col gap-3 items-center'>
+                    <button className='w-full flex justify-center border border-solid border-indigo rounded-xmd py-2 px-3 focus:outline-none text-black hover:bg-button-hover' onClick={() => googleLogin()}>
+                        <img src={google} alt="google" className='w-6 h-6 mx-4' />
+                        <span>Sign Up with Google</span>
+                    </button>
+                    <div className='text-center'><span className='text-indigo text-xl font-normal'>OR</span></div>
+                    <div className='w-full'>
+                        <form onSubmit={(event: any) => handleSignup(event, false, undefined)}>
+                            {errorMsg && <div className='font-medium text-red-600'>{errorMsg}</div>}
+                            <div className="mb-6 font-medium">
+                                <input type="text" id="firstName" name="firstName" placeholder='First Name'
+                                    onChange={(event) => {
+                                        setSignupForm((prev) => { return { ...prev, first_name: event?.target.value } });
+                                        handleNameInput(signupForm.first_name, 'first_name')
+                                    }}
+                                    className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                                {!valideForm.first_name && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid First Name"}</span>}
 
-                        </div>
-                        <div className="mb-6">
-                            <input type="text" id="lastName" name="lastName" placeholder='Last Name'
-                                onChange={(event) => {
-                                    setSignupForm((prev) => { return { ...prev, last_name: event?.target.value } });
-                                    handleNameInput(signupForm.last_name, 'last_name')
-                                }}                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.last_name && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Last Name"}</span>}
-                        </div>
-                        <div className="mb-6">
-                            <input type="text" id="email" name="email" placeholder='Email'
-                                onChange={(event) => handleEmailInput(event.target.value)}
-                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.email && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
+                            </div>
+                            <div className="mb-6">
+                                <input type="text" id="lastName" name="lastName" placeholder='Last Name'
+                                    onChange={(event) => {
+                                        setSignupForm((prev) => { return { ...prev, last_name: event?.target.value } });
+                                        handleNameInput(signupForm.last_name, 'last_name')
+                                    }}                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                                {!valideForm.last_name && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Last Name"}</span>}
+                            </div>
+                            <div className="mb-6">
+                                <input type="text" id="email" name="email" placeholder='Email'
+                                    onChange={(event) => handleEmailInput(event.target.value)}
+                                    className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                                {!valideForm.email && <span className='text-xs font-medium mt-1 text-red-600'>{"Invalid Email"}</span>}
 
-                        </div>
-                        <div className="mb-6">
-                            <input type="password" id="password" name="password" placeholder='Password'
-                                onChange={(event) => handlePasswordInput(event.target.value)}
-                                className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
-                            {!valideForm.password && <span className='text-xs font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
+                            </div>
+                            <div className="mb-6">
+                                <input type="password" id="password" name="password" placeholder='Password'
+                                    onChange={(event) => handlePasswordInput(event.target.value)}
+                                    className="w-full border border-indigo py-2 px-3 focus:outline-none focus:border-primary bg-transparent rounded-xmd" autoComplete="off" />
+                                {!valideForm.password && <span className='text-xs font-medium mt-1 text-red-600'>{"Password must be atleast 8 character long"}</span>}
 
-                        </div>
-                        <div className={`mb-6' ${(valideForm.first_name && valideForm.last_name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
-                            <button type="submit" className="bg-primary text-white font-medium rounded-xmd py-2 px-4 w-full">SIGNUP</button>
-                        </div>
-                    </form>
+                            </div>
+                            <div className={`mb-6' ${(valideForm.first_name && valideForm.last_name && valideForm.email && valideForm.password) ? "" : "pointer-events-none opacity-50"}`}>
+                                <button type="submit" className="bg-primary text-white font-medium rounded-xmd py-2 px-4 w-full">SIGNUP</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div className='border-t border-t-indigo mb-8'></div>
+                <div className=''>
+                    <button type="submit" className="border border-primary font-medium py-2 px-4 w-full hover:bg-button-hover rounded-xmd"
+                        onClick={() => routeChange('/login')}>LOGIN</button>
                 </div>
             </div>
-            <div className='border-t border-t-indigo mb-8'></div>
-            <div className=''>
-                <button type="submit" className="border border-primary font-medium py-2 px-4 w-full hover:bg-button-hover rounded-xmd"
-                    onClick={() => routeChange('/login')}>LOGIN</button>
-            </div>
-        </div>
+        </>
     )
 }
 

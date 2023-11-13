@@ -46,7 +46,7 @@ export const getAllAIVoiceSample = async (token:string = "",sample:boolean=false
 		console.log(error);
 	}
 };
-export const fetchAIVoicePreview = async (id:string , name:string) =>{
+export const fetchAIVoicePreview = async (id:number , name:string) =>{
 	const token = "";
 	try {
 		const response = await vauxAPI(token).get<VAUX_AI_VOICES_PREVIEW_RESPONSE>(VAUX_VOICE_PREVIEW_TYPE + `${id}/${name}`);
@@ -60,7 +60,7 @@ export const fetchAIVoicePreview = async (id:string , name:string) =>{
 	}
 }
 
-export const generateTTS = async (token:string="None", ttsBody: VAUX_GENERATE_TTS[] | {text: string}) => {
+export const generateTTS = async (token:string="None", ttsBody: VAUX_GENERATE_TTS[]) => {
 	try {
 		const response = await vauxAPI(token).post<VAUX_TTS_RESPONSE>(VAUX_PROCESS_TTS, ttsBody);
 		const {data} = response;

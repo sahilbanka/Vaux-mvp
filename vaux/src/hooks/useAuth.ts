@@ -11,8 +11,9 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    setToken(null);
-    setUserId(null);
+    window.localStorage.removeItem('vaux-staff-token');
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('userDetails');
   };
 
   return { token, userId, login, logout };

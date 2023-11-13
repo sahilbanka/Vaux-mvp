@@ -39,17 +39,17 @@ function Overview() {
     }
   }
 
-  const handleTTSListen = async () => {
-    if (generateRef?.current?.value && generateRef?.current?.value.length <= 100) {
-      const link = await generateTTS("None",{ text: generateRef?.current?.value });
-      if (ttsAudioRef.current) {
-        ttsAudioRef.current.src = link ?? '';
-        if (ttsAudioRef.current.paused) {
-          ttsAudioRef.current.play();
-        }
-      }
-    }
-  }
+  // const handleTTSListen = async () => {
+  //   if (generateRef?.current?.value && generateRef?.current?.value.length <= 100) {
+  //     const link = await generateTTS("None",[{ text: generateRef?.current?.value }]);
+  //     if (ttsAudioRef.current) {
+  //       ttsAudioRef.current.src = link ?? '';
+  //       if (ttsAudioRef.current.paused) {
+  //         ttsAudioRef.current.play();
+  //       }
+  //     }
+  //   }
+  // }
 
   const routeChange = (path: string, params?: any) => {
     navigate(path, { state: params });
@@ -111,7 +111,7 @@ function Overview() {
         </div>
       </div>
 
-      <div className='vaux-trail'>
+      {/* <div className='vaux-trail'>
         <h1 className='w-full md:w-[55%] text-3xl md:text-4xl font-semibold mb-6'>Improve Your Projects with Incredibly <br></br><span className='text-4xl md:text-5xl'>AI</span> Vocalizations</h1>
         <div className="md:flex w-full gap-6">
           <div className='md:w-1/2'>
@@ -126,7 +126,7 @@ function Overview() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className='vaux-narrate'>
         <h1 className='text-2xl md:text-4xl font-bold mb-10'>Discover Voice Narrations Crafted by the VOAUX AI Voice Generator</h1>

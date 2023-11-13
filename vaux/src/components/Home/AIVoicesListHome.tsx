@@ -5,7 +5,7 @@ import AIVoiceItemHome from "components/Home/AIVoiceItemHome";
 
 const AIVoicesListHome = () => {
 	const [AIVoices, setAIVoices] = useState<any>([]);
-	const [isAudioPlaying, setIsAudioPlaying] = useState("");
+	const [isAudioPlaying, setIsAudioPlaying] = useState(-1);
 
 	useEffect(() => {
 		const getAllAIVoices = async () => {
@@ -24,7 +24,7 @@ const AIVoicesListHome = () => {
 				(voice: {
 					Gender: string;
 					Name: string;
-					Id: string;
+					Id: number;
 					Img_url: string;
 					img_id: string;
 					Language: string;

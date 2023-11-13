@@ -7,7 +7,6 @@ import GlobalModal from "components/common/GlobalModal";
 import ExploreAI from "components/exploreAI/ExploreAI";
 import { VAUX_GENERATE_TTS } from "utils/APIResponseTypes";
 import { generateTTS } from "actions/APIActions";
-import { useCookie } from "hooks/useCookie";
 import SliderDropdown from "components/common/SliderDropdown";
 import { AiVoicesContext } from 'context/AiVoicesContext';
 import { useLocalStorage } from "hooks/useLocalStorage";
@@ -33,7 +32,7 @@ function GenerateAIBlock({
 
 	const selectStyles: SxProps<Theme> = {
 		border: 'none',
-		padding:' 0 1rem 0rem 0.5rem',
+		padding: ' 0 1rem 0rem 0.5rem',
 		maxWidth: '6rem',
 		':focus-visible': {
 			outline: 'none !important'
@@ -120,7 +119,6 @@ function GenerateAIBlock({
 	return (
 		<>
 			{generateBlockDetail &&
-				generateBlockDetail?.speaker_id &&
 				selectedAIVoice && (
 					<div className="bg-white border border-transparent rounded-lg p-4 m-8">
 						<div className="flex justify-between items-center">
@@ -180,7 +178,7 @@ function GenerateAIBlock({
 											setOpenSpeed(!openSpeed);
 										}}
 									>
-										<span>{`Speed`}</span>
+										<span>{`Duration`}</span>
 										<DownArrow className="fill-primary mx-1" />
 									</div>
 									{openSpeed && (

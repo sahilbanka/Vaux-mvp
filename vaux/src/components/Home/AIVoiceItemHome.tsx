@@ -11,15 +11,15 @@ interface AIVoiceItemHomePropsInterface {
 	AIVoiceItem: {
 		Gender: string;
 		Name: string;
-		Id: string;
+		Id: number;
 		Img_url: string;
 		img_id: string;
 		Language: string;
 		Emotion: Array<string>;
 		Country: string;
 	};
-	isAudioPlaying: string;
-	setIsAudioPlaying: React.Dispatch<React.SetStateAction<string>>;
+	isAudioPlaying: number;
+	setIsAudioPlaying: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
@@ -39,7 +39,7 @@ const AIVoiceItemHome = (props: AIVoiceItemHomePropsInterface) => {
 		F1: Avatar_female_1,
 		F2: Avatar_female_2,
 	};
-	const fetchAIVoiceAudioLink = async (VoiceId: string, name: string) => {
+	const fetchAIVoiceAudioLink = async (VoiceId: number, name: string) => {
 		// const url = await fetchAIVoicePreview(VoiceId, name);
 		const url = await fetchAIVoicePreview(VoiceId, name);
 		if (url) {
