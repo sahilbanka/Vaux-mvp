@@ -4,6 +4,7 @@ import { Constants } from "utils/constants";
 import GlobalModal from "components/common/GlobalModal";
 import ContactUs from "components/common/ContactUs";
 import { useNavigate } from "react-router";
+import LOGO from "assets/logo.jpeg";
 
 const MainHeader = () => {
 	const [showMenu, setShowMenu] = useState(false);
@@ -21,11 +22,11 @@ const MainHeader = () => {
 			<div>
 				<a href="/#">
 					<div className="flex">
-						{/* <img
-							src="https://flowbite.com/docs/images/logo.svg"
+						<img
+							src={LOGO}
 							className="h-8 mr-3"
-							alt="Flowbite Logo"
-						/> */}
+							alt="VOAUX Logo"
+						/>
 						<span className="self-center text-2xl font-semibold whitespace-nowrap">
 							VOAUX
 						</span>

@@ -10,7 +10,7 @@ import { generateTTS } from "actions/APIActions";
 import SliderDropdown from "components/common/SliderDropdown";
 import { AiVoicesContext } from 'context/AiVoicesContext';
 import { useLocalStorage } from "hooks/useLocalStorage";
-import { MenuItem, Select, SxProps, Theme } from "@mui/material";
+import { ClickAwayListener, MenuItem, Select, SxProps, Theme } from "@mui/material";
 
 function GenerateAIBlock({
 	blockDetail,
@@ -29,6 +29,44 @@ function GenerateAIBlock({
 	const [openSpeed, setOpenSpeed] = useState(false);
 	const [generateBlockDetail, setGenerateBlockDetail] = useState(blockDetail);
 	const [selectedAIVoice, setSelectedAIVoice] = useState(aiVoices[0]);
+
+	const pitchSliderOptions = [
+		{
+			value: -50,
+			label: '-50%',
+		},
+		{
+			value: -25,
+			label: '-25%',
+		},
+		{
+			value: 0,
+			label: '0%',
+		},
+		{
+			value: 25,
+			label: '25%',
+		},
+		{
+			value: 50,
+			label: '50%',
+		},
+	];
+
+	const speedSliderOptions = [
+		{
+			value: 1,
+			label: '1',
+		},
+		{
+			value: 2,
+			label: '2',
+		},
+		{
+			value: 3,
+			label: '3',
+		}
+	];
 
 	const selectStyles: SxProps<Theme> = {
 		border: 'none',
@@ -160,13 +198,8 @@ function GenerateAIBlock({
 									{openPitch && (
 										<>
 											<div className="absolute top-[110%] left-[40%] w-[0px] h-[0px] border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[12px]"></div>
-											<SliderDropdown
-												positionStyles={`top-[145%] left-[-174%]`}
-												sliderValue={generateBlockDetail.pitch}
-												sliderChanged={(value) =>
-													updateGenerateBlockDetail("pitch", value)
-												}
-											/>
+											<SliderDropdown positionStyles={`top-[145%] left-[-174%]`} sliderValue={generateBlockDetail.pitch}
+												sliderChanged={(value) => updateGenerateBlockDetail("pitch", value)} defaultValue={0} min={-50} max={50} sliderOptions={pitchSliderOptions} />
 										</>
 									)}
 								</div>
@@ -184,13 +217,11 @@ function GenerateAIBlock({
 									{openSpeed && (
 										<>
 											<div className="absolute top-[110%] left-[40%] w-[0px] h-[0px] border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[12px]"></div>
-											<SliderDropdown
-												positionStyles={`top-[145%] left-[-150%]`}
-												sliderValue={generateBlockDetail.duration}
-												sliderChanged={(value) =>
-													updateGenerateBlockDetail("duration", value)
-												}
-											/>
+											<ClickAwayListener onClickAway={() => setOpenSpeed(false)}>
+												<SliderDropdown
+													positionStyles={`top-[145%] left-[-150%]`} sliderValue={generateBlockDetail.duration}
+													sliderChanged={(value) => updateGenerateBlockDetail("duration", value)} defaultValue={1} min={1} max={3} sliderOptions={speedSliderOptions} />
+											</ClickAwayListener>
 										</>
 									)}
 								</div>

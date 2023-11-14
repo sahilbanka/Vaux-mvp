@@ -13,53 +13,65 @@ import UserProfile from "components/UserDetail/UserProfile";
 import { useAuth } from "hooks/useAuth";
 import { useNavigate } from "react-router";
 import { useLocalStorage } from "hooks/useLocalStorage";
-import { SelectedProjectContext } from 'context/SelectedProjectContext';
+import { SelectedProjectContext } from "context/SelectedProjectContext";
+import ContactUs from "components/common/ContactUs";
+import Email from "@mui/icons-material/Email";
+import LOGO from "assets/logo.jpeg";
 
 function AuthHeader() {
 	const { logout }: any = useAuth();
 	const { project } = useContext(SelectedProjectContext);
-	const [userDetails] = useLocalStorage('userDetails', JSON.stringify(null));
+	const [userDetails] = useLocalStorage("userDetails", JSON.stringify(null));
 	const navigate = useNavigate();
 
 	const [openCreateProject, setOpenCreateProject] = useState(false);
-    const [openMyAccountModal, setOpenMyAccountModal] = useState(false);
+	const [openMyAccountModal, setOpenMyAccountModal] = useState(false);
 	const handleProjectCloseModal = () => setOpenCreateProject(false);
-    const handleCloseMyAccountModal = () => setOpenMyAccountModal(false);
+	const handleCloseMyAccountModal = () => setOpenMyAccountModal(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [openContactUsModal, setOpenContactUsModal] = useState(false);
+	const handleOpenContactUsModal = (event: any) => {
+		event.preventDefault();
+		setOpenContactUsModal(true);
+	};
+	const handleCloseContactUsModal = (event: any) => {
+		event.preventDefault();
+		setOpenContactUsModal(false);
+	};
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleLogout = () => {
-        logout();
-		navigate('/login');
+		logout();
+		navigate("/login");
 	};
-    const handleOnClickMyAccBtn = () => {
-        setOpenMyAccountModal(true);
+	const handleOnClickMyAccBtn = () => {
+		setOpenMyAccountModal(true);
 	};
-    const handleClose = () => {
-        setAnchorEl(null);
-      };
-    const makeBadge = () => {
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+	const makeBadge = () => {
 		const name = [userDetails?.first_name, userDetails?.last_name];
-        if (name.length > 1) {
-          return name[0].charAt(0).toUpperCase() + name[1].charAt(0).toUpperCase();
-        }
-        return name[0].charAt(0);
-      };
+		if (name && name.length > 1) {
+			return name[0].charAt(0).toUpperCase() + name[1].charAt(0).toUpperCase();
+		}else if(name && name.length == 1){
+			return name[0].charAt(0);
+		}
+	};
 	return (
 		<nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full p-0 border-b border-gray-300 bg-white">
 			<div className="flex bg-primary w-[90px] h-[67px] items-center justify-center">
 				<a href="/studio">
 					<div className="flex">
-						{/* <img
-                            src="https://flowbite.com/docs/images/logo.svg"
-                            className="h-8 mr-3"
-                            alt="VAux Logo"
-                        /> */}
-						<span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
+					<img
+							src={LOGO}
+							alt="VOAUX Logo"
+						/>
+						{/* <span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
 							VOAUX
-						</span>
+						</span> */}
 					</div>
 				</a>
 			</div>
@@ -82,9 +94,13 @@ function AuthHeader() {
 							<IconButton
 								onClick={handleClick}
 								size="small"
-								sx={{ ml: 2,  background: "rgb(24 42 117 / 1)",  "&:hover": {
-                                    background: "rgb(24 42 117 / 1)",
-                                  }}}
+								sx={{
+									ml: 2,
+									background: "rgb(24 42 117 / 1)",
+									"&:hover": {
+										background: "rgb(24 42 117 / 1)",
+									},
+								}}
 								aria-controls={open ? "account-menu" : undefined}
 								aria-haspopup="true"
 								aria-expanded={open ? "true" : undefined}
@@ -94,7 +110,7 @@ function AuthHeader() {
 										width: 30,
 										height: 30,
 										background: "rgb(24 42 117 / 1)",
-                                        fontSize:"16px",
+										fontSize: "16px",
 									}}
 								>
 									{makeBadge()}
@@ -140,6 +156,16 @@ function AuthHeader() {
 								<Avatar /> My Account
 							</MenuItem>
 							<Divider />
+							<MenuItem
+								onClick={(event) => {
+									handleOpenContactUsModal(event);
+								}}
+							>
+								<ListItemIcon>
+									<Email fontSize="small" />
+								</ListItemIcon>
+								Contact Us
+							</MenuItem>
 							<MenuItem onClick={handleLogout}>
 								<ListItemIcon>
 									<Logout fontSize="small" />
@@ -157,13 +183,26 @@ function AuthHeader() {
 			>
 				<CreateProject handleCloseModal={handleProjectCloseModal} />
 			</GlobalModal>
-            {openMyAccountModal && <GlobalModal
-				openState={openMyAccountModal}
-				onCloseHandler={handleCloseMyAccountModal}
+			{openMyAccountModal && (
+				<GlobalModal
+					openState={openMyAccountModal}
+					onCloseHandler={handleCloseMyAccountModal}
+					MinWidth={"400"}
+				>
+					<UserProfile handleCloseModal={handleCloseMyAccountModal} />
+				</GlobalModal>
+			)}
+			{openContactUsModal && (<GlobalModal
+				openState={openContactUsModal}
+				onCloseHandler={(event) => {
+					handleCloseContactUsModal(event);
+				}}
 				MinWidth={"400"}
+				iskeepMounted={false}
 			>
-                <UserProfile handleCloseModal={handleCloseMyAccountModal}/>
-			</GlobalModal>}
+				<ContactUs />
+			</GlobalModal>
+			)}
 		</nav>
 	);
 }
