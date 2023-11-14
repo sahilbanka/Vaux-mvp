@@ -35,5 +35,9 @@ export const Constants = {
 	COUNTRY_MAPPING: {
 		"us": "USA"
 	},
+	CONTACT_US_EMAIL:{
+		SUPPORT:"xyz@mail.com",
+		PRODUCT_SUPPORT:"xyz@mail.com",
+	}
 }
 

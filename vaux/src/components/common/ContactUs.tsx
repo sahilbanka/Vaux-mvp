@@ -1,5 +1,7 @@
 import { List, ListItem } from "@mui/material";
 import contactUsbanner from "assets/contactUs.svg";
+import { Constants } from "utils/constants";
+
 const ContactUs = () => {
 	return (
 		<div className="grid  grid-cols-1 md:grid-cols-2 gap-4 items-center sm:text-lg 2xl:text-2xl">
@@ -14,7 +16,7 @@ const ContactUs = () => {
 							{" "}
 							write to{" "}
 							<a className="text-blue-700" href="mailto:xyz@mail.com">
-								xyz@mail.com
+								{Constants.CONTACT_US_EMAIL.SUPPORT}
 							</a>
 						</span>
 					</ListItem>
@@ -25,7 +27,7 @@ const ContactUs = () => {
 							<div style={{ fontWeight: "bold" }}>
 								Email us at{" "}
 								<a className="text-blue-700" href="mailto:xyz@mail.com">
-									xyz@mail.com
+								{Constants.CONTACT_US_EMAIL.PRODUCT_SUPPORT}
 								</a>
 							</div>
 						</p>
