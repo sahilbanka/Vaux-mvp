@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { environment } from '../environment/environment';
+import { VAUX_LOGIN } from './APITypes';
 
 const { baseURL } = environment || {};
 const commonConfig = {
@@ -33,7 +34,7 @@ export const vauxAPI = (token:any = '') => {
       },
       (error: AxiosError) => {
         const { response, request } = error || {};
-        if (response?.status === 401) {
+        if (response?.status === 401 && response.config.url !== VAUX_LOGIN ) {
           window.localStorage.removeItem('vaux-staff-token');
           window.localStorage.removeItem('userId');
           window.localStorage.removeItem('userDetails');
