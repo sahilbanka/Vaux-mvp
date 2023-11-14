@@ -16,6 +16,7 @@ import { useLocalStorage } from "hooks/useLocalStorage";
 import { SelectedProjectContext } from "context/SelectedProjectContext";
 import ContactUs from "components/common/ContactUs";
 import Email from "@mui/icons-material/Email";
+import LOGO from "assets/logo.jpeg";
 
 function AuthHeader() {
 	const { logout }: any = useAuth();
@@ -53,24 +54,24 @@ function AuthHeader() {
 	};
 	const makeBadge = () => {
 		const name = [userDetails?.first_name, userDetails?.last_name];
-		if (name.length > 1) {
+		if (name && name.length > 1) {
 			return name[0].charAt(0).toUpperCase() + name[1].charAt(0).toUpperCase();
+		}else if(name && name.length == 1){
+			return name[0].charAt(0);
 		}
-		return name[0].charAt(0);
 	};
 	return (
 		<nav className="sticky top-0 flex flex-wrap items-center justify-between z-20 w-full p-0 border-b border-gray-300 bg-white">
 			<div className="flex bg-primary w-[90px] h-[67px] items-center justify-center">
 				<a href="/studio">
 					<div className="flex">
-						{/* <img
-                            src="https://flowbite.com/docs/images/logo.svg"
-                            className="h-8 mr-3"
-                            alt="VAux Logo"
-                        /> */}
-						<span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
+					<img
+							src={LOGO}
+							alt="VOAUX Logo"
+						/>
+						{/* <span className="self-center text-2xl text-white font-semibold whitespace-nowrap">
 							VOAUX
-						</span>
+						</span> */}
 					</div>
 				</a>
 			</div>
