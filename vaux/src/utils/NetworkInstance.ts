@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { environment } from '../environment/environment';
+import { VAUX_LOGIN } from './APITypes';
 
 const { baseURL } = environment || {};
 const commonConfig = {
@@ -9,7 +10,7 @@ const commonConfig = {
     'Content-Type': 'application/json',
   },
 };
-export const vauxAPI = (token = '') => {
+export const vauxAPI = (token:any = '') => {
     const vauxInstance = axios.create({
       ...commonConfig,
       baseURL: baseURL,
@@ -33,6 +34,12 @@ export const vauxAPI = (token = '') => {
       },
       (error: AxiosError) => {
         const { response, request } = error || {};
+        if (response?.status === 401 && response.config.url !== VAUX_LOGIN ) {
+          window.localStorage.removeItem('vaux-staff-token');
+          window.localStorage.removeItem('userId');
+          window.localStorage.removeItem('userDetails');
+          window.location.href = '/login';
+        }
         return Promise.reject(response || request);
       }
     );
