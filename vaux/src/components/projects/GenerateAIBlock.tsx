@@ -103,6 +103,9 @@ function GenerateAIBlock({
 
 	useEffect(() => {
 		setGenerateBlockDetail(blockDetail);
+		if(blockDetail.speech_s3_link.length > 0) {
+			setAudioLink(blockDetail.speech_s3_link);
+		}
 		const result = aiVoices.find((item) => item.Id === blockDetail.speaker_id);
 		setSelectedAIVoice(result ?? aiVoices[0]);
 	}, [blockDetail]);
@@ -126,7 +129,7 @@ function GenerateAIBlock({
 			generateBlockDetail.text.length > 0
 		) {
 			setIsloading(true);
-			const payload = {
+			const payload: any = {
 				project_id: generateBlockDetail.project_id,
 				text: generateBlockDetail.text,
 				language: generateBlockDetail.language,
