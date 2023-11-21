@@ -8,6 +8,7 @@ const UserProfile = (props: any) => {
 	const [token, setToken] = useLocalStorage("vaux-staff-token", JSON.stringify(null));
 	const [UserDetail, setUserDetail] = useState<any>({});
 	const [inputUserDetail, setInputUserDetail] = useState<any>({});
+	const [userPasswordDetail, setUserPasswordDetail] = useState<any>({});
 	const [disabledInput, setDisabledInput] = useState<any>({
 		details: true,
 		password: true,
@@ -17,11 +18,15 @@ const UserProfile = (props: any) => {
 		last_name: true,
 		email: true,
 	});
+	const [passwordValidity, setPasswordValidity] = useState<any>({
+		currentPassword: false,
+		newPassword: false,
+	})
 	let { handleCloseModal } = props;
 
-	const onEditClickHandler = () => {
+	const onEditClickHandler = (type: string) => {
 		setDisabledInput((prev: any) => {
-			return { ...prev, details: false };
+			return { ...prev, [type]: false };
 		});
 	};
 	const handleEmailInput = (value: string) => {
@@ -63,17 +68,38 @@ const UserProfile = (props: any) => {
 			return;
 		}
 	};
-	const saveDetailsHandler = async () => {
+	const handlePasswordInput = (value: string, type: string) => {
+		switch (type) {
+			case 'currentPassword':
+				setPasswordValidity((prev: any) => {
+					return { ...prev, [type]: UserDetail.password === null ? true : UserDetail.password === value}
+				})
+				break;
+			default:
+				setInputUserDetail((prev: any) => {
+					return { ...prev, password: value };
+				});
+				setPasswordValidity((prev: any) => {
+					return { ...prev, [type]: value.length >= 8 }
+				});
+				break;
+		}
+	}
+	const saveDetailsHandler = async (from?: string) => {
 		if (inputValid.first_name && inputValid.last_name && inputValid.email) {
 			setDisabledInput((prev: any) => {
 				return { ...prev, details: true };
 			});
-			const res = await updateUserDetails(token, {
+			let payload: any = {
 				user_id: userId,
 				first_name: inputUserDetail.first_name,
 				last_name: inputUserDetail.last_name,
 				email: inputUserDetail.email,
-			});
+			}
+			if(from === 'password') {
+				payload.password = inputUserDetail.password
+			}
+			const res = await updateUserDetails(token, payload);
 			if (res) {
 				//toaster msg
 				handleCloseModal();
@@ -105,8 +131,8 @@ const UserProfile = (props: any) => {
 				<div className="flex gap-2 items-center">
 					<button
 						className="text-primary font-semibold  border border-solid border-primary px-3 py-1 rounded-md"
-						onClick={
-							disabledInput.details ? onEditClickHandler : saveDetailsHandler
+						onClick={() => 
+							disabledInput.details ? onEditClickHandler('details') : saveDetailsHandler
 						}
 					>
 						{disabledInput.details ? "Edit" : "Save"}
@@ -197,6 +223,70 @@ const UserProfile = (props: any) => {
 							)}
 						</div>
 						{/* <label className="text-red3 m-0" style="visibility: hidden;"></label> */}
+					</div>
+				</div>
+
+				<div className="h-1 border-b border-b-gray-300 p-2"></div>
+
+				<div className="relative flex items-center my-2 gap-2">
+					<button disabled={(!passwordValidity.newPassword || (!passwordValidity.currentPassword && UserDetail.password)) && !disabledInput.password}
+							className="absolute top-[10px] right-[30px] text-primary font-semibold  border border-solid border-primary px-3 py-1 rounded-md disabled:border-gray-300 disabled:bg-gray-200 disabled:text-white"
+							onClick={ () => 
+								disabledInput.password ? onEditClickHandler('password') : saveDetailsHandler('password')
+							}
+						>
+							{disabledInput.password ? "Edit Password" : "Save Password"}
+						</button>
+				</div>
+				{UserDetail.password && <div className="flex items-center mb-3 mt-3 gap-2">
+					<div className="w-full flex flex-col">
+						<label className="text-base font-semibold ">Current Password </label>
+						<div className="">
+							<input
+								type="password"
+								className={`min-w-[300px] max-w-[300px]  ${
+									!disabledInput.password && !passwordValidity.currentPassword 
+										? "border-red-500 focus-visible:border-red-500"
+										: " border-gray-300 "
+								}  font-medium text-sm disabled:text-gray-500 disabled:bg-[rgba(209,213,221,.5)] disabled:cursor-not-allowed  rounded px-2 py-1 border border-1`}
+								disabled={disabledInput.password}
+								value={userPasswordDetail["currentPassword"]}
+								onChange={(event) => {
+									handlePasswordInput(event.target.value, 'currentPassword');
+								}}
+							/>
+							{!disabledInput.password && !passwordValidity.currentPassword  && (
+								<div className="text-sm font-semibold mt-1 text-red-600">
+									{"Invalid Current Password"}
+								</div>
+							)}
+						</div>
+					</div>
+				</div>}
+
+				<div className="flex items-center mb-3 mt-3 gap-2">
+					<div className="w-full flex flex-col">
+						<label className="text-base font-semibold ">New Password </label>
+						<div className="">
+							<input
+								type="password"
+								className={`min-w-[300px] max-w-[300px]  ${
+									!passwordValidity.newPassword && !disabledInput.password
+										? "border-red-500 focus-visible:border-red-500"
+										: " border-gray-300 "
+								}  font-medium text-sm disabled:text-gray-500 disabled:bg-[rgba(209,213,221,.5)] disabled:cursor-not-allowed  rounded px-2 py-1 border border-1`}
+								disabled={disabledInput.password}
+								value={userPasswordDetail["newPassword"]}
+								onChange={(event) => {
+									handlePasswordInput(event.target.value, 'newPassword');
+								}}
+							/>
+							{!passwordValidity.newPassword && !disabledInput.password && (
+								<div className="text-sm font-semibold mt-1 text-red-600">
+									{"Password must be atleast 8 character long"}
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
