@@ -3,6 +3,6 @@ import { EnvironmentSchema } from './environment-schema';
 
 export const environment: EnvironmentSchema = {
   production: false,
-  baseURL: 'https://57207372-c561-4231-8534-f67979043624.mock.pstmn.io/',
+  baseURL: 'https://731c-2405-201-9005-3f54-c197-aaab-db6f-882a.ngrok-free.app',
   envName: 'DEVELOPMENT',
 };
