@@ -81,11 +81,10 @@ const ExploreAI = (props: ExploreAIProps) => {
 	};
 
 	const voiceCallbackFunctionHandler = (voice: VAUX_AI_VOICES) => {
-		handleCloseModal();
+		modalCloseWrapper();
 		SelectCallbackFunc && SelectCallbackFunc(voice);
 	};
 	const modalCloseWrapper = () => {
-		console.log(isAudioPlaying, "dddd");
 		const audioId: HTMLAudioElement | any =
 			document.getElementById(isAudioPlaying);
 
